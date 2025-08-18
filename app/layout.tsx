@@ -96,6 +96,9 @@ export default function RootLayout({
         <meta name="theme-color" content="#0f172a" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
+        {/* Plausible Analytics */}
+        <script defer data-domain="sapphirelegal.ai" src="https://analytics.sapphirefive.com/js/script.js"></script>
+        
         {/* Structured Data */}
         <script
           type="application/ld+json"
