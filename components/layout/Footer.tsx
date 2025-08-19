@@ -66,14 +66,14 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-sm text-dark-300">
                 <Mail className="h-4 w-4" />
-                <a href="mailto:info@sapphirelegal.ai" className="hover:text-sapphire-400 transition-colors">
-                  info@sapphirelegal.ai
+                <a href="mailto:info@sapphirefive.com" className="hover:text-sapphire-400 transition-colors">
+                  info@sapphirefive.com
                 </a>
               </div>
               <div className="flex items-center gap-2 text-sm text-dark-300">
                 <Phone className="h-4 w-4" />
-                <a href="tel:+1-555-123-4567" className="hover:text-sapphire-400 transition-colors">
-                  +1 (555) 123-4567
+                <a href="tel:+1-216-577-9018" className="hover:text-sapphire-400 transition-colors">
+                  +1 (216) 577-9018
                 </a>
               </div>
               <div className="flex items-center gap-2 text-sm text-dark-300">

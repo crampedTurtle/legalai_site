@@ -108,11 +108,11 @@ export function CTASection() {
                 </div>
                 <div className="flex items-center gap-3 text-dark-300">
                   <Phone className="h-5 w-5 text-sapphire-400" />
-                  <span>+1 (555) 123-4567</span>
+                  <span>+1 (216) 577-9018</span>
                 </div>
                 <div className="flex items-center gap-3 text-dark-300">
                   <Mail className="h-5 w-5 text-sapphire-400" />
-                  <span>info@sapphirelegal.ai</span>
+                  <span>info@sapphirefive.com</span>
                 </div>
                 <div className="flex items-center gap-3 text-dark-300">
                   <Clock className="h-5 w-5 text-sapphire-400" />
