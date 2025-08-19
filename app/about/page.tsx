@@ -1,4 +1,6 @@
 import { Metadata } from 'next'
+import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
   title: 'About Us | Sapphire Legal AI',
@@ -8,7 +10,9 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className='mx-auto max-w-5xl px-6 py-16'>
+    <>
+      <Header />
+      <main className='mx-auto max-w-5xl px-6 py-16'>
       <header className='mb-12'>
         <h1 className='text-4xl font-bold mb-3'>About Us</h1>
         <p className='text-lg text-slate-300 max-w-3xl'>
@@ -100,6 +104,8 @@ export default function AboutPage() {
           Explore Features
         </a>
       </section>
-    </main>
+      </main>
+      <Footer />
+    </>
   )
 } 
