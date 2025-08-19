@@ -77,7 +77,7 @@ export function Intro({ children }: IntroProps) {
 
 interface ResourceCardProps {
   title: string
-  type: 'Whitepaper' | 'Guide' | 'Checklist' | 'Video'
+  type: 'Whitepaper' | 'Guide' | 'Checklist' | 'Video' | 'Assessment'
   link: string
 }
 
@@ -97,6 +97,8 @@ export function ResourceCard({ title, type, link }: ResourceCardProps) {
         return <CheckSquare className="h-6 w-6" />
       case 'Video':
         return <Play className="h-6 w-6" />
+      case 'Assessment':
+        return <CheckSquare className="h-6 w-6" />
       default:
         return <FileText className="h-6 w-6" />
     }
@@ -112,6 +114,8 @@ export function ResourceCard({ title, type, link }: ResourceCardProps) {
         return 'bg-purple-500/20 text-purple-400 border-purple-500/30'
       case 'Video':
         return 'bg-orange-500/20 text-orange-400 border-orange-500/30'
+      case 'Assessment':
+        return 'bg-purple-500/20 text-purple-400 border-purple-500/30'
       default:
         return 'bg-sapphire-500/20 text-sapphire-400 border-sapphire-500/30'
     }

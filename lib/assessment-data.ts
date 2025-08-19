@@ -1,7 +1,7 @@
 export interface Question {
   id: string
   text: string
-  category: AssessmentCategory
+  category: string
   weight: number
 }
 
