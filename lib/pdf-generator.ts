@@ -106,8 +106,7 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
           bottom: 80,
           left: 50,
           right: 50
-        },
-        font: 'Helvetica' // Use built-in font to avoid file system issues
+        }
       })
 
       const chunks: Buffer[] = []
@@ -118,7 +117,6 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
       const addFooter = (pageNumber?: number) => {
         const currentY = doc.page.margins.bottom - 30
         doc.fontSize(10)
-          .font('Helvetica')
           .fillColor('#6B7280')
           .text('Sapphire Legal AI | Private AI for Law Firms', 50, currentY, { align: 'center' })
         doc.text('www.sapphirelegal.ai', 50, currentY + 15, { align: 'center' })
@@ -145,20 +143,17 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
       
       // Logo placeholder (in production, embed actual logo)
       doc.fontSize(24)
-        .font('Helvetica-Bold')
         .fillColor('#3B82F6')
         .text('SAPPHIRE LEGAL AI', { align: 'center' })
       
       doc.moveDown(3)
       
       doc.fontSize(32)
-        .font('Helvetica-Bold')
         .fillColor('#1F2937')
         .text('AI Readiness Assessment Report', { align: 'center' })
       
       doc.moveDown(1)
       doc.fontSize(16)
-        .font('Helvetica')
         .fillColor('#6B7280')
         .text('Confidential Findings & Recommendations', { align: 'center' })
       
@@ -166,25 +161,21 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
       
       // Firm information
       doc.fontSize(14)
-        .font('Helvetica-Bold')
         .fillColor('#374151')
         .text('Prepared for:', { align: 'center' })
       
       doc.moveDown(0.5)
       doc.fontSize(18)
-        .font('Helvetica-Bold')
         .fillColor('#1F2937')
         .text(assessment.firm, { align: 'center' })
       
       doc.moveDown(0.5)
       doc.fontSize(14)
-        .font('Helvetica')
         .fillColor('#6B7280')
         .text(assessment.name, { align: 'center' })
       
       doc.moveDown(2)
       doc.fontSize(12)
-        .font('Helvetica')
         .fillColor('#6B7280')
         .text(`Assessment Date: ${new Date().toLocaleDateString()}`, { align: 'center' })
       
@@ -194,13 +185,11 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
       doc.addPage()
       
       doc.fontSize(24)
-        .font('Helvetica-Bold')
         .fillColor('#1F2937')
         .text('Executive Summary')
       
       doc.moveDown(1)
       doc.fontSize(12)
-        .font('Helvetica')
         .fillColor('#374151')
         .text('Based on your responses, this report highlights your organization\'s current AI readiness across 5 key areas: Strategy, Data, Technology, Team, and Change Management. Each section includes a score, visual benchmarking, and tailored recommendations.')
       
@@ -231,24 +220,21 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
         .stroke()
       
       doc.fontSize(16)
-        .font('Helvetica-Bold')
         .fillColor('white')
         .text('Overall Score', 60, doc.y + 10)
       
       doc.fontSize(24)
-        .font('Helvetica-Bold')
         .fillColor('white')
         .text(`${Math.round(assessment.overallPercentage)}%`, 60, doc.y + 30)
       
       doc.fontSize(12)
-        .font('Helvetica')
         .fillColor('white')
         .text(overallLabel, 60, doc.y + 50)
       
       doc.moveDown(4)
       
       // Category score boxes
-      const categoryBoxes = assessment.results.map((result, index) => {
+      assessment.results.forEach((result, index) => {
         const color = getScoreColor(result.percentage)
         const label = getScoreLabel(result.percentage)
         const x = 50 + (index % 2) * 250
@@ -262,21 +248,16 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
           .stroke()
         
         doc.fontSize(12)
-          .font('Helvetica-Bold')
           .fillColor('white')
           .text(result.category, x + 10, y + 10)
         
         doc.fontSize(18)
-          .font('Helvetica-Bold')
           .fillColor('white')
           .text(`${Math.round(result.percentage)}%`, x + 10, y + 30)
         
         doc.fontSize(10)
-          .font('Helvetica')
           .fillColor('white')
           .text(label, x + 10, y + 50)
-        
-        return { x, y, width: 200, height: 60 }
       })
       
       doc.moveDown(6)
@@ -287,13 +268,11 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
       doc.addPage()
       
       doc.fontSize(24)
-        .font('Helvetica-Bold')
         .fillColor('#1F2937')
         .text('Assessment Results Overview')
       
       doc.moveDown(1)
       doc.fontSize(12)
-        .font('Helvetica')
         .fillColor('#374151')
         .text('The spider chart below visualizes your performance across all five assessment categories. Areas closer to the center indicate areas needing attention, while areas extending outward show strengths.')
       
@@ -313,12 +292,10 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
           .stroke()
         
         doc.fontSize(14)
-          .font('Helvetica-Bold')
           .fillColor('#6B7280')
           .text('Spider Chart Visualization', 250, doc.y + 140, { align: 'center' })
         
         doc.fontSize(12)
-          .font('Helvetica')
           .fillColor('#6B7280')
           .text('(Chart showing category performance)', 250, doc.y + 160, { align: 'center' })
         
@@ -336,7 +313,6 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
           .stroke()
         
         doc.fontSize(14)
-          .font('Helvetica-Bold')
           .fillColor('#6B7280')
           .text('Spider Chart Visualization', 250, doc.y + 140, { align: 'center' })
       }
@@ -348,7 +324,6 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
                            assessment.overallPercentage >= 60 ? 'Developing' : 'Emerging'
       
       doc.fontSize(16)
-        .font('Helvetica-Bold')
         .fillColor('#1F2937')
         .text(`Overall Readiness Rating: ${readinessLevel}`)
       
@@ -359,7 +334,6 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
         doc.addPage()
         
         doc.fontSize(20)
-          .font('Helvetica-Bold')
           .fillColor('#1F2937')
           .text(`${index + 1}. ${result.category}`)
         
@@ -384,7 +358,6 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
           .fill()
         
         doc.fontSize(14)
-          .font('Helvetica-Bold')
           .fillColor('#374151')
           .text(`Score: ${Math.round(result.percentage)}%`, 260, doc.y + 2)
         
@@ -392,13 +365,11 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
         
         // What This Means
         doc.fontSize(14)
-          .font('Helvetica-Bold')
           .fillColor('#1F2937')
           .text('What This Means:')
         
         doc.moveDown(0.5)
         doc.fontSize(12)
-          .font('Helvetica')
           .fillColor('#374151')
           .text(getCategoryExplanation(result.category, result.percentage))
         
@@ -406,14 +377,12 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
         
         // Top Recommendations
         doc.fontSize(14)
-          .font('Helvetica-Bold')
           .fillColor('#1F2937')
           .text('Top Recommendations:')
         
         doc.moveDown(0.5)
         result.recommendations.slice(0, 3).forEach((rec, recIndex) => {
           doc.fontSize(12)
-            .font('Helvetica')
             .fillColor('#374151')
             .text(`• ${rec}`)
           doc.moveDown(0.3)
@@ -426,13 +395,11 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
       doc.addPage()
       
       doc.fontSize(24)
-        .font('Helvetica-Bold')
         .fillColor('#1F2937')
         .text('Next Steps')
       
       doc.moveDown(1)
       doc.fontSize(12)
-        .font('Helvetica')
         .fillColor('#374151')
         .text('Based on your assessment results, here are the recommended next steps to accelerate your AI adoption journey:')
       
@@ -448,7 +415,6 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
       
       nextSteps.forEach((step, index) => {
         doc.fontSize(12)
-          .font('Helvetica-Bold')
           .fillColor('#1F2937')
           .text(`${index + 1}. ${step}`)
         doc.moveDown(0.5)
@@ -465,22 +431,18 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
         .stroke()
       
       doc.fontSize(16)
-        .font('Helvetica-Bold')
         .fillColor('#1F2937')
         .text('Ready to Get Started?', 70, doc.y + 20)
       
       doc.fontSize(12)
-        .font('Helvetica')
         .fillColor('#374151')
         .text('Schedule a 30-minute consultation with Sapphire Legal AI to review your results and discuss implementation strategies.', 70, doc.y + 45)
       
       doc.fontSize(12)
-        .font('Helvetica-Bold')
         .fillColor('#3B82F6')
         .text('Request a Demo: sapphirelegal.ai/demo', 70, doc.y + 70)
       
       doc.fontSize(12)
-        .font('Helvetica')
         .fillColor('#374151')
         .text('Contact: info@sapphirelegal.ai', 70, doc.y + 85)
       
