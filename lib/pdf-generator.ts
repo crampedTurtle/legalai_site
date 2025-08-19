@@ -106,7 +106,8 @@ export async function generateAssessmentPDF(assessment: AssessmentSubmission): P
           bottom: 80,
           left: 50,
           right: 50
-        }
+        },
+        font: 'Helvetica' // Use built-in font to avoid file system issues
       })
 
       const chunks: Buffer[] = []

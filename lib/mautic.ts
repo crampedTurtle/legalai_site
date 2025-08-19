@@ -179,6 +179,12 @@ const mauticConfig: MauticConfig = {
   password: process.env.MAUTIC_PASSWORD || '',
 }
 
+// Validate Mautic configuration
+if (!mauticConfig.baseUrl || !mauticConfig.username || !mauticConfig.password) {
+  console.warn('Mautic configuration incomplete. Mautic integration will be disabled.')
+  console.warn('Required environment variables: MAUTIC_BASE_URL, MAUTIC_USERNAME, MAUTIC_PASSWORD')
+}
+
 export const mauticAPI = new MauticAPI(mauticConfig)
 
 // Form configurations

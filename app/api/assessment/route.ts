@@ -212,26 +212,31 @@ export async function POST(request: NextRequest) {
       overallPercentage
     }
 
-    // Submit to Mautic
-    try {
-      const contactData = formatContactData({
-        name,
-        email,
-        firm,
-        assessment_score: Math.round(overallPercentage),
-        assessment_completed: true
-      })
+    // Submit to Mautic (only if configured)
+    if (process.env.MAUTIC_BASE_URL && process.env.MAUTIC_USERNAME && process.env.MAUTIC_PASSWORD) {
+      try {
+        const contactData = formatContactData({
+          name,
+          email,
+          firm,
+          assessment_score: Math.round(overallPercentage),
+          assessment_completed: true
+        })
 
-      const submission = {
-        formId: MAUTIC_FORMS.NEWSLETTER, // Using newsletter form for now
-        contact: contactData,
-        tags: ['assessment-completed', 'ai-readiness', 'sapphire-legal-ai'],
+        const submission = {
+          formId: MAUTIC_FORMS.NEWSLETTER, // Using newsletter form for now
+          contact: contactData,
+          tags: ['assessment-completed', 'ai-readiness', 'sapphire-legal-ai'],
+        }
+
+        await mauticAPI.submitForm(submission)
+        console.log('Assessment submitted to Mautic successfully')
+      } catch (mauticError) {
+        console.error('Mautic submission failed:', mauticError)
+        // Continue with assessment processing even if Mautic fails
       }
-
-      await mauticAPI.submitForm(submission)
-    } catch (mauticError) {
-      console.error('Mautic submission failed:', mauticError)
-      // Continue with assessment processing even if Mautic fails
+    } else {
+      console.log('Mautic not configured - skipping lead capture')
     }
 
     // Generate PDF report and send email
