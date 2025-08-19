@@ -1,14 +1,14 @@
 import { Metadata } from 'next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { PricingPage, Headline, Subhead, PricingCard, CTA } from '@/components/pricing/PricingPage'
+import { PricingPage, Headline, Subhead, PricingTabs, PlatformTab, LaunchPackTab, ManagedOpsTab, FAQSection } from '@/components/pricing/PricingPage'
 
 export const metadata: Metadata = {
-  title: 'Pricing - Simple, Transparent Pricing | Sapphire Legal AI',
-  description: 'Simple, transparent pricing for Sapphire Legal AI. Choose from Starter, Professional, or Enterprise plans designed for law firms of all sizes.',
+  title: 'Pricing - Hybrid Platform & Services Model | Sapphire Legal AI',
+  description: 'Choose from our flexible pricing model: Platform tiers (Core, Practice, Firm, Enterprise) with per-user pricing, Launch Pack implementation services, or Managed Operations.',
   openGraph: {
     title: 'Pricing - Sapphire Legal AI',
-    description: 'Simple, transparent pricing for private AI legal solutions.',
+    description: 'Flexible pricing for private AI legal solutions.',
   },
 }
 
@@ -18,63 +18,16 @@ export default function Pricing() {
       <Header />
       <main>
         <PricingPage>
-          <Headline>Simple, Transparent Pricing</Headline>
-          <Subhead>All features. Private. Secure. Backed by expert onboarding.</Subhead>
+          <Headline>Flexible Pricing for Every Stage</Headline>
+          <Subhead>Choose the right combination of platform and services for your firm's needs.</Subhead>
           
-          <PricingCard
-            title="Starter"
-            price="$1,500"
-            period="month"
-            users="5 users"
-            description="Perfect for small firms getting started with AI"
-            features={[
-              'Document Intelligence',
-              'Collaborative Drafting',
-              'AI Assistant',
-              'Basic Support',
-              'Private Cloud Deployment'
-            ]}
-            cta="Get Started"
-            popular={false}
-          />
+          <PricingTabs>
+            <PlatformTab />
+            <LaunchPackTab />
+            <ManagedOpsTab />
+          </PricingTabs>
           
-          <PricingCard
-            title="Professional"
-            price="$3,500"
-            period="month"
-            users="25 users"
-            description="Ideal for growing firms with complex workflows"
-            features={[
-              'Everything in Starter',
-              'Case Management',
-              'Legal Research Tools',
-              'Premium Support',
-              'Custom Templates',
-              'Advanced Analytics'
-            ]}
-            cta="Get Started"
-            popular={true}
-          />
-          
-          <PricingCard
-            title="Enterprise"
-            price="Custom"
-            period=""
-            users="Unlimited users"
-            description="For large firms requiring maximum control and customization"
-            features={[
-              'Everything in Professional',
-              'Advanced Integrations',
-              'Dedicated Environment',
-              'Custom AI Training',
-              'Dedicated Support Team',
-              'Compliance Consulting'
-            ]}
-            cta="Contact Sales"
-            popular={false}
-          />
-          
-          <CTA>Not sure which plan is right for your firm? Schedule a demo and we'll help you choose.</CTA>
+          <FAQSection />
         </PricingPage>
       </main>
       <Footer />
