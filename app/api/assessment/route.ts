@@ -7,6 +7,7 @@ import {
 } from '@/lib/assessment-data'
 import { mauticAPI, MAUTIC_FORMS, formatContactData } from '@/lib/mautic'
 import { generateAssessmentPDF } from '@/lib/pdf-generator'
+import { emailService } from '@/lib/email-service'
 
 // Mock OpenAI recommendations - in production, this would call OpenAI API
 const getRecommendations = async (category: string, score: number): Promise<string[]> => {
@@ -233,20 +234,17 @@ export async function POST(request: NextRequest) {
       // Continue with assessment processing even if Mautic fails
     }
 
-    // Generate PDF report
+    // Generate PDF report and send email
     try {
       const pdfBuffer = await generateAssessmentPDF(assessmentSubmission)
       
-      // TODO: Send email with PDF attachment
-      // This would involve:
-      // 1. Using SES or SendGrid to send email
-      // 2. Attaching the PDF buffer
-      // 3. Sending to the user's email address
+      // Send email with PDF attachment
+      await emailService.sendAssessmentReport(assessmentSubmission, pdfBuffer)
       
-      console.log('PDF generated successfully for:', email)
-    } catch (pdfError) {
-      console.error('PDF generation failed:', pdfError)
-      // Continue even if PDF generation fails
+      console.log('Assessment report sent successfully to:', email)
+    } catch (emailError) {
+      console.error('Email sending failed:', emailError)
+      // Continue even if email fails - user can still see results on screen
     }
 
     return NextResponse.json(assessmentSubmission)
