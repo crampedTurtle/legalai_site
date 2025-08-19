@@ -165,9 +165,11 @@ export function FeaturesOverview() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="text-center mt-16"
         >
-          <Button size="lg" className="group">
-            Explore All Features
-            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+          <Button size="lg" className="group" asChild>
+            <a href="/features">
+              Explore All Features
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </a>
           </Button>
         </motion.div>
       </div>

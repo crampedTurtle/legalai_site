@@ -22,7 +22,7 @@ const navigation = {
     { name: 'Support', href: '/support' },
   ],
   legal: [
-    { name: 'Privacy Policy', href: '/privacy' },
+            { name: 'Privacy Policy', href: '/privacy-policy' },
     { name: 'Terms of Service', href: '/terms' },
     { name: 'GDPR Compliance', href: '/gdpr' },
     { name: 'CCPA Compliance', href: '/ccpa' },
@@ -147,8 +147,8 @@ export function Footer() {
             <p>
               This website uses cookies to enhance your experience. By continuing to use this site, you consent to our use of cookies. 
               For more information, see our{' '}
-              <Link href="/privacy" className="text-sapphire-400 hover:text-sapphire-300 transition-colors">
-                Privacy Policy
+                              <Link href="/privacy-policy" className="text-sapphire-400 hover:text-sapphire-300 transition-colors">
+                  Privacy Policy
               </Link>
               .
             </p>

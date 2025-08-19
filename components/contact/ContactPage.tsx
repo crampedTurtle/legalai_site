@@ -5,6 +5,7 @@ import { useInView } from 'react-intersection-observer'
 import { Button } from '@/components/ui/Button'
 import { ArrowRight, Mail, Linkedin, Calendar } from 'lucide-react'
 import { useForm } from 'react-hook-form'
+import { useFormSubmission } from '@/hooks/useFormSubmission'
 
 interface ContactPageProps {
   children: React.ReactNode
@@ -60,11 +61,15 @@ export function ContactForm() {
     threshold: 0.1,
   })
 
-  const { register, handleSubmit, formState: { errors } } = useForm<ContactFormData>()
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormData>()
+  const { submitForm, isSubmitting, isSuccess, error, reset: resetSubmission } = useFormSubmission('contact', {
+    onSuccess: () => {
+      reset()
+    },
+  })
 
-  const onSubmit = (data: ContactFormData) => {
-    console.log('Form submitted:', data)
-    // Handle form submission here
+  const onSubmit = async (data: ContactFormData) => {
+    await submitForm(data)
   }
 
   return (
@@ -154,10 +159,27 @@ export function ContactForm() {
               )}
             </div>
             
-            <Button type="submit" size="lg" className="w-full group">
-              Send Message
+            <Button 
+              type="submit" 
+              size="lg" 
+              className="w-full group" 
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Sending...' : 'Send Message'}
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
+
+            {isSuccess && (
+              <div className="mt-4 p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
+                <p className="text-green-400 text-sm">Message sent successfully! We'll get back to you soon.</p>
+              </div>
+            )}
+
+            {error && (
+              <div className="mt-4 p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
+                <p className="text-red-400 text-sm">{error}</p>
+              </div>
+            )}
           </form>
         </motion.div>
       </div>

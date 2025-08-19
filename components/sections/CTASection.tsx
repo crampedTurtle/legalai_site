@@ -11,6 +11,8 @@ import {
   Clock,
   CheckCircle
 } from 'lucide-react'
+import { useForm } from 'react-hook-form'
+import { useFormSubmission } from '@/hooks/useFormSubmission'
 
 const benefits = [
   '30-minute personalized demo',
@@ -21,7 +23,26 @@ const benefits = [
   'Free consultation'
 ]
 
+interface DemoFormData {
+  firstName: string
+  lastName: string
+  email: string
+  firm: string
+  practiceArea?: string
+  message?: string
+}
+
 export function CTASection() {
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<DemoFormData>()
+  const { submitForm, isSubmitting, isSuccess, error, reset: resetSubmission } = useFormSubmission('demo', {
+    onSuccess: () => {
+      reset()
+    },
+  })
+
+  const onSubmit = async (data: DemoFormData) => {
+    await submitForm(data)
+  }
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -111,33 +132,37 @@ export function CTASection() {
             <h3 className="text-2xl font-semibold text-white mb-6">
               Request Your Demo
             </h3>
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="firstName" className="block text-sm font-medium text-dark-300 mb-2">
                     First Name *
                   </label>
                   <input
+                    {...register('firstName', { required: 'First name is required' })}
                     type="text"
                     id="firstName"
-                    name="firstName"
-                    required
                     className="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors"
                     placeholder="John"
                   />
+                  {errors.firstName && (
+                    <p className="mt-1 text-sm text-red-400">{errors.firstName.message}</p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor="lastName" className="block text-sm font-medium text-dark-300 mb-2">
                     Last Name *
                   </label>
                   <input
+                    {...register('lastName', { required: 'Last name is required' })}
                     type="text"
                     id="lastName"
-                    name="lastName"
-                    required
                     className="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors"
                     placeholder="Smith"
                   />
+                  {errors.lastName && (
+                    <p className="mt-1 text-sm text-red-400">{errors.lastName.message}</p>
+                  )}
                 </div>
               </div>
 
@@ -146,13 +171,21 @@ export function CTASection() {
                   Email Address *
                 </label>
                 <input
+                  {...register('email', { 
+                    required: 'Email is required',
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: 'Invalid email address'
+                    }
+                  })}
                   type="email"
                   id="email"
-                  name="email"
-                  required
                   className="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors"
                   placeholder="john.smith@lawfirm.com"
                 />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
+                )}
               </div>
 
               <div>
@@ -160,13 +193,15 @@ export function CTASection() {
                   Firm/Organization *
                 </label>
                 <input
+                  {...register('firm', { required: 'Firm/Organization is required' })}
                   type="text"
                   id="firm"
-                  name="firm"
-                  required
                   className="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors"
                   placeholder="Smith & Associates Law"
                 />
+                {errors.firm && (
+                  <p className="mt-1 text-sm text-red-400">{errors.firm.message}</p>
+                )}
               </div>
 
               <div>
@@ -174,8 +209,8 @@ export function CTASection() {
                   Practice Area
                 </label>
                 <select
+                  {...register('practiceArea')}
                   id="practiceArea"
-                  name="practiceArea"
                   className="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors"
                 >
                   <option value="">Select your practice area</option>
@@ -196,24 +231,39 @@ export function CTASection() {
                   Additional Information
                 </label>
                 <textarea
+                  {...register('message')}
                   id="message"
-                  name="message"
                   rows={4}
                   className="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors resize-none"
                   placeholder="Tell us about your current challenges and what you're looking to achieve..."
                 />
               </div>
 
-              <Button type="submit" size="lg" className="w-full group" asChild>
-                <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
-                  Schedule Demo
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </a>
+              <Button 
+                type="submit" 
+                size="lg" 
+                className="w-full group" 
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Submitting...' : 'Schedule Demo'}
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
+
+              {isSuccess && (
+                <div className="mt-4 p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
+                  <p className="text-green-400 text-sm">Demo request submitted successfully! We'll contact you soon to schedule your demo.</p>
+                </div>
+              )}
+
+              {error && (
+                <div className="mt-4 p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
+                  <p className="text-red-400 text-sm">{error}</p>
+                </div>
+              )}
 
               <p className="text-xs text-dark-400 text-center">
                 By submitting this form, you agree to our{' '}
-                <a href="/privacy" className="text-sapphire-400 hover:text-sapphire-300 transition-colors">
+                <a href="/privacy-policy" className="text-sapphire-400 hover:text-sapphire-300 transition-colors">
                   Privacy Policy
                 </a>
                 . We'll never share your information with third parties.
