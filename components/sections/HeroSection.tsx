@@ -84,9 +84,11 @@ export function HeroSection() {
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Button>
-              <Button variant="secondary" size="lg" className="group">
-                <Download className="mr-2 h-5 w-5" />
-                Download Whitepaper
+              <Button variant="secondary" size="lg" className="group" asChild>
+                <a href="/resources">
+                  <Download className="mr-2 h-5 w-5" />
+                  Download Whitepaper
+                </a>
               </Button>
             </motion.div>
 
