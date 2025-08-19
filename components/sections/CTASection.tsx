@@ -204,9 +204,11 @@ export function CTASection() {
                 />
               </div>
 
-              <Button type="submit" size="lg" className="w-full group">
-                Schedule Demo
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <Button type="submit" size="lg" className="w-full group" asChild>
+                <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
+                  Schedule Demo
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </a>
               </Button>
 
               <p className="text-xs text-dark-400 text-center">

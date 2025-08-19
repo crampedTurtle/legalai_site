@@ -107,10 +107,10 @@ export function Header() {
         
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
           <Button variant="ghost" size="sm" asChild>
-            <Link href="/demo">Schedule Demo</Link>
+            <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">Schedule Demo</a>
           </Button>
           <Button variant="primary" size="sm" asChild>
-            <Link href="/demo">Request Demo</Link>
+            <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">Request Demo</a>
           </Button>
         </div>
         
@@ -179,14 +179,14 @@ export function Header() {
                   </div>
                   <div className="py-6 space-y-4">
                     <Button variant="ghost" className="w-full" asChild>
-                      <Link href="/demo" onClick={() => setMobileMenuOpen(false)}>
+                      <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)}>
                         Schedule Demo
-                      </Link>
+                      </a>
                     </Button>
                     <Button variant="primary" className="w-full" asChild>
-                      <Link href="/demo" onClick={() => setMobileMenuOpen(false)}>
+                      <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)}>
                         Request Demo
-                      </Link>
+                      </a>
                     </Button>
                   </div>
                 </div>

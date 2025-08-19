@@ -137,9 +137,12 @@ export function PricingCard({ title, price, period, users, description, features
               <Button 
                 size="lg" 
                 className={`w-full group ${popular ? 'bg-sapphire-500 hover:bg-sapphire-600' : ''}`}
+                asChild
               >
-                {cta}
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
+                  {cta}
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </a>
               </Button>
             </div>
           </div>
@@ -172,10 +175,12 @@ export function CTA({ children }: CTAProps) {
           <p className="text-xl text-dark-300 mb-8 leading-relaxed">
             {children}
           </p>
-          <Button size="lg" className="group">
-            Schedule a Demo
-            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-          </Button>
+                                <Button size="lg" className="group" asChild>
+                        <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
+                          Schedule a Demo
+                          <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                        </a>
+                      </Button>
         </motion.div>
       </div>
     </section>

@@ -27,10 +27,12 @@ export function FeaturesCTA() {
           <p className="text-xl text-dark-300 max-w-3xl mx-auto mb-8">
             See how Sapphire Legal AI can transform your legal practice.
           </p>
-          <Button size="lg" className="group">
-            Schedule a Demo
-            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-          </Button>
+                        <Button size="lg" className="group" asChild>
+                <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
+                  Schedule a Demo
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </Button>
         </motion.div>
       </div>
     </section>

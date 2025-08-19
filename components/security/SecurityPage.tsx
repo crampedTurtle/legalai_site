@@ -172,10 +172,12 @@ export function CTA({ children }: CTAProps) {
           <p className="text-xl text-dark-300 mb-8 leading-relaxed">
             {children}
           </p>
-          <Button size="lg" className="group">
-            Request a Demo
-            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-          </Button>
+                                <Button size="lg" className="group" asChild>
+                        <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
+                          Request a Demo
+                          <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                        </a>
+                      </Button>
         </motion.div>
       </div>
     </section>

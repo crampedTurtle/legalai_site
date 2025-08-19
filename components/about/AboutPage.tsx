@@ -108,7 +108,7 @@ interface CTAProps {
   children: React.ReactNode
 }
 
-export function CTA({ children }: CTAProps) {
+export function CTA({ children, ...props }: CTAProps & React.ComponentProps<typeof Button>) {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -124,7 +124,7 @@ export function CTA({ children }: CTAProps) {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <Button size="lg" className="group">
+          <Button size="lg" className="group" {...props}>
             {children}
             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
           </Button>

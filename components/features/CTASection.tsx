@@ -60,9 +60,9 @@ interface CTAButtonProps {
   children: React.ReactNode
 }
 
-export function CTAButton({ children }: CTAButtonProps) {
+export function CTAButton({ children, ...props }: CTAButtonProps & React.ComponentProps<typeof Button>) {
   return (
-    <Button size="lg" className="group">
+    <Button size="lg" className="group" {...props}>
       {children}
       <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
     </Button>

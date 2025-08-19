@@ -30,7 +30,11 @@ export default function About() {
           <Paragraph>
             We support mid-sized firms, private equity–backed practices, and forward-thinking legal teams who want a competitive edge.
           </Paragraph>
-          <CTA>Schedule a Demo</CTA>
+          <CTA asChild>
+        <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
+          Schedule a Demo
+        </a>
+      </CTA>
         </AboutPage>
       </main>
       <Footer />

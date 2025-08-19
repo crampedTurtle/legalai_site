@@ -220,10 +220,12 @@ export function ContactSidebar() {
               </div>
               
               <div className="pt-6 border-t border-dark-600">
-                <Button size="lg" className="w-full group">
-                  <Calendar className="mr-2 h-5 w-5" />
-                  Schedule a Demo
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <Button size="lg" className="w-full group" asChild>
+                  <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
+                    <Calendar className="mr-2 h-5 w-5" />
+                    Schedule a Demo
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </a>
                 </Button>
               </div>
             </div>

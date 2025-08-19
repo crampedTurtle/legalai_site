@@ -140,7 +140,11 @@ export default function FeaturesPage() {
             Early adopters receive priority onboarding, training, and locked-in pricing.
             Don't wait — see how Sapphire Legal AI can transform your practice today.
           </CTAParagraph>
-          <CTAButton>Book Your Demo</CTAButton>
+          <CTAButton asChild>
+        <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
+          Book Your Demo
+        </a>
+      </CTAButton>
         </CTASection>
 
         <FeaturesCTA />
