@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/Button'
 import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react'
@@ -24,6 +24,11 @@ export function AssessmentQuestionnaire({ onComplete }: AssessmentQuestionnaireP
   const currentCategory = ASSESSMENT_CATEGORIES.find(cat => cat.id === currentQuestion.category)
   const totalQuestions = ASSESSMENT_QUESTIONS.length
   const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100
+
+  // Ensure questionnaire starts at top
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   const questionsInCurrentCategory = ASSESSMENT_QUESTIONS.filter(q => q.category === currentQuestion.category)
   const categoryQuestionIndex = questionsInCurrentCategory.findIndex(q => q.id === currentQuestion.id)

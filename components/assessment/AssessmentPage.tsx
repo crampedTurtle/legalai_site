@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -19,13 +19,22 @@ export function AssessmentPage() {
   const [results, setResults] = useState<AssessmentSubmission | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  // Ensure page starts at top when component mounts
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
   const handleStartAssessment = () => {
     setCurrentStep('questionnaire')
+    // Scroll to top when starting assessment
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleQuestionnaireComplete = (questionAnswers: Record<string, number>) => {
     setAnswers(questionAnswers)
     setCurrentStep('contact')
+    // Scroll to top when moving to contact step
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleContactSubmit = async (contact: { name: string; email: string; firm: string }) => {
@@ -53,6 +62,8 @@ export function AssessmentPage() {
       const assessmentResults = await response.json()
       setResults(assessmentResults)
       setCurrentStep('results')
+      // Scroll to top when showing results
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     } catch (error) {
       console.error('Error submitting assessment:', error)
       // Handle error - could show a toast notification
@@ -66,6 +77,8 @@ export function AssessmentPage() {
     setAnswers({})
     setContactInfo({ name: '', email: '', firm: '' })
     setResults(null)
+    // Scroll to top when restarting
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
