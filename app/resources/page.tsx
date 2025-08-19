@@ -24,7 +24,7 @@ export default function Resources() {
           </Intro>
           <ResourceCard title="Why Public AI Tools Put Firms At Risk" type="Whitepaper" link="https://mautic.sapphirefive.com/asset/1:why-public-ai-tools-put-firms-at-risk" />
           <ResourceCard title="Sapphire Legal AI: Your Private & Intelligent Legal Workspace" type="Guide" link="https://mautic.sapphirefive.com/asset/2:sapphire-legal-ai-features" />
-          <ResourceCard title="AI Readiness Assessment for Mid-Sized Firms" type="Checklist" link="/resources/ai-readiness-checklist" />
+          <ResourceCard title="AI Readiness Assessment for Mid-Sized Firms" type="Assessment" link="/assessment" />
           <ResourceCard title="Sapphire Legal AI Demo Walkthrough" type="Video" link="/resources/demo-video" />
           <CTA>Book a Demo</CTA>
         </ResourcesPage>

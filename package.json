@@ -9,15 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/pdfkit": "^0.17.2",
     "clsx": "^2.0.0",
     "framer-motion": "^10.16.16",
     "lucide-react": "^0.294.0",
     "next": "14.2.31",
+    "pdfkit": "^0.17.1",
     "react": "^18",
-    "react-dom": "^18",
-    "react-intersection-observer": "^9.5.3",
     "react-countup": "^6.4.2",
+    "react-dom": "^18",
     "react-hook-form": "^7.48.2",
+    "react-intersection-observer": "^9.5.3",
     "tailwind-merge": "^2.2.0"
   },
   "devDependencies": {
