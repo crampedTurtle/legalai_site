@@ -42,7 +42,23 @@ class MauticAPI {
       return this.accessToken
     }
 
+    // Try OAuth2 first, then fallback to Basic Auth
     try {
+      return await this.getOAuthToken()
+    } catch (oauthError) {
+      console.log('OAuth2 failed, trying Basic Auth...')
+      return await this.getBasicAuthToken()
+    }
+  }
+
+  private async getOAuthToken(): Promise<string> {
+
+    try {
+      console.log('Attempting Mautic OAuth authentication...')
+      console.log('Base URL:', this.config.baseUrl)
+      console.log('Username length:', this.config.username.length)
+      console.log('Password length:', this.config.password.length)
+      
       const response = await fetch(`${this.config.baseUrl}/oauth/v2/token`, {
         method: 'POST',
         headers: {
@@ -57,17 +73,66 @@ class MauticAPI {
         }),
       })
 
+      console.log('OAuth response status:', response.status)
+      console.log('OAuth response status text:', response.statusText)
+
       if (!response.ok) {
-        throw new Error(`Failed to get access token: ${response.statusText}`)
+        const errorText = await response.text()
+        console.error('OAuth error response:', errorText)
+        throw new Error(`Failed to get access token: ${response.status} ${response.statusText}`)
       }
 
       const data = await response.json()
+      console.log('OAuth response keys:', Object.keys(data))
+      
+      if (!data.access_token) {
+        throw new Error('No access_token in OAuth response')
+      }
+      
       this.accessToken = data.access_token
       this.tokenExpiry = Date.now() + (data.expires_in * 1000) - 60000 // Expire 1 minute early
 
       return this.accessToken!
     } catch (error) {
       console.error('Error getting Mautic access token:', error)
+      throw error
+    }
+  }
+
+  private async getBasicAuthToken(): Promise<string> {
+    try {
+      console.log('Attempting Mautic Basic Auth...')
+      
+      // For Basic Auth, we'll use the credentials directly
+      // Some Mautic instances don't use OAuth2
+      const basicAuth = Buffer.from(`${this.config.username}:${this.config.password}`).toString('base64')
+      
+      // Test the connection with a simple API call
+      const response = await fetch(`${this.config.baseUrl}/api/contacts`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Basic ${basicAuth}`,
+          'Content-Type': 'application/json',
+        },
+      })
+
+      console.log('Basic Auth response status:', response.status)
+      
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error('Basic Auth error response:', errorText)
+        throw new Error(`Basic Auth failed: ${response.status} ${response.statusText}`)
+      }
+
+      // If Basic Auth works, we'll use it for subsequent requests
+      // Store the Basic Auth header instead of OAuth token
+      this.accessToken = `Basic ${basicAuth}`
+      this.tokenExpiry = Date.now() + (3600 * 1000) - 60000 // 1 hour expiry
+      
+      console.log('Basic Auth successful')
+      return this.accessToken
+    } catch (error) {
+      console.error('Error with Basic Auth:', error)
       throw error
     }
   }
@@ -82,10 +147,11 @@ class MauticAPI {
       const token = await this.getAccessToken()
 
       // First, create or update the contact
+      const authHeader = token.startsWith('Basic ') ? token : `Bearer ${token}`
       const contactResponse = await fetch(`${this.config.baseUrl}/api/contacts/new`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': authHeader,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(submission.contact),
@@ -103,7 +169,7 @@ class MauticAPI {
         await fetch(`${this.config.baseUrl}/api/contacts/${contactId}/edit`, {
           method: 'PATCH',
           headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': authHeader,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
@@ -124,7 +190,7 @@ class MauticAPI {
       const formResponse = await fetch(`${this.config.baseUrl}/api/forms/${submission.formId}/submit`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': authHeader,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
