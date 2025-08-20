@@ -52,7 +52,7 @@ const trustFeatures = [
 ]
 
 const complianceBadges = [
-  'SOC 2 Type II', 'GDPR', 'CCPA', 'HIPAA', 'ISO 27001', 'FedRAMP'
+  'SOC 2 Type II', 'GDPR', 'CCPA', 'HIPAA', 'ISO 27001'
 ]
 
 export function TrustSection() {
@@ -120,7 +120,7 @@ export function TrustSection() {
           className="text-center mb-16"
         >
           <h3 className="text-2xl font-semibold text-white mb-8">
-            Industry-Standard Compliance
+            Compliance Alignment & Roadmap
           </h3>
           <div className="flex flex-wrap justify-center gap-4">
             {complianceBadges.map((badge) => (

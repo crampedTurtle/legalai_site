@@ -3,10 +3,44 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Button } from '@/components/ui/Button'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Shield, Lock, Eye, CheckCircle, Server } from 'lucide-react'
 
-const complianceBadges = [
-  'SOC 2 Type II', 'GDPR', 'CCPA', 'HIPAA', 'ISO 27001', 'FedRAMP'
+const complianceFrameworks = [
+  {
+    name: 'SOC 2 Type II',
+    status: 'Roadmap',
+    description: 'Controls aligned, certification in progress.',
+    icon: Shield,
+    color: 'from-blue-500 to-cyan-500'
+  },
+  {
+    name: 'ISO 27001',
+    status: 'Roadmap',
+    description: 'Global standard for information security, planned certification.',
+    icon: Lock,
+    color: 'from-green-500 to-emerald-500'
+  },
+  {
+    name: 'GDPR',
+    status: 'Aligned',
+    description: 'Designed with data privacy principles for EU clients.',
+    icon: Eye,
+    color: 'from-purple-500 to-pink-500'
+  },
+  {
+    name: 'CCPA',
+    status: 'Aligned',
+    description: 'Supports California privacy rights and consumer data protection.',
+    icon: CheckCircle,
+    color: 'from-teal-500 to-green-500'
+  },
+  {
+    name: 'HIPAA',
+    status: 'Aligned',
+    description: 'Safeguards PHI for firms handling healthcare matters.',
+    icon: Server,
+    color: 'from-orange-500 to-red-500'
+  }
 ]
 
 export function ComplianceSection() {
@@ -26,20 +60,50 @@ export function ComplianceSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Industry-Standard Compliance
+            Compliance Alignment & Roadmap
           </h2>
-          <p className="text-xl text-dark-300 max-w-3xl mx-auto mb-8">
-            Meet the highest standards of security and compliance required by the legal industry.
+          <p className="text-xl text-dark-300 max-w-3xl mx-auto mb-12">
+            Our security controls align with industry standards. We're committed to achieving full certification while maintaining transparency about our current status.
           </p>
           
-          <div className="flex flex-wrap justify-center gap-4">
-            {complianceBadges.map((badge) => (
-              <div
-                key={badge}
-                className="px-4 py-2 bg-dark-800 border border-dark-700 rounded-full text-sm text-sapphire-400 hover:border-sapphire-500 transition-colors"
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {complianceFrameworks.map((framework, index) => (
+              <motion.div
+                key={framework.name}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="group"
               >
-                {badge}
-              </div>
+                <a 
+                  href="/security"
+                  className="block p-6 bg-dark-800 border border-dark-700 rounded-xl hover:border-sapphire-500/30 hover:bg-dark-750 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-sapphire-500/10"
+                  aria-label={`${framework.name}, ${framework.status.toLowerCase()}`}
+                >
+                  <div className="flex items-start gap-4">
+                    <div className={`flex-shrink-0 p-3 rounded-lg bg-gradient-to-br ${framework.color} opacity-80 group-hover:opacity-100 transition-opacity`}>
+                      <framework.icon className="h-6 w-6 text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="text-lg font-semibold text-white group-hover:text-sapphire-400 transition-colors">
+                          {framework.name}
+                        </h3>
+                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                          framework.status === 'Roadmap' 
+                            ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' 
+                            : 'bg-green-500/20 text-green-400 border border-green-500/30'
+                        }`}>
+                          {framework.status}
+                        </span>
+                      </div>
+                      <p className="text-sm text-dark-300 leading-relaxed">
+                        {framework.description}
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </motion.div>
             ))}
           </div>
         </motion.div>
@@ -53,9 +117,11 @@ export function ComplianceSection() {
           <p className="text-lg text-dark-300 mb-6">
             Ready to experience truly private AI for your legal practice?
           </p>
-          <Button size="lg" className="group">
-            Schedule a Security Demo
-            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+          <Button size="lg" className="group" asChild>
+            <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
+              Schedule a Security Demo
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </a>
           </Button>
         </motion.div>
       </div>

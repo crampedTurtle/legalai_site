@@ -5,8 +5,10 @@ import { SecurityHero } from '@/components/security/SecurityHero'
 import { SecurityPillars } from '@/components/security/SecurityPillars'
 import { SecurityArchitecture } from '@/components/security/SecurityArchitecture'
 import { SecurityStandards } from '@/components/security/SecurityStandards'
+import { SecurityCompliance } from '@/components/security/SecurityCompliance'
 import { SecurityFAQ } from '@/components/security/SecurityFAQ'
 import { SecurityCTA } from '@/components/security/SecurityCTA'
+
 
 export const metadata: Metadata = {
   title: 'Security & Compliance | Sapphire Legal AI',
@@ -49,6 +51,47 @@ const copy = {
     { k: "Backups & DR", v: "Configurable RPO/RTO; customer‑controlled retention." },
     { k: "Vendor Review", v: "Minimal third‑party reliance; security reviews available." }
   ],
+  compliance: {
+    title: "Compliance & Standards",
+    subtitle: "Our security controls align with industry standards. We're committed to achieving full certification while maintaining transparency about our current status.",
+    frameworks: [
+      {
+        name: "SOC 2 Type II",
+        status: "Roadmap",
+        description: "Controls aligned, certification in progress.",
+        icon: "Shield",
+        color: "from-blue-500 to-cyan-500"
+      },
+      {
+        name: "ISO 27001",
+        status: "Roadmap",
+        description: "Global standard for information security, planned certification.",
+        icon: "Lock",
+        color: "from-green-500 to-emerald-500"
+      },
+      {
+        name: "GDPR",
+        status: "Aligned",
+        description: "Designed with data privacy principles for EU clients.",
+        icon: "Eye",
+        color: "from-purple-500 to-pink-500"
+      },
+      {
+        name: "CCPA",
+        status: "Aligned",
+        description: "Supports California privacy rights and consumer data protection.",
+        icon: "CheckCircle",
+        color: "from-teal-500 to-green-500"
+      },
+      {
+        name: "HIPAA",
+        status: "Aligned",
+        description: "Safeguards PHI for firms handling healthcare matters.",
+        icon: "Server",
+        color: "from-orange-500 to-red-500"
+      }
+    ]
+  },
   faq: [
     { q: "Do you train on our data?", a: "No. Customer data is never used to train public or shared models." },
     { q: "Where is our data stored?", a: "In your environment (on‑prem or private cloud). You control the region and residency." },
@@ -71,6 +114,7 @@ export default function SecurityPage() {
         <SecurityPillars copy={copy.pillars} />
         <SecurityArchitecture copy={copy.architecture} />
         <SecurityStandards copy={copy.standards} />
+        <SecurityCompliance copy={copy.compliance} />
         <SecurityFAQ copy={copy.faq} />
         <SecurityCTA copy={copy.cta} />
       </main>
