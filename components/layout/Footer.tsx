@@ -81,6 +81,11 @@ export function Footer() {
                 <MapPin className="h-4 w-4" />
                 <span>Sapphire Five, Inc.</span>
               </div>
+              <div className="flex items-center gap-2 text-sm text-dark-300">
+                <a href="https://cal.com/s5-brett/" target="_blank" rel="noopener noreferrer" className="hover:text-sapphire-400 transition-colors">
+                  cal.com/s5-brett
+                </a>
+              </div>
             </div>
           </div>
           
