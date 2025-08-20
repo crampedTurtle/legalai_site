@@ -2,10 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import CountUp from 'react-countup'
-import Image from 'next/image'
 import { Button } from '@/components/ui/Button'
-import { ArrowRight, Download, Play } from 'lucide-react'
+import { ArrowRight, Download, Shield, Lock, Users } from 'lucide-react'
 
 export function HeroSection() {
   const [ref, inView] = useInView({
@@ -13,21 +11,13 @@ export function HeroSection() {
     threshold: 0.1,
   })
 
-  const metrics = [
-    { label: 'Documents', value: 51, icon: '📄' },
-    { label: 'Active Cases', value: 8, icon: '💼' },
-    { label: 'Pending Tasks', value: 7, icon: '⏰' },
-    { label: 'Processed', value: 51, icon: '✅' },
-    { label: 'Collaborations', value: 1, icon: '👥' },
-  ]
-
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950 pt-32 pb-20">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-sapphire-500/5 to-transparent" />
       
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Content */}
           <motion.div
             ref={ref}
@@ -55,10 +45,9 @@ export function HeroSection() {
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
                 All Your Legal Work.{' '}
-                <span className="text-sapphire-400">One</span>{' '}
-                <span className="bg-gradient-to-r from-sapphire-400 to-purple-500 bg-clip-text text-transparent">Private,</span>{' '}
-                Intelligent{' '}
-                <span className="text-white">Workspace.</span>
+                <span className="text-sapphire-400">Private.</span>{' '}
+                <span className="bg-gradient-to-r from-sapphire-400 to-purple-500 bg-clip-text text-transparent">Intelligent.</span>{' '}
+                <span className="text-white">Secure.</span>
               </motion.h1>
               
               <motion.p 
@@ -67,7 +56,7 @@ export function HeroSection() {
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                AI-powered platform built exclusively for law firms and legal teams—secure, private, and tailored to your practice.
+                Sapphire Legal AI is built exclusively for law firms. Unlike public AI tools, your data stays private, compliant, and tailored to your practice.
               </motion.p>
             </div>
 
@@ -94,27 +83,91 @@ export function HeroSection() {
 
             {/* Trust Indicators */}
             <motion.div 
-              className="flex items-center gap-6 text-sm text-dark-400"
+              className="flex flex-wrap items-center gap-6 text-sm text-dark-400 border-t border-dark-800 pt-6"
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span>Private AI</span>
+                <Shield className="h-4 w-4 text-sapphire-400" />
+                <span>SOC 2 Type II</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
-                <span>SOC 2 Certified</span>
+                <Lock className="h-4 w-4 text-sapphire-400" />
+                <span>GDPR & CCPA Compliant</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" />
-                <span>GDPR Compliant</span>
+                <Users className="h-4 w-4 text-sapphire-400" />
+                <span>Built for Legal Teams</span>
               </div>
             </motion.div>
           </motion.div>
 
-
+          {/* Right Column - Visual Element */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="relative flex justify-center lg:justify-end"
+          >
+            <div className="relative w-80 h-80 lg:w-96 lg:h-96">
+              {/* Main Shield */}
+              <div className="absolute inset-0 bg-gradient-to-br from-sapphire-500/20 to-purple-500/20 rounded-full blur-3xl" />
+              <div className="relative w-full h-full bg-gradient-to-br from-sapphire-500/10 to-purple-500/10 rounded-full border border-sapphire-500/30 flex items-center justify-center">
+                <div className="w-48 h-48 bg-gradient-to-br from-sapphire-500/20 to-purple-500/20 rounded-full border border-sapphire-500/50 flex items-center justify-center backdrop-blur-sm">
+                  <Shield className="w-24 h-24 text-sapphire-400" strokeWidth={1.5} />
+                </div>
+              </div>
+              
+              {/* Floating Elements */}
+              <motion.div
+                animate={{ 
+                  y: [-10, 10, -10],
+                  rotate: [0, 5, 0]
+                }}
+                transition={{ 
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="absolute top-8 right-8 w-8 h-8 bg-sapphire-500/30 rounded-full border border-sapphire-400/50 flex items-center justify-center"
+              >
+                <div className="w-2 h-2 bg-sapphire-400 rounded-full" />
+              </motion.div>
+              
+              <motion.div
+                animate={{ 
+                  y: [10, -10, 10],
+                  rotate: [0, -5, 0]
+                }}
+                transition={{ 
+                  duration: 3.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 1
+                }}
+                className="absolute bottom-12 left-8 w-6 h-6 bg-purple-500/30 rounded-full border border-purple-400/50 flex items-center justify-center"
+              >
+                <div className="w-1.5 h-1.5 bg-purple-400 rounded-full" />
+              </motion.div>
+              
+              <motion.div
+                animate={{ 
+                  y: [-5, 15, -5],
+                  x: [-5, 5, -5]
+                }}
+                transition={{ 
+                  duration: 4.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.5
+                }}
+                className="absolute top-1/2 -left-4 w-4 h-4 bg-sapphire-400/40 rounded-full border border-sapphire-300/60 flex items-center justify-center"
+              >
+                <div className="w-1 h-1 bg-sapphire-300 rounded-full" />
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
