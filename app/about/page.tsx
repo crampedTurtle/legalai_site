@@ -12,7 +12,7 @@ export default function AboutPage() {
   return (
     <>
       <Header />
-      <main className='mx-auto max-w-5xl px-6 py-16'>
+      <main className='mx-auto max-w-5xl px-6 pt-32 pb-16'>
       <header className='mb-12'>
         <h1 className='text-4xl font-bold mb-3'>About Us</h1>
         <p className='text-lg text-slate-300 max-w-3xl'>
