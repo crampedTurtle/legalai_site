@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { WhyPrivateAIHero } from '@/components/why-private-ai/WhyPrivateAIHero'
+import { SecurityPosture } from '@/components/why/SecurityPosture'
 import { PrivacyComparison } from '@/components/why-private-ai/PrivacyComparison'
 import { SecurityFeatures } from '@/components/why-private-ai/SecurityFeatures'
 import { ComplianceSection } from '@/components/why-private-ai/ComplianceSection'
@@ -21,6 +22,7 @@ export default function WhyPrivateAIPage() {
       <Header />
       <main>
         <WhyPrivateAIHero />
+        <SecurityPosture />
         <PrivacyComparison />
         <SecurityFeatures />
         <ComplianceSection />
