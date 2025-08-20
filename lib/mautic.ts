@@ -190,21 +190,21 @@ class MauticAPI {
 // Initialize Mautic API with environment variables
 const mauticConfig: MauticConfig = {
   baseUrl: process.env.MAUTIC_BASE_URL || '',
-  username: process.env.MAUTIC_USERNAME || '',
-  password: process.env.MAUTIC_PASSWORD || '',
+  username: process.env.MAUTIC_API_USERNAME || '',
+  password: process.env.MAUTIC_API_PASSWORD || '',
 }
 
 // Debug environment variables (only log if they exist to avoid exposing values)
 console.log('Mautic configuration check:')
 console.log('- MAUTIC_BASE_URL exists:', !!process.env.MAUTIC_BASE_URL)
-console.log('- MAUTIC_USERNAME exists:', !!process.env.MAUTIC_USERNAME)
-console.log('- MAUTIC_PASSWORD exists:', !!process.env.MAUTIC_PASSWORD)
+console.log('- MAUTIC_API_USERNAME exists:', !!process.env.MAUTIC_API_USERNAME)
+console.log('- MAUTIC_API_PASSWORD exists:', !!process.env.MAUTIC_API_PASSWORD)
 console.log('- Base URL length:', mauticConfig.baseUrl.length)
 
 // Validate Mautic configuration
 if (!mauticConfig.baseUrl || !mauticConfig.username || !mauticConfig.password) {
   console.warn('Mautic configuration incomplete. Mautic integration will be disabled.')
-  console.warn('Required environment variables: MAUTIC_BASE_URL, MAUTIC_USERNAME, MAUTIC_PASSWORD')
+  console.warn('Required environment variables: MAUTIC_BASE_URL, MAUTIC_API_USERNAME, MAUTIC_API_PASSWORD')
 }
 
 export const mauticAPI = new MauticAPI(mauticConfig)
