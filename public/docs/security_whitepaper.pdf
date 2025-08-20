@@ -1,10 +1,139 @@
-# Security Whitepaper Placeholder
+%PDF-1.4
+%“Œ‹ž ReportLab Generated PDF document http://www.reportlab.com
+1 0 obj
+<<
+/F1 2 0 R /F2 3 0 R /F3 4 0 R /F4 6 0 R
+>>
+endobj
+2 0 obj
+<<
+/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+>>
+endobj
+3 0 obj
+<<
+/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
+>>
+endobj
+4 0 obj
+<<
+/BaseFont /HeiseiKakuGo-W5 /DescendantFonts [ <<
+/BaseFont /HeiseiKakuGo-W5 /CIDSystemInfo <<
+/Ordering (Japan1) /Registry (Adobe) /Supplement 2
+>> /DW 1000 /FontDescriptor <<
+/Ascent 752 /CapHeight 737 /Descent -221 /Flags 4 /FontBBox [ -92 -250 1010 922 ] /FontName /HeiseKakuGo-W5 
+  /ItalicAngle 0 /StemH 0 /StemV 114 /Type /FontDescriptor /XHeight 553
+>> /Subtype /CIDFontType0 /Type /Font 
+  /W [ 1 [ 277 305 500 668 668 906 727 305 445 445 
+  508 668 305 379 305 539 ] 17 26 668 27 [ 305 305 668 668 668 566 871 727 637 652 
+  699 574 555 676 687 242 492 664 582 789 
+  707 734 582 734 605 605 641 668 727 945 
+  609 609 574 445 668 445 668 668 590 555 
+  609 547 602 574 391 609 582 234 277 539 
+  234 895 582 605 602 602 387 508 441 582 
+  562 781 531 570 555 449 246 449 668 ] 231 632 500 ]
+>> ] /Encoding /UniJIS-UCS2-H /Name /F3 /Subtype /Type0 /Type /Font
+>>
+endobj
+5 0 obj
+<<
+/Contents 12 0 R /MediaBox [ 0 0 612 792 ] /Parent 11 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
 
-This is a placeholder file for the security whitepaper. In production, this would be replaced with the actual PDF document.
+>> 
+  /Type /Page
+>>
+endobj
+6 0 obj
+<<
+/BaseFont /ZapfDingbats /Name /F4 /Subtype /Type1 /Type /Font
+>>
+endobj
+7 0 obj
+<<
+/Contents 13 0 R /MediaBox [ 0 0 612 792 ] /Parent 11 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
 
-The whitepaper should contain:
-- Detailed security architecture
-- Compliance information
-- Data protection measures
-- Deployment options
-- Security controls and standards 
+>> 
+  /Type /Page
+>>
+endobj
+8 0 obj
+<<
+/Contents 14 0 R /MediaBox [ 0 0 612 792 ] /Parent 11 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
+
+>> 
+  /Type /Page
+>>
+endobj
+9 0 obj
+<<
+/PageMode /UseNone /Pages 11 0 R /Type /Catalog
+>>
+endobj
+10 0 obj
+<<
+/Author (\(anonymous\)) /CreationDate (D:20250820013600+00'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20250820013600+00'00') /Producer (ReportLab PDF Library - www.reportlab.com) 
+  /Subject (\(unspecified\)) /Title (\(anonymous\)) /Trapped /False
+>>
+endobj
+11 0 obj
+<<
+/Count 3 /Kids [ 5 0 R 7 0 R 8 0 R ] /Type /Pages
+>>
+endobj
+12 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 891
+>>
+stream
+Gatm:9lHLd&A@Zck#Alk9A'JbHq^;'MW@.R+B=\I+U$P!`[65,ptqDAkDaYkhPO2)1h([lo?H"j5sbO,608p0\!4U5$PJWN-&K^(-sb2"l90FPUcD'rSk$K"GAHQjUtU7fHm*+NBL]_#ZR?UMa-#)LB'&^R"X<ZSX$2stOf2qkW`YIsXKL/d;p_7@AK/4jq+0ag8jB:+DVrBk:,1We<_aI+qae9l72-!uK`!MqA/LLpQQi$HqlKX]7D<]_mRSG`E`^e\1>CpprEP[p;.k%!\5EUMW<J5WSe;Ec]ecL?,_?Wl0ircd\IX;M;MgqW>:#S-PY+%f;;e+b6)MRi$)7;^7`1].f5T8JDZMLA_\UEIU()H.8u,SgJ:dqZ(m`K#d,`7_F#Q^-]-;O^e[Z0]j42NOOU./OQbLRIGpqlo?WC6MFQOClRO[=4g!o8u]=J!RcTmXt41(n`U;^i'<od(+i2+t(<bUM*%b?r#DW$6,Kdju9R9U!Q,);L_\*]jZLq"J^L4]^Wp:>:Af1("3;52(96-/?H2..O43--fi*7RO>5qaR?ap!#cE3Os3/D=/`=kh1E)$n6#LH92"`d=Q=)8kguLB:s>E5RI[46Y3+CRpZZJU;8OJ8knNAB(3fH-d-Agjca\B>B$*b[L#Fd?lRIoTm(B/_q>aE%Xd+5$gus]=A;sKiVkZ!L7j?dfrR-jtShhOPt;bgNF>?gMF@HO\*G+$oY_,;KKq1igGYAeGFqu:>@up(eL;iCrUNJdoAB$UCkr-:qfg)OlL5g"^o?pA$Cq3i6K%?%ubMLNAB_=@u9XZ%ma\F\gbGB.Z5f0@B\E(-(*oqSRD[o3'6945b>U%lROT`m41Amrf>qCr%`_>b&(J9S"b&%P+;N=anl0o4O,D~>endstream
+endobj
+13 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 1937
+>>
+stream
+Gau`VgN):C&:O:SbYuYZ]GLqu@,JWLcFVSeZ^AD$r#uLdPiZK`]]&=3#(2H/1E)I2Pfd!3nm&b1V_?NJ_Gg.#T;QBc;<h(eSR$N`o2Yf^GsO#Yr>Tn45C,Na[OYR!eZ'FDO36&)ou_)Q/F^H)]kXiZ+,KU1itKuCbJL4XF2@2.)p+Z?<Ut3fN*mm*TtL5V<P_6*J,E-Hf=M3S'kC4(GsTFR8IDc=P;3qM0q2TFDc>tUIXiFT?pN"`nHqq1mfV-PfVZ&K$^,!N2tpqZQ[ACcQ\%VkpP;OLQ3A.>pg:l:C)T-LLD:\Q.sZV3?NT?jY[.<]&!eNa*/ajc$<Ss326A8hi#H"i+il<-ZQLFBd8%jVJ/f6#R-b^N##+]W=-+?Qs+6)lWgR04@3Wb'L!pK7IT:9iOhAFJr!?UG\;XB*+i8n%G_E?GKQLl^q/7VC5oJj^):io@-VJ7`ZV^h(Me-gEH%k>XTPq9>ZM$cYrmng"Rmq!<BiogCmJ2>]*WSPi#oiU=1DfB0IPdl-bNap$KE7[6!IbQ"B:7-0cuhWlSH]LSWXQD"r+rX-[+;8nFp"<\:'OBh!:nOE(hZncMqLjO7`#F,+sF\I"!D7]f,0fBi(p5h['B6PE/P%IoP`s1R!%S"?WTF#[+X-`6T$N1eiR_KCUDiFUT%uKheRt;Z5E-ifPAR_)Y/=iO/?V2NR`:iO4$H00:#c#;Q&2_gXPcLkrRT[K(!.73QMK!B;TYcmR(e0A+gms@#gae#?*.2,o0\VN.j^qQp+T5n"qm=?#^/!k<r=9$BaZ=L0(8!Ml@6qOblNs)Ar+kQ[T!-To8<_M%t0lb><g;X>%N&kgbfsQJT#o'kSFhepYT+gF0L0.nV-D*Ep*DP^Z<T!XP8gm>@@W<<NLDp'MV,R+i[B0rW&#0Kh=:A+;M]CR,G4'8b4Ln8P+qE8$bG-]^_9jqJG<6JR$eOM6@Ll--!S]K!,u1<`FGhGa\jDoB$.W/`%l%,5U])\3naZ%tQ_Z7%\d]8@eb:;n5pW:=Ouf57*.r`qL#Id!MlLbmA\^m*PkY]?:C6-"/'"_%9>7r!6+R?,g1)COftS.;H\AEl;7K4\dq-E-4l[?\CS/^>'bKaiGmp!$<D?sSDt8R]i1&RoC)Il3":'.:qO<Hjq7jSeV]2F/X\Xb,%g]Rs_W<HYFr9&:Z%cN$f!!RF'WbZX=uQgi\SB(BB!*$Q3@U<<jRAaRt);!l_=$ZZ7jHN<7<:L+N@9anH,Z+A%NpbnIL(P[pl3g5OjFXBaC:ZD"AJX6@mKo]QL6laBs-.^bpi]m&qM56l<=O:A`af2i2M`KA-/+@6/1r,V^%"6<mf4ar73.\gi.s7K&b:Hr#e5[+r=5)H/NV/1bW)r+qp$dLfPg\u`kZ_:rgl8-FgFOGOUU4a3HQH88J.jtNI)8;'SGb+S0#(=bJ[C^?5NW"?.;,#B?q&g=oV8s`2:NM`Gf[-]Sa=F(giIaPMFt?<D:bef(u%[>5I,1rVRs8?DbWb?<(tJeJI"):9CW8`(/Dc#<E4?Lanl<CcV/GT=Y)'4'BU=LrJ>CmS,[fT[t=*/(-VZLoDgf,fQ3b>GVA71W/"cp6Yu'C?+/TM/_dA,o\<&&d!_(&MKf^U^#T7bfeq$t%fuiS>7RM]A8GP.;fd`($.rKmC&4KoFd=5cDsIUPSa[2E;(p2/WS;))%?pOt&mdZ(l/D%>2#No(WBHQl:k#][c!&i0[,kH<f,+,J`*sgn6QCul?Z3IOlaG].:t$_&q%6_IHbn@eoH]P+b.i9$Qj<4uM!`"8>^)b+4n5M(NFMmeKcO]t0!ToT9Jg,1qF_2iL`]6R^87r)b;u^%1HCbW/(r]WLhU6%)jU9+kZ%.K-aF[A6KT'RKq"^-7?2bjd/+nrAgV/aMmKhVH+):=q_4SkA\OO+P"bP3Hp4%^l!lbL([8^&G3\953BJ>8~>endstream
+endobj
+14 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 969
+>>
+stream
+Gau`R9lJ`N&A@Zcp/IkgCM[L>h,BLo<0_-n$MW*Z0jrejk0&G?hhPKm2p?$MU.lnd1h,).[I;AcN[NW"cVlSNKt']BGN]@Z(Wfp,JJ3iM,jpi@]&Pqh%O*WHUP!UM#N$!N5jl(+E0]Q4P6rA**jj(BI\>q4'lQP3gYaK*-[hOTNl,Af20U'3f:K;5%XZ'6V4V65-X2SQeM#Ns^I^/B,+#$eU,M?E.CN-uUe%?78[6+'i"gB]S\V\Rh@<lW2HOhdn#I/S.U<5+&JCXpaLr9.:#pFiN1c$DiA]2)a5L5(QBYmSBH%!g@B`RT"jA_U;/e^UD<5/C75t]/Kl@_$jTs`F,mEni:lGI3U`B4_"KCbG-&2S#Tp!]o>ekN8jeER`^4.T]S&d6Qr?lM*!k9"2DT;S"#?^%PQu#>S"d"dCXPb5a6n>UW'FQnI)@e@N+=lUsVH0:9dj*8$UBX*+$i9:"iUikcn+DAJqd)LGgJIPXIKpQ3L#VL*8rML`?WOTLqGCou+UDm@pAD7B*2@[Y&.8S8$I=jBq-9]$$b4o@ZNgU(FKJHdmG+@.Q'CmuFA5cO]SBGQ!MmXm<jN,$-+*DsIlY:;pO#d.XQ;eJW.HC%H%g"Hk>"r+fT]2A&F'!=(#m8;1DW@#O'f_So&h.L%8W>3.leL_s-FU<,NliT;5R:?TV3)fBdfrDVdb2f)6ZVH*#1]Pp-Q6SL$?E5UF`A%W7k%'ioj9ZMEAd;W(3GPAn?8r06<Yhi2iC:>N3:Qc]?`1Y'gU0eG?R^ct5h;@2s&moNago$tArgHLpmahcc!)fkP:q+W-T<LS,G%-MaMbs4\s*9f>sQ1td6ZMV=T'bW^$Hm2`o`Z?3=pT19>B=)4XlOYArI1o!oE3m!s$kHtgD72K[^:o2A838J4T]a+N?p?7snknG2=V1"Im9gp:UeYqZ439>XobdcLIcVqY3ZoQ8c.8`=3[9Fb7:LA[U3r~>endstream
+endobj
+xref
+0 15
+0000000000 65535 f 
+0000000073 00000 n 
+0000000134 00000 n 
+0000000241 00000 n 
+0000000353 00000 n 
+0000001243 00000 n 
+0000001438 00000 n 
+0000001521 00000 n 
+0000001716 00000 n 
+0000001911 00000 n 
+0000001980 00000 n 
+0000002264 00000 n 
+0000002336 00000 n 
+0000003318 00000 n 
+0000005347 00000 n 
+trailer
+<<
+/ID 
+[<8343a70a60a905c591abc50736872157><8343a70a60a905c591abc50736872157>]
+% ReportLab generated PDF document -- digest (http://www.reportlab.com)
+
+/Info 10 0 R
+/Root 9 0 R
+/Size 15
+>>
+startxref
+6407
+%%EOF

@@ -4,24 +4,34 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Button } from '@/components/ui/Button'
-import { ArrowRight, Download, Shield } from 'lucide-react'
-import { WhitepaperModal } from './WhitepaperModal'
+import { ArrowRight, Download, FileText, Shield } from 'lucide-react'
+import { SigLiteModal } from './SigLiteModal'
 
-interface SecurityHeroProps {
+interface SigLiteHeroProps {
   copy: {
     title: string
     subtitle: string
-    primaryCta: string
-    secondaryCta: string
+    primary: string
+    secondary: string
   }
 }
 
-export function SecurityHero({ copy }: SecurityHeroProps) {
+export function SigLiteHero({ copy }: SigLiteHeroProps) {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   })
   const [isModalOpen, setIsModalOpen] = useState(false)
+  
+  // Check if gating is enabled
+  const isGated = process.env.NEXT_PUBLIC_GATE_SIGLITE === 'true'
+
+  const handlePrimaryClick = (e: React.MouseEvent) => {
+    if (isGated) {
+      e.preventDefault()
+      setIsModalOpen(true)
+    }
+  }
 
   return (
     <>
@@ -42,7 +52,7 @@ export function SecurityHero({ copy }: SecurityHeroProps) {
               className="inline-flex items-center gap-2 px-4 py-2 bg-sapphire-500/20 border border-sapphire-500/30 rounded-full text-sm text-sapphire-400 mb-8"
             >
               <Shield className="h-4 w-4" />
-              Private by Design
+              Vendor Due Diligence
             </motion.div>
 
             {/* Title */}
@@ -75,11 +85,22 @@ export function SecurityHero({ copy }: SecurityHeroProps) {
               <Button 
                 size="lg" 
                 className="group w-full sm:w-auto"
-                onClick={() => setIsModalOpen(true)}
+                onClick={handlePrimaryClick}
+                asChild={!isGated}
               >
-                <Download className="mr-2 h-5 w-5" />
-                {copy.primaryCta}
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                {isGated ? (
+                  <span>
+                    <Download className="mr-2 h-5 w-5" />
+                    {copy.primary}
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                ) : (
+                  <a href="/docs/sapphire_legal_ai_siglite.pdf" download>
+                    <Download className="mr-2 h-5 w-5" />
+                    {copy.primary}
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                )}
               </Button>
               
               <Button 
@@ -88,35 +109,23 @@ export function SecurityHero({ copy }: SecurityHeroProps) {
                 className="group w-full sm:w-auto"
                 asChild
               >
-                <a href="/demo">
-                  {copy.secondaryCta}
+                <a href="/docs/security_whitepaper.pdf" download>
+                  <FileText className="mr-2 h-5 w-5" />
+                  {copy.secondary}
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Button>
-            </motion.div>
-
-            {/* SIG-Lite Link */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="mt-6"
-            >
-              <a 
-                href="/siglite" 
-                className="text-sm text-sapphire-400 hover:text-sapphire-300 transition-colors"
-              >
-                Need a one-pager? Get the SIG-Lite summary →
-              </a>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      <WhitepaperModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-      />
+      {isGated && (
+        <SigLiteModal 
+          isOpen={isModalOpen} 
+          onClose={() => setIsModalOpen(false)} 
+        />
+      )}
     </>
   )
 } 
