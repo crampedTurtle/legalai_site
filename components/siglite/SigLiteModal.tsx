@@ -8,6 +8,7 @@ import { X, Download, CheckCircle, AlertCircle } from 'lucide-react'
 interface SigLiteModalProps {
   isOpen: boolean
   onClose: () => void
+  resourceType?: 'SIG-Lite' | 'Security Whitepaper'
 }
 
 interface FormData {
@@ -18,7 +19,7 @@ interface FormData {
   optIn: boolean
 }
 
-export function SigLiteModal({ isOpen, onClose }: SigLiteModalProps) {
+export function SigLiteModal({ isOpen, onClose, resourceType = 'SIG-Lite' }: SigLiteModalProps) {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -43,8 +44,8 @@ export function SigLiteModal({ isOpen, onClose }: SigLiteModalProps) {
         },
         body: JSON.stringify({
           ...formData,
-          resourceType: 'SIG-Lite',
-          resourceTitle: 'SIG-Lite Security Summary'
+          resourceType: resourceType,
+          resourceTitle: resourceType === 'SIG-Lite' ? 'SIG-Lite Security Summary' : 'Security Whitepaper'
         }),
       })
 
@@ -107,7 +108,7 @@ export function SigLiteModal({ isOpen, onClose }: SigLiteModalProps) {
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-dark-700">
               <h2 className="text-xl font-semibold text-white">
-                {isSuccess ? 'Download Ready' : 'Download SIG-Lite'}
+                {isSuccess ? 'Download Ready' : `Download ${resourceType}`}
               </h2>
               <button
                 onClick={handleClose}
@@ -131,7 +132,7 @@ export function SigLiteModal({ isOpen, onClose }: SigLiteModalProps) {
                   </h3>
                   
                   <p className="text-dark-300 mb-6">
-                    Your SIG-Lite Security Summary is ready for download. We've also sent a copy to your email.
+                    Your {resourceType} is ready for download. We've also sent a copy to your email.
                   </p>
                   
                   <Button 
@@ -139,9 +140,9 @@ export function SigLiteModal({ isOpen, onClose }: SigLiteModalProps) {
                     className="w-full group"
                     asChild
                   >
-                    <a href="/docs/sapphire_legal_ai_siglite.pdf" download>
+                    <a href={resourceType === 'SIG-Lite' ? "/docs/sapphire_legal_ai_siglite.pdf" : "/docs/security_whitepaper.pdf"} download>
                       <Download className="mr-2 h-5 w-5" />
-                      Download SIG-Lite
+                      Download {resourceType}
                     </a>
                   </Button>
                 </div>

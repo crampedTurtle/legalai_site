@@ -1,9 +1,12 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Button } from '@/components/ui/Button'
 import { Shield, ArrowRight, Download, FileText } from 'lucide-react'
+import { WhitepaperModal } from '@/components/security/WhitepaperModal'
+import { SigLiteModal } from '@/components/siglite/SigLiteModal'
 
 const copy = {
   title: "Our Security Posture",
@@ -28,7 +31,23 @@ export function SecurityPosture() {
     threshold: 0.1,
   })
 
+  const [isWhitepaperModalOpen, setIsWhitepaperModalOpen] = useState(false)
+  const [isSigLiteModalOpen, setIsSigLiteModalOpen] = useState(false)
+  
   const isGovConTarget = process.env.NEXT_PUBLIC_TARGET_GOVCON === "true"
+  const isGated = process.env.NEXT_PUBLIC_GATE_SIGLITE === 'true'
+
+  const handleWhitepaperClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setIsWhitepaperModalOpen(true)
+  }
+
+  const handleSigLiteClick = (e: React.MouseEvent) => {
+    if (isGated) {
+      e.preventDefault()
+      setIsSigLiteModalOpen(true)
+    }
+  }
 
   return (
     <section className="py-24 bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950">
@@ -116,40 +135,52 @@ export function SecurityPosture() {
                   variant="secondary" 
                   size="lg" 
                   className="w-full group justify-start"
-                  asChild
+                  onClick={handleWhitepaperClick}
                 >
-                  <a 
-                    href="/docs/security_whitepaper.pdf" 
-                    download
-                    aria-label="Download Security Whitepaper PDF"
-                  >
-                    <Download className="mr-3 h-5 w-5" />
-                    {copy.ctas.whitepaper}
-                    <ArrowRight className="ml-auto h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </a>
+                  <Download className="mr-3 h-5 w-5" />
+                  {copy.ctas.whitepaper}
+                  <ArrowRight className="ml-auto h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
 
                 <Button 
                   variant="secondary" 
                   size="lg" 
                   className="w-full group justify-start"
-                  asChild
+                  onClick={handleSigLiteClick}
+                  asChild={!isGated}
                 >
-                  <a 
-                    href="/docs/sapphire_legal_ai_siglite.pdf" 
-                    download
-                    aria-label="Download SIG-Lite PDF"
-                  >
-                    <FileText className="mr-3 h-5 w-5" />
-                    {copy.ctas.siglite}
-                    <ArrowRight className="ml-auto h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </a>
+                  {isGated ? (
+                    <span>
+                      <FileText className="mr-3 h-5 w-5" />
+                      {copy.ctas.siglite}
+                      <ArrowRight className="ml-auto h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  ) : (
+                    <a href="/docs/sapphire_legal_ai_siglite.pdf" download>
+                      <FileText className="mr-3 h-5 w-5" />
+                      {copy.ctas.siglite}
+                      <ArrowRight className="ml-auto h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    </a>
+                  )}
                 </Button>
               </motion.div>
             </div>
           </div>
         </motion.div>
       </div>
+
+      {/* Modals */}
+      <WhitepaperModal 
+        isOpen={isWhitepaperModalOpen} 
+        onClose={() => setIsWhitepaperModalOpen(false)} 
+      />
+      
+      {isGated && (
+        <SigLiteModal 
+          isOpen={isSigLiteModalOpen} 
+          onClose={() => setIsSigLiteModalOpen(false)} 
+        />
+      )}
     </section>
   )
 } 

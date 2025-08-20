@@ -22,6 +22,7 @@ export function SigLiteHero({ copy }: SigLiteHeroProps) {
     threshold: 0.1,
   })
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [modalResourceType, setModalResourceType] = useState<'SIG-Lite' | 'Security Whitepaper'>('SIG-Lite')
   
   // Check if gating is enabled
   const isGated = process.env.NEXT_PUBLIC_GATE_SIGLITE === 'true'
@@ -29,8 +30,15 @@ export function SigLiteHero({ copy }: SigLiteHeroProps) {
   const handlePrimaryClick = (e: React.MouseEvent) => {
     if (isGated) {
       e.preventDefault()
+      setModalResourceType('SIG-Lite')
       setIsModalOpen(true)
     }
+  }
+
+  const handleSecondaryClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setModalResourceType('Security Whitepaper')
+    setIsModalOpen(true)
   }
 
   return (
@@ -107,25 +115,22 @@ export function SigLiteHero({ copy }: SigLiteHeroProps) {
                 variant="secondary" 
                 size="lg" 
                 className="group w-full sm:w-auto"
-                asChild
+                onClick={handleSecondaryClick}
               >
-                <a href="/docs/security_whitepaper.pdf" download>
-                  <FileText className="mr-2 h-5 w-5" />
-                  {copy.secondary}
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </a>
+                <FileText className="mr-2 h-5 w-5" />
+                {copy.secondary}
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {isGated && (
-        <SigLiteModal 
-          isOpen={isModalOpen} 
-          onClose={() => setIsModalOpen(false)} 
-        />
-      )}
+      <SigLiteModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)}
+        resourceType={modalResourceType}
+      />
     </>
   )
 } 
