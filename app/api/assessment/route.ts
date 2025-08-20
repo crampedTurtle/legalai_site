@@ -6,7 +6,7 @@ import {
   AssessmentSubmission 
 } from '@/lib/assessment-data'
 import { mauticAPI, MAUTIC_FORMS, formatContactData } from '@/lib/mautic'
-import { generateAssessmentPDF } from '@/lib/pdf-generator'
+import { generateSimpleAssessmentPDF } from '@/lib/simple-pdf-generator'
 import { emailService } from '@/lib/email-service'
 
 // Mock OpenAI recommendations - in production, this would call OpenAI API
@@ -241,7 +241,7 @@ export async function POST(request: NextRequest) {
 
     // Generate PDF report and send email
     try {
-      const pdfBuffer = await generateAssessmentPDF(assessmentSubmission)
+      const pdfBuffer = await generateSimpleAssessmentPDF(assessmentSubmission)
       
       // Send email with PDF attachment
       await emailService.sendAssessmentReport(assessmentSubmission, pdfBuffer)
