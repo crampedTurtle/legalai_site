@@ -1,9 +1,11 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Button } from '@/components/ui/Button'
 import { ArrowRight, FileText, BookOpen, CheckSquare, Play } from 'lucide-react'
+import { ResourceModal } from './ResourceModal'
 
 interface ResourcesPageProps {
   children: React.ReactNode
@@ -86,6 +88,17 @@ export function ResourceCard({ title, type, link }: ResourceCardProps) {
     triggerOnce: true,
     threshold: 0.1,
   })
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  // Determine if this resource should be gated (whitepapers and guides)
+  const isGated = type === 'Whitepaper' || type === 'Guide'
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (isGated) {
+      e.preventDefault()
+      setIsModalOpen(true)
+    }
+  }
 
   const getIcon = () => {
     switch (type) {
@@ -133,6 +146,7 @@ export function ResourceCard({ title, type, link }: ResourceCardProps) {
           <div className="max-w-4xl mx-auto">
             <motion.a
               href={link}
+              onClick={handleClick}
               className="card-hover block p-8 rounded-xl border border-dark-700 bg-dark-800 group"
               whileHover={{ y: -4 }}
               transition={{ duration: 0.2 }}
@@ -155,6 +169,19 @@ export function ResourceCard({ title, type, link }: ResourceCardProps) {
           </div>
         </motion.div>
       </div>
+
+      {/* Resource Modal for gated content */}
+      {isGated && (
+        <ResourceModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          resource={{
+            title,
+            type,
+            downloadUrl: link
+          }}
+        />
+      )}
     </section>
   )
 }
