@@ -32,6 +32,11 @@ class MauticAPI {
   }
 
   private async getAccessToken(): Promise<string> {
+    // Validate configuration first
+    if (!this.config.baseUrl || !this.config.username || !this.config.password) {
+      throw new Error('Mautic configuration incomplete. Cannot get access token.')
+    }
+
     // Check if we have a valid token
     if (this.accessToken && Date.now() < this.tokenExpiry) {
       return this.accessToken
@@ -68,6 +73,11 @@ class MauticAPI {
   }
 
   async submitForm(submission: MauticFormSubmission): Promise<any> {
+    // Validate configuration first
+    if (!this.config.baseUrl || !this.config.username || !this.config.password) {
+      throw new Error('Mautic configuration incomplete. Cannot submit form.')
+    }
+
     try {
       const token = await this.getAccessToken()
 
@@ -132,6 +142,11 @@ class MauticAPI {
   }
 
   async createContact(contact: MauticContact, tags?: string[]): Promise<any> {
+    // Validate configuration first
+    if (!this.config.baseUrl || !this.config.username || !this.config.password) {
+      throw new Error('Mautic configuration incomplete. Cannot create contact.')
+    }
+
     try {
       const token = await this.getAccessToken()
 
@@ -178,6 +193,13 @@ const mauticConfig: MauticConfig = {
   username: process.env.MAUTIC_USERNAME || '',
   password: process.env.MAUTIC_PASSWORD || '',
 }
+
+// Debug environment variables (only log if they exist to avoid exposing values)
+console.log('Mautic configuration check:')
+console.log('- MAUTIC_BASE_URL exists:', !!process.env.MAUTIC_BASE_URL)
+console.log('- MAUTIC_USERNAME exists:', !!process.env.MAUTIC_USERNAME)
+console.log('- MAUTIC_PASSWORD exists:', !!process.env.MAUTIC_PASSWORD)
+console.log('- Base URL length:', mauticConfig.baseUrl.length)
 
 // Validate Mautic configuration
 if (!mauticConfig.baseUrl || !mauticConfig.username || !mauticConfig.password) {
