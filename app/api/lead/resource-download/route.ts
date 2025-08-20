@@ -40,10 +40,10 @@ export async function POST(request: NextRequest) {
     contactData.lead_type = `${body.resourceType.toLowerCase()}_download`
     contactData.opt_in = body.optIn ? 'yes' : 'no'
 
-    // Submit to Mautic
+    // Submit to Mautic (using NEWSLETTER form as fallback for generic resources)
     try {
       await mauticAPI.submitForm({
-        formId: MAUTIC_FORMS.RESOURCE_DOWNLOAD,
+        formId: MAUTIC_FORMS.NEWSLETTER,
         contact: contactData,
         tags: ['resource-download', body.resourceType.toLowerCase(), 'sapphire-legal-ai']
       })

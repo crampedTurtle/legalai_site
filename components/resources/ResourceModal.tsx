@@ -41,7 +41,19 @@ export function ResourceModal({ isOpen, onClose, resource }: ResourceModalProps)
     setError(null)
 
     try {
-      const response = await fetch('/api/lead/resource-download', {
+      // Determine the correct API endpoint based on resource type
+      let apiEndpoint = '/api/lead/resource-download'
+      if (resource.type === 'Security Whitepaper') {
+        apiEndpoint = '/api/lead/security-whitepaper'
+      } else if (resource.type === 'SIG-Lite') {
+        apiEndpoint = '/api/lead/siglite'
+      } else if (resource.type === 'Feature Guide') {
+        apiEndpoint = '/api/lead/feature-guide'
+      } else if (resource.type === 'Public AI Whitepaper') {
+        apiEndpoint = '/api/lead/public-ai-whitepaper'
+      }
+
+      const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

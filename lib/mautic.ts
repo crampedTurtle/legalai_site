@@ -191,10 +191,12 @@ export const mauticAPI = new MauticAPI(mauticConfig)
 export const MAUTIC_FORMS = {
   CONTACT: parseInt(process.env.MAUTIC_CONTACT_FORM_ID || '1'),
   DEMO: parseInt(process.env.MAUTIC_DEMO_FORM_ID || '2'),
-  SUPPORT: parseInt(process.env.MAUTIC_SUPPORT_FORM_ID || '3'),
-  NEWSLETTER: parseInt(process.env.MAUTIC_NEWSLETTER_FORM_ID || '4'),
-  SECURITY_WHITEPAPER: parseInt(process.env.MAUTIC_SECURITY_WHITEPAPER_FORM_ID || '5'),
-  RESOURCE_DOWNLOAD: parseInt(process.env.MAUTIC_RESOURCE_DOWNLOAD_FORM_ID || '6'),
+  PUBLIC_AI_WHITEPAPER: parseInt(process.env.MAUTIC_PUBLIC_AI_WHITEPAPER_FORM_ID || '3'),
+  SECURITY_WHITEPAPER: parseInt(process.env.MAUTIC_SECURITY_WHITEPAPER_FORM_ID || '4'),
+  SIGLITE: parseInt(process.env.MAUTIC_SIGLITE_FORM_ID || '5'),
+  NEWSLETTER: parseInt(process.env.MAUTIC_NEWSLETTER_FORM_ID || '6'),
+  FEATURE_GUIDE: parseInt(process.env.MAUTIC_FEATURE_GUIDE_FORM_ID || '7'),
+  SUPPORT: parseInt(process.env.MAUTIC_SUPPORT_FORM_ID || '8'),
 }
 
 // Helper function to extract UTM parameters

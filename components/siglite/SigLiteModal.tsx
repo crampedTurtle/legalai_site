@@ -37,7 +37,7 @@ export function SigLiteModal({ isOpen, onClose, resourceType = 'SIG-Lite' }: Sig
     setError(null)
 
     try {
-      const response = await fetch('/api/lead/security-whitepaper', {
+      const response = await fetch(resourceType === 'SIG-Lite' ? '/api/lead/siglite' : '/api/lead/security-whitepaper', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

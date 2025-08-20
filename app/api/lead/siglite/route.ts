@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { mauticAPI, MAUTIC_FORMS } from '@/lib/mautic'
 
-interface SecurityWhitepaperRequest {
+interface SigLiteRequest {
   name: string
   email: string
   company: string
@@ -11,7 +11,7 @@ interface SecurityWhitepaperRequest {
 
 export async function POST(request: NextRequest) {
   try {
-    const body: SecurityWhitepaperRequest = await request.json()
+    const body: SigLiteRequest = await request.json()
     
     // Validate required fields
     if (!body.name || !body.email || !body.company) {
@@ -29,48 +29,33 @@ export async function POST(request: NextRequest) {
       company: body.company,
       region: body.region || '',
       // Custom fields for tracking
-      lead_source: 'security_whitepaper',
-      lead_type: 'security_whitepaper_download',
+      lead_source: 'siglite',
+      lead_type: 'siglite_download',
       opt_in: body.optIn ? 'yes' : 'no'
     }
 
     // Submit to Mautic
     try {
       await mauticAPI.submitForm({
-        formId: MAUTIC_FORMS.SECURITY_WHITEPAPER,
+        formId: MAUTIC_FORMS.SIGLITE,
         contact: contactData,
-        tags: ['security-whitepaper', 'lead']
+        tags: ['siglite', 'lead']
       })
-      console.log('Security whitepaper lead submitted to Mautic:', body.email)
+      console.log('SIG-Lite lead submitted to Mautic:', body.email)
     } catch (mauticError) {
       console.error('Mautic submission failed:', mauticError)
       // Continue even if Mautic fails - we still want to provide the download
     }
 
-    // TODO: Send confirmation email via SES (commented example)
-    /*
-    try {
-      const emailService = new EmailService()
-      await emailService.sendWhitepaperConfirmation({
-        to: body.email,
-        name: body.name,
-        company: body.company,
-        downloadUrl: '/docs/security_whitepaper.pdf'
-      })
-    } catch (emailError) {
-      console.error('Email sending failed:', emailError)
-    }
-    */
-
     // Return download URL
     return NextResponse.json({
       success: true,
-      downloadUrl: '/docs/security_whitepaper.pdf',
-      message: 'Security whitepaper download ready'
+      downloadUrl: '/docs/sapphire_legal_ai_siglite.pdf',
+      message: 'SIG-Lite download ready'
     })
 
   } catch (error) {
-    console.error('Security whitepaper API error:', error)
+    console.error('SIG-Lite API error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
