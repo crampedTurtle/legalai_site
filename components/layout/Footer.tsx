@@ -7,6 +7,7 @@ const navigation = {
     { name: 'Features', href: '/features' },
     { name: 'Solutions', href: '/solutions' },
     { name: 'Why Private AI', href: '/why-private-ai' },
+    { name: 'Security', href: '/security' },
     { name: 'Pricing', href: '/pricing' },
   ],
   company: [

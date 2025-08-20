@@ -1,78 +1,107 @@
 import { Metadata } from 'next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { SecurityPage, Headline, Subhead, SecuritySection, CTA } from '@/components/security/SecurityPage'
+import { SecurityHero } from '@/components/security/SecurityHero'
+import { SecurityPillars } from '@/components/security/SecurityPillars'
+import { SecurityArchitecture } from '@/components/security/SecurityArchitecture'
+import { SecurityStandards } from '@/components/security/SecurityStandards'
+import { SecurityFAQ } from '@/components/security/SecurityFAQ'
+import { SecurityCTA } from '@/components/security/SecurityCTA'
 
 export const metadata: Metadata = {
-  title: 'Security - Your Data, Your Control | Sapphire Legal AI',
-  description: 'Sapphire Legal AI is built on the principle of private by design. Bank-grade security, compliance ready, and continuous protection for your sensitive legal data.',
+  title: 'Security & Compliance | Sapphire Legal AI',
+  description: 'Private AI for law firms. On-prem or private cloud, end-to-end encryption, zero data sharing.',
   openGraph: {
-    title: 'Security - Sapphire Legal AI',
-    description: 'Your data, your control. Private by design with bank-grade security.',
+    title: 'Security & Compliance | Sapphire Legal AI',
+    description: 'Private AI for law firms. On-prem or private cloud, end-to-end encryption, zero data sharing.',
+    type: 'website',
+    url: 'https://sapphirelegal.ai/security',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Security & Compliance | Sapphire Legal AI',
+    description: 'Private AI for law firms. On-prem or private cloud, end-to-end encryption, zero data sharing.',
   },
 }
 
-export default function Security() {
+const copy = {
+  hero: {
+    title: "Security & Compliance",
+    subtitle: "Private by design. Your client data never trains public models—ever.",
+    primaryCta: "Download Security Whitepaper",
+    secondaryCta: "Request a Private Demo"
+  },
+  pillars: [
+    { title: "Complete Control", desc: "Deploy on‑prem or private cloud. Data residency honored." },
+    { title: "End‑to‑End Encryption", desc: "TLS in transit, AES‑256 at rest. KMS/externally managed keys supported." },
+    { title: "Zero Data Sharing", desc: "No training on your data. Strict tenant isolation." }
+  ],
+  architecture: {
+    title: "How Sapphire Legal AI Protects Your Data",
+    caption: "Supported deployments: on‑prem, private cloud (AWS/GCP/Azure), or hybrid. No cross‑tenant mixing."
+  },
+  standards: [
+    { k: "Access Control", v: "Role‑based access, SSO (SAML/OIDC), SCIM provisioning." },
+    { k: "Data Protection", v: "PII/PHI detection, masking & redaction in drafting workflows." },
+    { k: "Key Management", v: "Customer‑managed keys (KMS/HSM) or provider‑managed." },
+    { k: "Logging & Audit", v: "Comprehensive logs; SIEM export and alerting." },
+    { k: "Secure SDLC", v: "SAST/DAST, dependency scanning, signed builds." },
+    { k: "Backups & DR", v: "Configurable RPO/RTO; customer‑controlled retention." },
+    { k: "Vendor Review", v: "Minimal third‑party reliance; security reviews available." }
+  ],
+  faq: [
+    { q: "Do you train on our data?", a: "No. Customer data is never used to train public or shared models." },
+    { q: "Where is our data stored?", a: "In your environment (on‑prem or private cloud). You control the region and residency." },
+    { q: "How do you handle encryption and keys?", a: "TLS 1.2+ in transit, AES‑256 at rest. Use your KMS/HSM or ours." },
+    { q: "How do you integrate with our DMS/IDP?", a: "Native connectors and SSO (SAML/OIDC). SCIM for provisioning and lifecycle." },
+    { q: "Can we get a Security Review doc?", a: "Yes—download the whitepaper or request our SIG‑Lite package." }
+  ],
+  cta: {
+    banner: "Want a deeper review with your security team?",
+    button: "Book a private security review"
+  }
+}
+
+export default function SecurityPage() {
   return (
-    <div className="min-h-screen bg-dark-950">
+    <>
       <Header />
-      <main>
-        <SecurityPage>
-          <Headline>Your Data. Your Control.</Headline>
-          <Subhead>Sapphire Legal AI is built on the principle of private by design.</Subhead>
-          
-          <SecuritySection
-            title="Bank-Grade Security"
-            description="Enterprise-level security measures to protect your most sensitive information."
-            features={[
-              'End-to-end encryption for all data in transit and at rest',
-              'Private AI models that never share your data',
-              'Role-based access control with granular permissions',
-              'Multi-factor authentication and SSO integration'
-            ]}
-            icon="shield"
-          />
-          
-          <SecuritySection
-            title="Compliance Ready"
-            description="Built to meet the highest standards of legal and regulatory compliance."
-            features={[
-              'SOC 2 Type II certification',
-              'HIPAA compliance for healthcare legal matters',
-              'GDPR alignment for international data protection',
-              'Comprehensive audit logs and reporting'
-            ]}
-            icon="certificate"
-          />
-          
-          <SecuritySection
-            title="Deployment Options"
-            description="Choose the deployment model that best fits your security requirements."
-            features={[
-              'Private cloud hosting with dedicated infrastructure',
-              'On-premises deployment for maximum control',
-              'Hybrid options for complex environments',
-              'Custom security configurations available'
-            ]}
-            icon="server"
-          />
-          
-          <SecuritySection
-            title="Continuous Protection"
-            description="Ongoing security measures to ensure your data remains protected."
-            features={[
-              'Regular security patches and updates',
-              'Third-party penetration testing',
-              'Transparent security practices and reporting',
-              '24/7 security monitoring and incident response'
-            ]}
-            icon="monitor"
-          />
-          
-          <CTA>Your clients trust you with their most sensitive data. Sapphire Legal AI ensures you can trust us with yours. Request a demo.</CTA>
-        </SecurityPage>
+      <main className="min-h-screen bg-dark-950">
+        <SecurityHero copy={copy.hero} />
+        <SecurityPillars copy={copy.pillars} />
+        <SecurityArchitecture copy={copy.architecture} />
+        <SecurityStandards copy={copy.standards} />
+        <SecurityFAQ copy={copy.faq} />
+        <SecurityCTA copy={copy.cta} />
       </main>
       <Footer />
-    </div>
+      
+      {/* JSON-LD Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Security & Compliance | Sapphire Legal AI",
+            "description": "Private AI for law firms. On-prem or private cloud, end-to-end encryption, zero data sharing.",
+            "url": "https://sapphirelegal.ai/security",
+            "about": {
+              "@type": "Thing",
+              "name": "AI Security & Compliance"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Sapphire Legal AI",
+              "url": "https://sapphirelegal.ai"
+            },
+            "primaryImageOfPage": {
+              "@type": "ImageObject",
+              "url": "https://sapphirelegal.ai/images/security-hero.jpg"
+            }
+          })
+        }}
+      />
+    </>
   )
 } 

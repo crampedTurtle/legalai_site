@@ -193,6 +193,7 @@ export const MAUTIC_FORMS = {
   DEMO: parseInt(process.env.MAUTIC_DEMO_FORM_ID || '2'),
   SUPPORT: parseInt(process.env.MAUTIC_SUPPORT_FORM_ID || '3'),
   NEWSLETTER: parseInt(process.env.MAUTIC_NEWSLETTER_FORM_ID || '4'),
+  SECURITY_WHITEPAPER: parseInt(process.env.MAUTIC_SECURITY_WHITEPAPER_FORM_ID || '5'),
 }
 
 // Helper function to extract UTM parameters
