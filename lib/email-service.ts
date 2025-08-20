@@ -41,6 +41,22 @@ class EmailService {
     await this.sendEmail(emailData)
   }
 
+  async sendSupportTicketNotification(supportData: {
+    name: string
+    email: string
+    subject: string
+    priority: string
+    message: string
+  }): Promise<void> {
+    const emailData: EmailData = {
+      to: 'brett@sapphirefive.com',
+      subject: `Support Ticket: ${supportData.subject}`,
+      htmlBody: this.generateSupportTicketEmailHTML(supportData)
+    }
+
+    await this.sendEmail(emailData)
+  }
+
   private generateAssessmentEmailHTML(assessment: AssessmentSubmission): string {
     const overallScore = Math.round(assessment.overallPercentage)
     const scoreLevel = overallScore >= 80 ? 'Strong' : overallScore >= 60 ? 'Developing' : 'Needs Attention'
@@ -107,6 +123,76 @@ class EmailService {
             <p style="margin-top: 30px; font-size: 14px; color: #6B7280;">
               Questions? Contact us at <a href="mailto:info@sapphirefive.com" style="color: #3B82F6;">info@sapphirefive.com</a> or call <a href="tel:+1-216-577-9018" style="color: #3B82F6;">+1 (216) 577-9018</a>
             </p>
+          </div>
+          
+          <div class="footer">
+            <p>Sapphire Legal AI | Private AI for Law Firms</p>
+            <p><a href="https://sapphirelegal.ai" style="color: #3B82F6;">sapphirelegal.ai</a></p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `
+  }
+
+  private generateSupportTicketEmailHTML(supportData: {
+    name: string
+    email: string
+    subject: string
+    priority: string
+    message: string
+  }): string {
+    const priorityColor = supportData.priority === 'High' ? '#EF4444' : 
+                         supportData.priority === 'Medium' ? '#F59E0B' : '#10B981'
+    
+    return `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Support Ticket</title>
+        <style>
+          body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #374151; }
+          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background: linear-gradient(135deg, #1E293B 0%, #334155 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
+          .content { background: #ffffff; padding: 30px; border-radius: 0 0 8px 8px; }
+          .ticket-info { background: #F8FAFC; padding: 20px; border-radius: 8px; margin: 20px 0; }
+          .priority-badge { display: inline-block; background: ${priorityColor}; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+          .message-box { background: #F1F5F9; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3B82F6; }
+          .footer { background: #F1F5F9; padding: 20px; text-align: center; font-size: 14px; color: #64748B; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1 style="margin: 0; font-size: 28px;">Sapphire Legal AI</h1>
+            <p style="margin: 10px 0 0 0; opacity: 0.9;">New Support Ticket</p>
+          </div>
+          
+          <div class="content">
+            <h2>New Support Ticket Received</h2>
+            
+            <div class="ticket-info">
+              <h3 style="margin: 0 0 15px 0; color: #1F2937;">Ticket Details</h3>
+              <p><strong>From:</strong> ${supportData.name} (${supportData.email})</p>
+              <p><strong>Subject:</strong> ${supportData.subject}</p>
+              <p><strong>Priority:</strong> <span class="priority-badge">${supportData.priority}</span></p>
+              <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
+            </div>
+            
+            <h3>Message:</h3>
+            <div class="message-box">
+              <p style="margin: 0; white-space: pre-wrap;">${supportData.message}</p>
+            </div>
+            
+            <p><strong>Next Steps:</strong></p>
+            <ul>
+              <li>Review the ticket details above</li>
+              <li>Check Mautic for additional contact information</li>
+              <li>Respond to the customer within 4 hours during business hours</li>
+              <li>Update ticket status in your support system</li>
+            </ul>
           </div>
           
           <div class="footer">

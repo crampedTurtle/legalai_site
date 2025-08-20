@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { mauticAPI, MAUTIC_FORMS, formatContactData } from '@/lib/mautic'
+import { emailService } from '@/lib/email-service'
 
 export async function POST(request: NextRequest) {
   try {
@@ -43,6 +44,21 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await mauticAPI.submitForm(submission)
+
+    // Send email notification to support team
+    try {
+      await emailService.sendSupportTicketNotification({
+        name,
+        email,
+        subject,
+        priority,
+        message,
+      })
+      console.log('Support ticket notification sent to brett@sapphirefive.com')
+    } catch (emailError) {
+      console.error('Email notification failed:', emailError)
+      // Continue even if email fails - Mautic submission was successful
+    }
 
     return NextResponse.json({
       success: true,
