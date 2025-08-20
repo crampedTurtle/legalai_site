@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ChevronDown } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
 const navigation = [
@@ -15,16 +15,9 @@ const navigation = [
   { name: 'About', href: '/about' },
 ]
 
-const solutions = [
-  { name: 'Small Firms', href: '/solutions#small-firms' },
-  { name: 'Midsized Firms', href: '/solutions#midsized-firms' },
-  { name: 'In-House Teams', href: '/solutions#in-house' },
-]
-
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [solutionsOpen, setSolutionsOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,52 +49,13 @@ export function Header() {
         {/* Desktop Navigation */}
         <div className="hidden lg:flex lg:gap-x-12">
           {navigation.map((item) => (
-            <div key={item.name} className="relative">
-              {item.name === 'Solutions' ? (
-                <div className="relative">
-                  <button
-                    onClick={() => setSolutionsOpen(!solutionsOpen)}
-                    className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-white hover:text-sapphire-400 transition-colors"
-                  >
-                    {item.name}
-                    <ChevronDown className="h-4 w-4" />
-                  </button>
-                  
-                  <AnimatePresence>
-                    {solutionsOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4"
-                      >
-                        <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-dark-800 text-sm leading-6 shadow-lg ring-1 ring-dark-700">
-                          <div className="p-4">
-                            {solutions.map((solution) => (
-                              <div key={solution.name} className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-dark-700">
-                                <div>
-                                  <Link href={solution.href} className="font-semibold text-white">
-                                    {solution.name}
-                                    <span className="absolute inset-0" />
-                                  </Link>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ) : (
-                <Link
-                  href={item.href}
-                  className="text-sm font-semibold leading-6 text-white hover:text-sapphire-400 transition-colors"
-                >
-                  {item.name}
-                </Link>
-              )}
-            </div>
+            <Link
+              key={item.name}
+              href={item.href}
+              className="text-sm font-semibold leading-6 text-white hover:text-sapphire-400 transition-colors"
+            >
+              {item.name}
+            </Link>
           ))}
         </div>
         
