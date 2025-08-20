@@ -42,7 +42,7 @@ export function SecurityArchitecture({ copy }: SecurityArchitectureProps) {
             className="relative"
           >
             <svg
-              viewBox="0 0 800 600"
+              viewBox="0 0 800 700"
               className="w-full max-w-4xl mx-auto"
               style={{ filter: 'drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))' }}
             >
@@ -141,7 +141,7 @@ export function SecurityArchitecture({ copy }: SecurityArchitectureProps) {
               </defs>
 
               {/* Security Notes */}
-              <g transform="translate(50, 350)">
+              <g transform="translate(50, 450)">
                 <rect width="700" height="80" fill="#1e293b" stroke="#ef4444" strokeWidth="1" rx="8" opacity="0.8" />
                 <text x="350" y="25" textAnchor="middle" fill="#f8fafc" fontSize="14" fontWeight="bold">
                   Security Guarantees
