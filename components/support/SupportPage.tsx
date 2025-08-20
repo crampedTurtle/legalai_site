@@ -100,9 +100,11 @@ export function SupportSection({ title, description, icon, link, linkText, featu
             </p>
             
             {link && linkText && (
-              <Button size="lg" className="group">
-                {linkText}
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <Button size="lg" className="group" asChild>
+                <a href={link}>
+                  {linkText}
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </a>
               </Button>
             )}
           </div>
