@@ -28,11 +28,9 @@ export function SigLiteHero({ copy }: SigLiteHeroProps) {
   const isGated = process.env.NEXT_PUBLIC_GATE_SIGLITE === 'true'
 
   const handlePrimaryClick = (e: React.MouseEvent) => {
-    if (isGated) {
-      e.preventDefault()
-      setModalResourceType('SIG-Lite')
-      setIsModalOpen(true)
-    }
+    e.preventDefault()
+    setModalResourceType('SIG-Lite')
+    setIsModalOpen(true)
   }
 
   const handleSecondaryClick = (e: React.MouseEvent) => {
@@ -94,21 +92,10 @@ export function SigLiteHero({ copy }: SigLiteHeroProps) {
                 size="lg" 
                 className="group w-full sm:w-auto"
                 onClick={handlePrimaryClick}
-                asChild={!isGated}
               >
-                {isGated ? (
-                  <span>
-                    <Download className="mr-2 h-5 w-5" />
-                    {copy.primary}
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                ) : (
-                  <a href="/docs/sapphire_legal_ai_siglite.pdf" download>
-                    <Download className="mr-2 h-5 w-5" />
-                    {copy.primary}
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </a>
-                )}
+                <Download className="mr-2 h-5 w-5" />
+                {copy.primary}
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               
               <Button 
