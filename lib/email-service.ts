@@ -32,9 +32,9 @@ class EmailService {
       htmlBody: this.generateAssessmentEmailHTML(assessment, reportContent.toString('utf-8')),
       attachments: [
         {
-          filename: `AI-Readiness-Assessment-${assessment.firm.replace(/[^a-zA-Z0-9]/g, '-')}.txt`,
+          filename: `AI-Readiness-Assessment-${assessment.firm.replace(/[^a-zA-Z0-9]/g, '-')}.html`,
           content: reportContent,
-          contentType: 'text/plain'
+          contentType: 'text/html'
         }
       ]
     }

@@ -1,25 +1,34 @@
 import { AssessmentSubmission } from './assessment-data'
+import { generateSpiderChartSVG } from './spider-chart-generator'
 
-// Simple HTML-based PDF generation that works in serverless environments
+// Create a professional HTML report that can be easily converted to PDF
 export async function generateSimpleAssessmentPDF(assessment: AssessmentSubmission): Promise<Buffer> {
+  const spiderChartSVG = generateSpiderChartSVG(assessment.results)
+  
   const html = `
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>AI Readiness Assessment Report</title>
+  <title>AI Readiness Assessment Report - ${assessment.firm}</title>
   <style>
+    @page {
+      size: A4;
+      margin: 1in;
+    }
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      padding: 20px;
+      padding: 0;
       color: #333;
       line-height: 1.6;
+      font-size: 12px;
+      background: white;
     }
     .header {
       text-align: center;
       margin-bottom: 40px;
-      border-bottom: 2px solid #2563eb;
+      border-bottom: 3px solid #2563eb;
       padding-bottom: 20px;
     }
     .title {
@@ -39,12 +48,14 @@ export async function generateSimpleAssessmentPDF(assessment: AssessmentSubmissi
       padding: 20px;
       background-color: #f8fafc;
       border-radius: 8px;
+      border: 1px solid #e2e8f0;
     }
     .score-section {
       margin: 30px 0;
       padding: 20px;
       background-color: #f1f5f9;
       border-radius: 8px;
+      border: 1px solid #cbd5e1;
     }
     .overall-score {
       font-size: 24px;
@@ -59,6 +70,8 @@ export async function generateSimpleAssessmentPDF(assessment: AssessmentSubmissi
       background-color: white;
       border-left: 4px solid #2563eb;
       border-radius: 4px;
+      page-break-inside: avoid;
+      border: 1px solid #e2e8f0;
     }
     .category-title {
       font-size: 18px;
@@ -91,6 +104,7 @@ export async function generateSimpleAssessmentPDF(assessment: AssessmentSubmissi
       padding: 20px;
       background-color: #f0f9ff;
       border-radius: 8px;
+      border: 1px solid #bae6fd;
     }
     .contact-info {
       text-align: center;
@@ -98,13 +112,50 @@ export async function generateSimpleAssessmentPDF(assessment: AssessmentSubmissi
       padding: 20px;
       background-color: #f8fafc;
       border-radius: 8px;
+      border: 1px solid #e2e8f0;
+    }
+    .spider-chart {
+      text-align: center;
+      margin: 30px 0;
+      page-break-inside: avoid;
     }
     .page-break {
       page-break-before: always;
     }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: white;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f8fafc;
+      font-weight: bold;
+      color: #1e293b;
+    }
+    .status-strong { color: #10B981; font-weight: bold; }
+    .status-developing { color: #F59E0B; font-weight: bold; }
+    .status-needs-attention { color: #EF4444; font-weight: bold; }
+    .pdf-instructions {
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 20px 0;
+      font-size: 11px;
+    }
   </style>
 </head>
 <body>
+  <div class="pdf-instructions">
+    <strong>📄 To save as PDF:</strong> Press Ctrl+P (or Cmd+P on Mac) and select "Save as PDF" in your browser's print dialog.
+  </div>
+
   <div class="header">
     <div class="title">SAPPHIRE LEGAL AI</div>
     <div class="subtitle">AI Readiness Assessment Report</div>
@@ -127,9 +178,42 @@ export async function generateSimpleAssessmentPDF(assessment: AssessmentSubmissi
     </div>
   </div>
 
+  <div class="spider-chart">
+    <h3 style="margin-bottom: 20px; color: #1F2937;">Assessment Visualization</h3>
+    <div style="display: inline-block; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0;">
+      ${spiderChartSVG}
+    </div>
+    <p style="margin-top: 15px; font-size: 14px; color: #6B7280;">
+      This spider chart shows your performance across all assessment categories. Areas closer to the center need attention, while areas extending outward show strengths.
+    </p>
+  </div>
+
   <div class="page-break"></div>
 
   <div style="font-size: 20px; font-weight: bold; margin-bottom: 20px;">Detailed Findings</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Score</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${assessment.results.map((result, index) => {
+        const status = result.percentage >= 80 ? 'Strong' : result.percentage >= 60 ? 'Developing' : 'Needs Attention'
+        const statusClass = result.percentage >= 80 ? 'status-strong' : result.percentage >= 60 ? 'status-developing' : 'status-needs-attention'
+        return `
+          <tr>
+            <td><strong>${index + 1}. ${result.category}</strong></td>
+            <td>${Math.round(result.percentage)}%</td>
+            <td class="${statusClass}">${status}</td>
+          </tr>
+        `
+      }).join('')}
+    </tbody>
+  </table>
 
   ${assessment.results.map((result, index) => `
     <div class="category">
@@ -173,55 +257,5 @@ export async function generateSimpleAssessmentPDF(assessment: AssessmentSubmissi
 </html>
   `
 
-  // For now, return a simple text representation since we can't easily generate PDFs in serverless
-  // In production, you might want to use a service like Puppeteer or a PDF generation service
-  const textContent = `
-SAPPHIRE LEGAL AI - AI Readiness Assessment Report
-==================================================
-
-Prepared for: ${assessment.firm}
-Contact: ${assessment.name}
-Assessment Date: ${new Date().toLocaleDateString()}
-
-EXECUTIVE SUMMARY
-================
-Overall Score: ${Math.round(assessment.overallPercentage)}%
-
-Based on your responses, this report highlights your organization's current AI readiness across 5 key areas: Strategy, Data, Technology, Team, and Change Management.
-
-DETAILED FINDINGS
-================
-
-${assessment.results.map((result, index) => `
-${index + 1}. ${result.category}
-   Score: ${Math.round(result.percentage)}%
-   
-   Key Recommendations:
-${result.recommendations.slice(0, 3).map(rec => `   • ${rec}`).join('\n')}
-`).join('\n')}
-
-NEXT STEPS
-==========
-Based on your assessment results, here are the recommended next steps:
-
-1. Review and prioritize recommendations from each category
-2. Develop a 90-day action plan focusing on your lowest-scoring areas
-3. Schedule a consultation with our AI implementation team
-4. Begin with pilot programs in high-impact, low-risk areas
-5. Establish regular progress reviews and milestone tracking
-
-CONTACT INFORMATION
-==================
-Ready to Get Started?
-
-Contact us to discuss your results and implementation strategy:
-
-Email: info@sapphirefive.com
-Phone: +1 (216) 577-9018
-Schedule a demo: cal.com/s5-brett
-  `
-
-  // Return a Buffer with the text content
-  // In a real implementation, you'd convert this to PDF using a service
-  return Buffer.from(textContent, 'utf-8')
+  return Buffer.from(html, 'utf-8')
 } 
