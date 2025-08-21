@@ -89,23 +89,41 @@ export async function POST(request: NextRequest) {
 </body>
 </html>`
 
-    // For SES v2, we need to use a different approach for attachments
-    // For now, send a simple email with a link to download the PDF
+    // Create MIME message with PDF attachment
+    const boundary = `----=_NextPart_${Date.now()}`
+    const pdfBuffer = Buffer.from(pdfBase64, 'base64')
+    
+    const mimeMessage = [
+      `MIME-Version: 1.0`,
+      `From: ${fromEmail}`,
+      `To: ${toEmail}`,
+      `Subject: Your AI Readiness Assessment Report - ${firmName}`,
+      `Content-Type: multipart/mixed; boundary="${boundary}"`,
+      ``,
+      `--${boundary}`,
+      `Content-Type: text/html; charset=UTF-8`,
+      `Content-Transfer-Encoding: 7bit`,
+      ``,
+      htmlBody,
+      ``,
+      `--${boundary}`,
+      `Content-Type: application/pdf; name="AI_Readiness_Assessment_Report.pdf"`,
+      `Content-Disposition: attachment; filename="AI_Readiness_Assessment_Report.pdf"`,
+      `Content-Transfer-Encoding: base64`,
+      ``,
+      pdfBase64,
+      ``,
+      `--${boundary}--`
+    ].join('\r\n')
+
     const command = new SendEmailCommand({
       FromEmailAddress: fromEmail,
       Destination: {
         ToAddresses: [toEmail]
       },
       Content: {
-        Simple: {
-          Subject: {
-            Data: `Your AI Readiness Assessment Report - ${firmName}`
-          },
-          Body: {
-            Html: {
-              Data: htmlBody
-            }
-          }
+        Raw: {
+          Data: Buffer.from(mimeMessage)
         }
       }
     })

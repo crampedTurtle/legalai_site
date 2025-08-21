@@ -19,6 +19,18 @@ export function AssessmentPage() {
   const [results, setResults] = useState<AssessmentSubmission | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  // Helper function to calculate average score for a category
+  const calculateCategoryAverage = (answers: Record<string, number>, category: string): number => {
+    const categoryAnswers = Object.entries(answers)
+      .filter(([id]) => id.startsWith(category + '_'))
+      .map(([, score]) => score || 0)
+    
+    if (categoryAnswers.length === 0) return 0
+    
+    const sum = categoryAnswers.reduce((acc, score) => acc + score, 0)
+    return Math.round((sum / categoryAnswers.length) * 10) / 10 // Round to 1 decimal place
+  }
+
   // Ensure page starts at top when component mounts
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -53,11 +65,11 @@ export function AssessmentPage() {
           email: contact.email,
           firm: { name: contact.firm },
           scores: {
-            strategy: answers['strategy_1'] || 0,
-            data: answers['data_1'] || 0,
-            technology: answers['technology_1'] || 0,
-            team: answers['team_1'] || 0,
-            change: answers['change_1'] || 0
+            strategy: calculateCategoryAverage(answers, 'strategy'),
+            data: calculateCategoryAverage(answers, 'data'),
+            technology: calculateCategoryAverage(answers, 'technology'),
+            team: calculateCategoryAverage(answers, 'team'),
+            change: calculateCategoryAverage(answers, 'implementation') // Note: category is 'implementation' but we map to 'change'
           },
           questions: Object.entries(answers).map(([id, score]) => ({
             id,
