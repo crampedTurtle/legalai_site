@@ -2,14 +2,32 @@ import { ChartData } from "./types"
 
 export async function renderRadarBase64({ labels, data }: ChartData): Promise<string> {
   try {
+    // Validate and sanitize input data
+    const validLabels = labels?.filter(label => label && label !== 'undefined') || ["Strategy", "Data", "Technology", "Team", "Change"]
+    const validData = data?.map(val => typeof val === 'number' && !isNaN(val) ? val : 0) || [0, 0, 0, 0, 0]
+    
+    // Ensure we have the same number of labels and data points
+    const chartLabels = validLabels.slice(0, 5) // Ensure exactly 5 categories
+    const chartData = validData.slice(0, 5) // Ensure exactly 5 data points
+    
+    // Pad arrays if needed
+    while (chartLabels.length < 5) {
+      chartLabels.push("Category")
+    }
+    while (chartData.length < 5) {
+      chartData.push(0)
+    }
+
+    console.log('Chart data:', { labels: chartLabels, data: chartData })
+
     // Use QuickChart for serverless environments
     const cfg = {
       type: "radar",
       data: {
-        labels,
+        labels: chartLabels,
         datasets: [{ 
           label: "Readiness", 
-          data,
+          data: chartData,
           backgroundColor: 'rgba(37, 99, 235, 0.2)',
           borderColor: 'rgba(37, 99, 235, 1)',
           borderWidth: 2,
@@ -64,7 +82,7 @@ export async function renderRadarBase64({ labels, data }: ChartData): Promise<st
     };
 
     const url = "https://quickchart.io/chart";
-    const res = await fetch(`${url}?w=900&h=600&format=png&backgroundColor=white&c=${encodeURIComponent(JSON.stringify(cfg))}`);
+    const res = await fetch(`${url}?w=600&h=400&format=png&backgroundColor=white&c=${encodeURIComponent(JSON.stringify(cfg))}`);
     
     if (!res.ok) {
       throw new Error(`QuickChart failed: ${res.status} ${res.statusText}`);

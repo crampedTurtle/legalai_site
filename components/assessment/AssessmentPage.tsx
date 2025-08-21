@@ -122,16 +122,27 @@ export function AssessmentPage() {
         email: contact.email,
         firm: contact.firm,
         answers: answers,
-        results: recommendations.categories.map((cat: any) => ({
-          category: cat.key,
-          score: cat.score * 20, // Convert to percentage
-          maxScore: 100,
-          percentage: cat.score * 20,
-          recommendations: cat.recommendations.map((rec: any) => rec.title)
-        })),
-        totalScore: recommendations.overall.score,
+        results: recommendations.categories.map((cat: any) => {
+          const score = typeof cat.score === 'number' && !isNaN(cat.score) ? cat.score : 0
+          const percentage = Math.round(score * 20) // Convert to percentage (0-5 scale to 0-100)
+          
+          return {
+            category: cat.key || 'Category',
+            score: percentage,
+            maxScore: 100,
+            percentage: percentage,
+            recommendations: Array.isArray(cat.recommendations) 
+              ? cat.recommendations.map((rec: any) => rec.title || 'Recommendation')
+              : []
+          }
+        }),
+        totalScore: typeof recommendations.overall?.score === 'number' && !isNaN(recommendations.overall.score) 
+          ? recommendations.overall.score 
+          : 0,
         maxTotalScore: 100,
-        overallPercentage: recommendations.overall.score
+        overallPercentage: typeof recommendations.overall?.score === 'number' && !isNaN(recommendations.overall.score) 
+          ? recommendations.overall.score 
+          : 0
       }
 
       setResults(assessmentResults)

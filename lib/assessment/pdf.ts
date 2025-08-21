@@ -7,6 +7,10 @@ function fontPath(rel: string) {
   return path.join(process.cwd(), "public", "fonts", rel)
 }
 
+function logoPath() {
+  return path.join(process.cwd(), "public", "images", "logo_full_1000px_transparent.png")
+}
+
 export async function buildReportPDF({ 
   firm, 
   scores, 
@@ -101,10 +105,26 @@ export async function buildReportPDF({
     const coverPage = pdfDoc.addPage([612, 792]) // Letter size
     const { width, height } = coverPage.getSize()
     
+    // Add Sapphire Legal AI logo
+    try {
+      const logoBuffer = fs.readFileSync(logoPath())
+      const logoImage = await pdfDoc.embedPng(logoBuffer)
+      const logoDims = logoImage.scale(0.3) // Scale logo to 30% of original size
+      
+      coverPage.drawImage(logoImage, {
+        x: (width - logoDims.width) / 2,
+        y: height - 150,
+        width: logoDims.width,
+        height: logoDims.height
+      })
+    } catch (error) {
+      console.warn("Could not load logo:", error)
+    }
+    
     // Title
     coverPage.drawText("AI Readiness Assessment Report", {
       x: 50,
-      y: height - 100,
+      y: height - 250,
       size: 24,
       font: interBold!,
       color: rgb(0.12, 0.16, 0.23)
@@ -113,7 +133,7 @@ export async function buildReportPDF({
     // Subtitle
     coverPage.drawText("Prepared for:", {
       x: 50,
-      y: height - 180,
+      y: height - 330,
       size: 16,
       font: interRegular!,
       color: rgb(0.4, 0.45, 0.55)
@@ -122,7 +142,7 @@ export async function buildReportPDF({
     // Firm name
     coverPage.drawText(firm?.name || "—", {
       x: 50,
-      y: height - 220,
+      y: height - 370,
       size: 18,
       font: interBold!,
       color: rgb(0.12, 0.16, 0.23)
@@ -131,7 +151,7 @@ export async function buildReportPDF({
     // Date
     coverPage.drawText(`Assessment Date: ${new Date().toLocaleDateString()}`, {
       x: 50,
-      y: height - 280,
+      y: height - 430,
       size: 12,
       font: interRegular!,
       color: rgb(0.4, 0.45, 0.55)
@@ -140,7 +160,7 @@ export async function buildReportPDF({
     // Confidential notice
     coverPage.drawText("Confidential — For Internal Use Only", {
       x: 50,
-      y: height - 400,
+      y: height - 550,
       size: 10,
       font: interRegular!,
       color: rgb(0.4, 0.45, 0.55)
@@ -208,16 +228,28 @@ export async function buildReportPDF({
       try {
         const chartBuffer = Buffer.from(chartBase64, "base64")
         const chartImage = await pdfDoc.embedPng(chartBuffer)
-        const chartDims = chartImage.scale(0.8) // Scale down to fit
+        
+        // Calculate proper chart dimensions - make it smaller and centered
+        const maxChartWidth = 400 // Reduced from previous size
+        const maxChartHeight = 300 // Reduced from previous size
+        const chartAspectRatio = chartImage.width / chartImage.height
+        
+        let chartWidth = maxChartWidth
+        let chartHeight = maxChartWidth / chartAspectRatio
+        
+        if (chartHeight > maxChartHeight) {
+          chartHeight = maxChartHeight
+          chartWidth = maxChartHeight * chartAspectRatio
+        }
         
         chartPage.drawImage(chartImage, {
-          x: (width - chartDims.width) / 2,
-          y: currentY - 400,
-          width: chartDims.width,
-          height: chartDims.height
+          x: (width - chartWidth) / 2,
+          y: currentY - 350, // Positioned higher to leave room for description
+          width: chartWidth,
+          height: chartHeight
         })
         
-        currentY -= 450
+        currentY -= 400
         currentY = drawWrappedText(
           chartPage,
           "This radar chart shows your performance across all assessment categories. Areas closer to the center need attention, while areas extending outward show strengths.",
@@ -254,7 +286,7 @@ export async function buildReportPDF({
       const scoreValues = [scores.strategy, scores.data, scores.technology, scores.team, scores.change]
       
       categories.forEach((category, index) => {
-        const score = scoreValues[index]
+        const score = scoreValues[index] || 0
         const percentage = Math.round((score / 5) * 100)
         const bars = "█".repeat(Math.round(percentage / 10))
         
