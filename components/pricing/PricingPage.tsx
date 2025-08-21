@@ -145,6 +145,9 @@ export function PlatformTab() {
       users: 'Up to 10 users',
       price: '$1,500',
       perUser: '$39',
+      heading: 'The safest way to start with Private AI.',
+      description: 'Secure private workspace, guardrails & redaction, policy controls, basic workflows, audit logs, and email support.',
+      bestFor: 'Best for: Solo attorneys & small firms ready to explore AI safely.',
       features: [
         'Private workspace',
         'Guardrails & redaction',
@@ -160,6 +163,9 @@ export function PlatformTab() {
       users: 'Up to 25 users',
       price: '$3,500',
       perUser: '$35',
+      heading: 'Add power and automation for growing practices.',
+      description: 'Includes everything in Core, plus advanced workflow builder, model routing, DMS connectors (NetDocs/iManage on roadmap), priority support, usage analytics.',
+      bestFor: 'Best for: Firms scaling up automation & collaboration.',
       features: [
         'Everything in Core',
         'Advanced workflow builder',
@@ -175,6 +181,9 @@ export function PlatformTab() {
       users: 'Up to 50 users',
       price: '$6,000',
       perUser: '$32',
+      heading: 'Enterprise-grade security and control.',
+      description: 'Includes everything in Practice, plus SSO/SAML, granular policy controls, sandbox environments, admin insights, and scheduled exports.',
+      bestFor: 'Best for: Mid-size firms with compliance & IT requirements.',
       features: [
         'Everything in Practice',
         'SSO/SAML',
@@ -190,6 +199,9 @@ export function PlatformTab() {
       users: 'Contact us',
       price: 'Custom',
       perUser: '',
+      heading: 'Tailored deployments for the largest firms.',
+      description: 'Private VPC or on-premise hosting, custom SLAs, BAA/HIPAA compliance, advanced governance, dedicated success manager.',
+      bestFor: 'Best for: AmLaw 200 firms, in-house legal, or regulated industries.',
       features: [
         'Unlimited org size',
         'Private VPC/on-prem',
@@ -241,6 +253,12 @@ export function PlatformTab() {
               {plan.perUser && (
                 <p className="text-sm text-dark-400">+ {plan.perUser}/user/mo</p>
               )}
+            </div>
+            
+            <div className="mb-6">
+              <h4 className="text-lg font-semibold text-white mb-2">{plan.heading}</h4>
+              <p className="text-sm text-dark-300 mb-3 leading-relaxed">{plan.description}</p>
+              <p className="text-xs text-sapphire-400 font-medium">{plan.bestFor}</p>
             </div>
             
             <div className="mb-6">
