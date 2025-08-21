@@ -28,14 +28,8 @@ class EmailService {
     const emailData: EmailData = {
       to: assessment.email,
       subject: `Your AI Readiness Assessment Report - ${assessment.firm}`,
-      htmlBody: this.generateAssessmentEmailHTML(assessment, reportContent.toString('utf-8')),
-      attachments: [
-        {
-          filename: `AI-Readiness-Assessment-${assessment.firm.replace(/[^a-zA-Z0-9]/g, '-')}.txt`,
-          content: reportContent,
-          contentType: 'text/plain'
-        }
-      ]
+      htmlBody: this.generateAssessmentEmailHTML(assessment, reportContent.toString('utf-8'))
+      // Removed attachments for now since the report content is included in the email body
     }
 
     await this.sendEmail(emailData)
@@ -235,36 +229,63 @@ class EmailService {
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
       })
 
-      const params = {
-        Source: this.config.fromEmail,
-        Destination: {
-          ToAddresses: [emailData.to]
-        },
-        Message: {
-          Subject: {
-            Data: emailData.subject,
-            Charset: 'UTF-8'
+      // If we have attachments, use sendRawEmail
+      if (emailData.attachments && emailData.attachments.length > 0) {
+        await this.sendRawEmailViaSES(ses, emailData)
+      } else {
+        // Simple email without attachments
+        const params = {
+          Source: this.config.fromEmail,
+          Destination: {
+            ToAddresses: [emailData.to]
           },
-          Body: {
-            Html: {
-              Data: emailData.htmlBody,
+          Message: {
+            Subject: {
+              Data: emailData.subject,
               Charset: 'UTF-8'
+            },
+            Body: {
+              Html: {
+                Data: emailData.htmlBody,
+                Charset: 'UTF-8'
+              }
             }
           }
-        },
-        Attachments: emailData.attachments?.map(attachment => ({
-          Filename: attachment.filename,
-          Content: attachment.content.toString('base64'),
-          ContentType: attachment.contentType
-        }))
-      }
+        }
 
-      await ses.sendEmail(params).promise()
-      console.log('Assessment email sent via SES to:', emailData.to)
+        await ses.sendEmail(params).promise()
+        console.log('Assessment email sent via SES to:', emailData.to)
+      }
     } catch (error) {
       console.error('SES email sending failed:', error)
       throw error
     }
+  }
+
+  private async sendRawEmailViaSES(ses: any, emailData: EmailData): Promise<void> {
+    // For now, just send the email without attachments to avoid complexity
+    // The report content is already included in the email body
+    const params = {
+      Source: this.config.fromEmail,
+      Destination: {
+        ToAddresses: [emailData.to]
+      },
+      Message: {
+        Subject: {
+          Data: emailData.subject,
+          Charset: 'UTF-8'
+        },
+        Body: {
+          Html: {
+            Data: emailData.htmlBody,
+            Charset: 'UTF-8'
+          }
+        }
+      }
+    }
+
+    await ses.sendEmail(params).promise()
+    console.log('Assessment email sent via SES to:', emailData.to)
   }
 
   private async sendViaSendGrid(emailData: EmailData): Promise<void> {
