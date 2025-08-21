@@ -22,6 +22,12 @@ async function getChartJSNodeCanvas() {
 
 export async function renderRadarBase64({ labels, data }: ChartData): Promise<string> {
   try {
+    // Check if we're in a serverless environment
+    if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
+      console.log('Skipping chart generation in serverless environment')
+      return ''
+    }
+
     const chartCanvas = await getChartJSNodeCanvas()
     
     const configuration = {
@@ -101,8 +107,7 @@ export async function renderRadarBase64({ labels, data }: ChartData): Promise<st
   } catch (error) {
     console.error('Chart generation error:', error)
     
-    // Return a fallback chart or error image
-    // For now, return an empty string - the PDF will handle missing charts gracefully
+    // Return empty string - the PDF will handle missing charts gracefully
     return ''
   }
 }

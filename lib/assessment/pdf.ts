@@ -19,6 +19,9 @@ export async function buildReportPDF({
         }
       })
 
+      // Use default fonts to avoid serverless font loading issues
+      doc.font('Helvetica')
+
       const chunks: Buffer[] = []
       doc.on("data", (chunk) => chunks.push(chunk))
       doc.on("end", () => {
@@ -93,7 +96,7 @@ export async function buildReportPDF({
       doc.addPage()
 
       // Radar Chart
-      if (chartBase64) {
+      if (chartBase64 && chartBase64.length > 0) {
         try {
           doc.fontSize(16)
             .fillColor("#1e293b")
@@ -120,6 +123,40 @@ export async function buildReportPDF({
             .fillColor("#64748b")
             .text("Chart visualization could not be generated.", { align: "center" })
         }
+      } else {
+        // Add a text-based chart representation when chart is not available
+        doc.fontSize(16)
+          .fillColor("#1e293b")
+          .text("Assessment Scores")
+        
+        doc.moveDown(0.5)
+        
+        const categories = ["Strategy", "Data", "Technology", "Team", "Change"]
+        const scoreValues = [scores.strategy, scores.data, scores.technology, scores.team, scores.change]
+        
+        categories.forEach((category, index) => {
+          const score = scoreValues[index]
+          const percentage = Math.round((score / 5) * 100)
+          const bars = "█".repeat(Math.round(percentage / 10))
+          
+          doc.fontSize(11)
+            .fillColor("#374151")
+            .text(`${category}: ${score.toFixed(1)}/5 (${percentage}%)`)
+          
+          doc.fontSize(10)
+            .fillColor("#2563eb")
+            .text(`${bars}${"░".repeat(10 - Math.round(percentage / 10))}`)
+          
+          doc.moveDown(0.2)
+        })
+        
+        doc.moveDown(0.5)
+        doc.fontSize(10)
+          .fillColor("#64748b")
+          .text("Score breakdown: █ = 10% | Higher scores indicate stronger readiness in each category.", {
+            align: "center",
+            width: 500
+          })
       }
 
       addPageFooter(3)
