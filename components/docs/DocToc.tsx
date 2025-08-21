@@ -21,11 +21,20 @@ export function DocToc({ className }: DocTocProps) {
   useEffect(() => {
     // Extract headings from the page
     const headingElements = document.querySelectorAll('h2, h3')
-    const tocItems: TocItem[] = Array.from(headingElements).map((element) => ({
-      id: element.id,
-      text: element.textContent || '',
-      level: parseInt(element.tagName.charAt(1))
-    }))
+    const tocItems: TocItem[] = Array.from(headingElements).map((element, index) => {
+      // Generate ID if none exists
+      let id = element.id
+      if (!id) {
+        id = `heading-${index}`
+        element.id = id
+      }
+      
+      return {
+        id,
+        text: element.textContent || '',
+        level: parseInt(element.tagName.charAt(1))
+      }
+    })
     setHeadings(tocItems)
 
     // Set up intersection observer for active heading
