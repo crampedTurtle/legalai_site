@@ -119,6 +119,7 @@ export function AssessmentPage() {
       // Step 3: Create results object for display
       console.log('Raw recommendations:', recommendations)
       console.log('Categories:', recommendations.categories)
+      console.log('Overall:', recommendations.overall)
       
       // Map OpenAI category keys to expected category IDs
       const categoryKeyMapping: { [key: string]: string } = {
@@ -130,12 +131,25 @@ export function AssessmentPage() {
         'implementation': 'implementation'
       }
       
+      // Calculate overall percentage from individual scores
+      const categoryScores = recommendations.categories.map((cat: any) => {
+        const score = typeof cat.score === 'number' && !isNaN(cat.score) ? cat.score : 0
+        return score * 20 // Convert to percentage (0-5 scale to 0-100)
+      })
+      
+      const overallPercentage = categoryScores.length > 0 
+        ? Math.round(categoryScores.reduce((sum, score) => sum + score, 0) / categoryScores.length)
+        : 0
+      
+      console.log('Category scores:', categoryScores)
+      console.log('Calculated overall percentage:', overallPercentage)
+      
       const assessmentResults = {
         name: contact.name,
         email: contact.email,
         firm: contact.firm,
         answers: answers,
-        results: recommendations.categories.map((cat: any) => {
+        results: recommendations.categories.map((cat: any, index: number) => {
           console.log('Processing category:', cat)
           
           // Map the category key to the expected ID
@@ -155,13 +169,9 @@ export function AssessmentPage() {
               : []
           }
         }),
-        totalScore: typeof recommendations.overall?.score === 'number' && !isNaN(recommendations.overall.score) 
-          ? recommendations.overall.score 
-          : 0,
+        totalScore: overallPercentage,
         maxTotalScore: 100,
-        overallPercentage: typeof recommendations.overall?.score === 'number' && !isNaN(recommendations.overall.score) 
-          ? recommendations.overall.score 
-          : 0
+        overallPercentage: overallPercentage
       }
       
       console.log('Final assessment results:', assessmentResults)

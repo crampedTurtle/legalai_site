@@ -337,7 +337,9 @@ export async function buildReportPDF({
       })
       
       currentY -= 30
-      categoryPage.drawText(`Score: ${category.score?.toFixed?.(1) ?? category.score} • Level: ${category.level}`, {
+      const score = typeof category.score === 'number' && !isNaN(category.score) ? category.score : 0
+      const level = category.level || 'Emerging'
+      categoryPage.drawText(`Score: ${score.toFixed(1)} • Level: ${level}`, {
         x: 50,
         y: currentY,
         size: 11,
@@ -405,7 +407,7 @@ export async function buildReportPDF({
           currentY -= 20
           currentY = drawWrappedText(
             categoryPage,
-            `Why it matters: ${rec.why_it_matters}`,
+            `Why it matters: ${rec.why_it_matters || 'This recommendation will help improve your AI readiness and operational efficiency.'}`,
             50,
             currentY,
             width - 100,
