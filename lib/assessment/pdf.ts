@@ -469,9 +469,9 @@ export async function buildReportPDF({
     
     if (plan) {
       const periods = [
-        { key: "day_30", label: "30 DAYS" },
-        { key: "day_60", label: "60 DAYS" },
-        { key: "day_90", label: "90 DAYS" }
+        { key: "30_days", label: "30 DAYS" },
+        { key: "60_days", label: "60 DAYS" },
+        { key: "90_days", label: "90 DAYS" }
       ]
       
       periods.forEach((period) => {

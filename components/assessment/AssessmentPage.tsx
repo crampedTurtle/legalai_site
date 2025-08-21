@@ -121,6 +121,9 @@ export function AssessmentPage() {
       console.log('Categories:', recommendations.categories)
       console.log('Overall:', recommendations.overall)
       
+      // Log all category keys to see what we're getting
+      console.log('Category keys from OpenAI:', recommendations.categories.map((cat: any) => cat.key))
+      
       // Map OpenAI category keys to expected category IDs
       const categoryKeyMapping: { [key: string]: string } = {
         'strategy': 'strategy',
@@ -143,6 +146,9 @@ export function AssessmentPage() {
       
       console.log('Category scores:', categoryScores)
       console.log('Calculated overall percentage:', overallPercentage)
+      
+      // Also log the overall object to see what's available
+      console.log('Overall object from OpenAI:', recommendations.overall)
       
       const assessmentResults = {
         name: contact.name,
