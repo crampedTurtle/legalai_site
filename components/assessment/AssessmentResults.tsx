@@ -186,13 +186,26 @@ export function AssessmentResults({ results, onRestart }: AssessmentResultsProps
         <h2 className="text-2xl font-semibold text-white">Category Breakdown</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {results.results.map((result, index) => {
+            console.log('Rendering result:', result)
+            console.log('Looking for category ID:', result.category)
+            console.log('Available categories:', ASSESSMENT_CATEGORIES.map(c => c.id))
+            
             const category = ASSESSMENT_CATEGORIES.find(cat => cat.id === result.category)
+            console.log('Found category:', category)
+            
             const getScoreColor = (percentage: number) => {
               if (percentage >= 80) return 'text-green-400'
               if (percentage >= 60) return 'text-blue-400'
               if (percentage >= 40) return 'text-yellow-400'
               return 'text-red-400'
             }
+
+            // Fallback values if category is not found
+            const categoryName = category?.name || result.category || 'Category'
+            const categoryDescription = category?.description || 'Assessment category'
+            const displayPercentage = typeof result.percentage === 'number' && !isNaN(result.percentage) 
+              ? Math.round(result.percentage) 
+              : 0
 
             return (
               <motion.div
@@ -203,12 +216,12 @@ export function AssessmentResults({ results, onRestart }: AssessmentResultsProps
                 className="p-6 bg-dark-800 border border-dark-700 rounded-xl"
               >
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-white">{category?.name}</h3>
-                  <div className={`text-2xl font-bold ${getScoreColor(result.percentage)}`}>
-                    {Math.round(result.percentage)}%
+                  <h3 className="text-lg font-semibold text-white">{categoryName}</h3>
+                  <div className={`text-2xl font-bold ${getScoreColor(displayPercentage)}`}>
+                    {displayPercentage}%
                   </div>
                 </div>
-                <p className="text-dark-300 text-sm mb-4">{category?.description}</p>
+                <p className="text-dark-300 text-sm mb-4">{categoryDescription}</p>
                 <div className="space-y-2">
                   <h4 className="text-sm font-medium text-white">Key Recommendations:</h4>
                   <ul className="space-y-1">

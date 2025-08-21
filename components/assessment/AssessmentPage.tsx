@@ -120,6 +120,16 @@ export function AssessmentPage() {
       console.log('Raw recommendations:', recommendations)
       console.log('Categories:', recommendations.categories)
       
+      // Map OpenAI category keys to expected category IDs
+      const categoryKeyMapping: { [key: string]: string } = {
+        'strategy': 'strategy',
+        'data': 'data', 
+        'technology': 'technology',
+        'team': 'team',
+        'change': 'implementation', // OpenAI returns 'change' but we expect 'implementation'
+        'implementation': 'implementation'
+      }
+      
       const assessmentResults = {
         name: contact.name,
         email: contact.email,
@@ -127,13 +137,16 @@ export function AssessmentPage() {
         answers: answers,
         results: recommendations.categories.map((cat: any) => {
           console.log('Processing category:', cat)
+          
+          // Map the category key to the expected ID
+          const categoryId = categoryKeyMapping[cat.key] || cat.key
           const score = typeof cat.score === 'number' && !isNaN(cat.score) ? cat.score : 0
           const percentage = Math.round(score * 20) // Convert to percentage (0-5 scale to 0-100)
           
-          console.log(`Category ${cat.key}: score=${cat.score}, calculated=${score}, percentage=${percentage}`)
+          console.log(`Category ${cat.key} -> ${categoryId}: score=${cat.score}, calculated=${score}, percentage=${percentage}`)
           
           return {
-            category: cat.key || 'Category',
+            category: categoryId, // Use the mapped category ID
             score: percentage,
             maxScore: 100,
             percentage: percentage,
