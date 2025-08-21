@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
         })
 
         const submission = {
-          formId: 1, // Using form ID 1 for now (newsletter form)
+          formId: 8, // Assessment form ID
           contact: contactData,
           tags: ['assessment-completed', 'ai-readiness', 'sapphire-legal-ai', 'asset:assessment_report'],
         }
