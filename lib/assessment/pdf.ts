@@ -17,17 +17,16 @@ export async function buildReportPDF({
     // Create a new PDF document
     const pdfDoc = await PDFDocument.create()
     
-    // Embed fonts
+    // Embed fonts - use standard fonts for now to avoid fontkit issues
     let interRegular: PDFFont | undefined
     let interBold: PDFFont | undefined
     
     try {
-      const interRegularBytes = fs.readFileSync(fontPath("Inter-Regular.ttf"))
-      const interBoldBytes = fs.readFileSync(fontPath("Inter-Bold.ttf"))
-      interRegular = await pdfDoc.embedFont(interRegularBytes)
-      interBold = await pdfDoc.embedFont(interBoldBytes)
+      // Use standard fonts for better compatibility
+      interRegular = await pdfDoc.embedFont(StandardFonts.Helvetica)
+      interBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold)
     } catch (error) {
-      console.warn("Could not load custom fonts, using defaults:", error)
+      console.warn("Could not load fonts, using defaults:", error)
       // Fallback to standard fonts
       interRegular = await pdfDoc.embedFont(StandardFonts.Helvetica)
       interBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold)
@@ -297,7 +296,7 @@ export async function buildReportPDF({
       const categoryPage = pdfDoc.addPage([612, 792])
       currentY = height - 80
       
-      categoryPage.drawText(category.key.toUpperCase(), {
+      categoryPage.drawText((category.key || 'Category').toUpperCase(), {
         x: 50,
         y: currentY,
         size: 14,
