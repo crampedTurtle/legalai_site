@@ -24,18 +24,18 @@ export function SidebarNav({ className }: SidebarNavProps) {
     )
   }
 
-  const isActive = (slug: string) => {
-    return pathname === `/docs${slug}`
+  const isActive = (slug: string, sectionBase: string) => {
+    return pathname === `${sectionBase}${slug}`
   }
 
   const isSectionActive = (section: typeof docsNav[0]) => {
-    return section.items.some(item => isActive(item.slug))
+    return section.items.some(item => isActive(item.slug, section.base))
   }
 
   // Auto-expand active section
   useState(() => {
     const activeSection = docsNav.find(section => 
-      section.items.some(item => isActive(item.slug))
+      section.items.some(item => isActive(item.slug, section.base))
     )
     if (activeSection && !expandedSections.includes(activeSection.title)) {
       setExpandedSections(prev => [...prev, activeSection.title])
@@ -105,10 +105,10 @@ export function SidebarNav({ className }: SidebarNavProps) {
                         {section.items.map((item) => (
                           <Link
                             key={item.slug}
-                            href={`/docs${item.slug}`}
+                            href={`${section.base}${item.slug}`}
                             className={clsx(
                               'block p-2 rounded-lg text-sm transition-colors',
-                              isActive(item.slug)
+                              isActive(item.slug, section.base)
                                 ? 'text-sapphire-400 bg-sapphire-500/10'
                                 : 'text-dark-400 hover:text-white hover:bg-dark-800'
                             )}

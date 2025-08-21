@@ -9,7 +9,7 @@ interface DocPagerProps {
 }
 
 export function DocPager({ currentSlug }: DocPagerProps) {
-  const { prev, next } = getNextPrevDocs(currentSlug)
+  const { prev, next, prevSection, nextSection } = getNextPrevDocs(currentSlug)
 
   if (!prev && !next) {
     return null
@@ -19,7 +19,7 @@ export function DocPager({ currentSlug }: DocPagerProps) {
     <div className="flex items-center justify-between pt-8 mt-12 border-t border-dark-700">
       {prev ? (
         <Link
-          href={`/docs${prev.slug}`}
+          href={`${prevSection?.base}${prev.slug}`}
           className="group flex items-center gap-2 text-dark-400 hover:text-sapphire-400 transition-colors"
         >
           <ChevronLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
@@ -34,7 +34,7 @@ export function DocPager({ currentSlug }: DocPagerProps) {
 
       {next ? (
         <Link
-          href={`/docs${next.slug}`}
+          href={`${nextSection?.base}${next.slug}`}
           className="group flex items-center gap-2 text-dark-400 hover:text-sapphire-400 transition-colors text-right"
         >
           <div>

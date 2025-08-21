@@ -124,9 +124,11 @@ export function findSectionBySlug(slug: string): DocSection | null {
   return docsNav.find(section => section.base.includes(slug)) || null
 }
 
-export function getNextPrevDocs(currentSlug: string): { prev: DocItem | null; next: DocItem | null } {
+export function getNextPrevDocs(currentSlug: string): { prev: DocItem | null; next: DocItem | null; prevSection: DocSection | null; nextSection: DocSection | null } {
   let prev: DocItem | null = null
   let next: DocItem | null = null
+  let prevSection: DocSection | null = null
+  let nextSection: DocSection | null = null
   let found = false
 
   for (const section of docsNav) {
@@ -135,16 +137,20 @@ export function getNextPrevDocs(currentSlug: string): { prev: DocItem | null; ne
         found = true
         if (i > 0) {
           prev = section.items[i - 1]
+          prevSection = section
         } else if (section !== docsNav[0]) {
           // Previous section's last item
-          const prevSection = docsNav[docsNav.indexOf(section) - 1]
+          const prevSectionIndex = docsNav.indexOf(section) - 1
+          prevSection = docsNav[prevSectionIndex]
           prev = prevSection.items[prevSection.items.length - 1]
         }
         if (i < section.items.length - 1) {
           next = section.items[i + 1]
+          nextSection = section
         } else if (section !== docsNav[docsNav.length - 1]) {
           // Next section's first item
-          const nextSection = docsNav[docsNav.indexOf(section) + 1]
+          const nextSectionIndex = docsNav.indexOf(section) + 1
+          nextSection = docsNav[nextSectionIndex]
           next = nextSection.items[0]
         }
         break
@@ -153,5 +159,5 @@ export function getNextPrevDocs(currentSlug: string): { prev: DocItem | null; ne
     if (found) break
   }
 
-  return { prev, next }
+  return { prev, next, prevSection, nextSection }
 } 
