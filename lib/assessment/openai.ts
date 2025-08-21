@@ -28,6 +28,9 @@ Content requirements by section:
    - top_priorities: 3 crisp items (verbs first)
 
 2) categories[] (for strategy|data|technology|team|change):
+   - key: MUST be one of "strategy", "data", "technology", "team", "change"
+   - score: MUST be the numerical score (1-5) for this category
+   - level: "Emerging" | "Developing" | "Mature" based on score and thresholds
    - what_this_means: 2–4 sentences diagnosing gaps/opportunities
    - quick_wins: 2–4 bullets that can be done in ≤ 30 days
    - recommendations[]: 3–4 items with:
@@ -42,6 +45,8 @@ Content requirements by section:
    - copy: 1–2 lines inviting a private review/demo (no hard sell)
    - link_text: "Request a Private Demo"
    - link_href: https://www.sapphirelegal.ai/demo
+
+CRITICAL: Each category MUST include "key" and "score" properties. The "key" must be exactly one of: "strategy", "data", "technology", "team", "change".
 
 Guardrails:
 - Never imply using public models that train on client data.
@@ -73,10 +78,28 @@ export async function generateRecommendations(payload: AssessmentPayload): Promi
 
     const recommendations = JSON.parse(content) as OpenAIRecommendations
     
-    // Validate the response structure
+    // Validate the response structure and add missing properties
     if (!recommendations.overall || !recommendations.categories || !recommendations.plan_30_60_90) {
       throw new Error("Invalid response structure from OpenAI")
     }
+
+    // Ensure each category has the required key and score properties
+    const expectedKeys = ['strategy', 'data', 'technology', 'team', 'change']
+    recommendations.categories = recommendations.categories.map((cat, index) => {
+      if (!cat.key || !expectedKeys.includes(cat.key)) {
+        cat.key = expectedKeys[index] || 'strategy'
+      }
+      if (typeof cat.score !== 'number' || isNaN(cat.score)) {
+        // Calculate score from the payload scores if available
+        const categoryKey = cat.key
+        cat.score = payload.scores[categoryKey as keyof typeof payload.scores] || 0
+      }
+      if (!cat.level) {
+        const score = cat.score
+        cat.level = score < 2.5 ? 'Emerging' : score < 3.7 ? 'Developing' : 'Mature'
+      }
+      return cat
+    })
 
     return recommendations
   } catch (error) {
