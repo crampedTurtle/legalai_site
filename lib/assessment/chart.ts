@@ -1,25 +1,5 @@
 import { ChartData } from "./types"
 
-// Lazy load ChartJS to avoid build-time issues
-let chartJSNodeCanvas: any = null
-
-async function getChartJSNodeCanvas() {
-  if (!chartJSNodeCanvas) {
-    const { ChartJSNodeCanvas } = await import("chartjs-node-canvas")
-    chartJSNodeCanvas = new ChartJSNodeCanvas({
-      width: 900,
-      height: 600,
-      backgroundColour: 'white',
-      chartCallback: (ChartJS: any) => {
-        // Register any plugins if needed
-        ChartJS.defaults.font.family = 'Arial, sans-serif'
-        ChartJS.defaults.font.size = 12
-      }
-    })
-  }
-  return chartJSNodeCanvas
-}
-
 export async function renderRadarBase64({ labels, data }: ChartData): Promise<string> {
   try {
     // Use QuickChart for serverless environments

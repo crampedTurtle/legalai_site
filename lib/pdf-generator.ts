@@ -1,4 +1,4 @@
-import PDFDocument from 'pdfkit'
+import { PDFDocument, rgb, StandardFonts, PDFFont, PDFPage } from 'pdf-lib'
 import { AssessmentSubmission, ASSESSMENT_CATEGORIES } from './assessment-data'
 import { generateSpiderChartSVG } from './spider-chart-generator'
 
@@ -97,362 +97,231 @@ const createSpiderChartImage = (results: AssessmentSubmission['results']): strin
 }
 
 export async function generateAssessmentPDF(assessment: AssessmentSubmission): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
-    try {
-      const doc = new PDFDocument({
-        size: 'A4',
-        margins: {
-          top: 50,
-          bottom: 80,
-          left: 50,
-          right: 50
+  try {
+    // Create a new PDF document
+    const pdfDoc = await PDFDocument.create()
+    
+    // Embed standard fonts
+    const helvetica = await pdfDoc.embedFont(StandardFonts.Helvetica)
+    const helveticaBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold)
+    
+    // Helper function to draw text with word wrapping
+    const drawWrappedText = (
+      page: PDFPage, 
+      text: string, 
+      x: number, 
+      y: number, 
+      maxWidth: number, 
+      fontSize: number, 
+      font: PDFFont,
+      color = rgb(0.2, 0.2, 0.2)
+    ): number => {
+      const words = text.split(' ')
+      let currentLine = ''
+      let currentY = y
+      const lineHeight = fontSize * 1.2
+
+      for (const word of words) {
+        const testLine = currentLine + (currentLine ? ' ' : '') + word
+        const testWidth = font.widthOfTextAtSize(testLine, fontSize)
+        
+        if (testWidth > maxWidth && currentLine) {
+          page.drawText(currentLine, {
+            x,
+            y: currentY,
+            size: fontSize,
+            font,
+            color
+          })
+          currentLine = word
+          currentY -= lineHeight
+        } else {
+          currentLine = testLine
         }
-      })
-
-      const chunks: Buffer[] = []
-      doc.on('data', (chunk) => chunks.push(chunk))
-      doc.on('end', () => resolve(Buffer.concat(chunks)))
-
-      // Helper function to add footer
-      const addFooter = (pageNumber?: number) => {
-        const currentY = doc.page.margins.bottom - 30
-        doc.fontSize(10)
-          .fillColor('#6B7280')
-          .text('Sapphire Legal AI | Private AI for Law Firms', 50, currentY, { align: 'center' })
-        doc.text('www.sapphirelegal.ai', 50, currentY + 15, { align: 'center' })
-        doc.text('Confidential — For Internal Use Only', 50, currentY + 30, { align: 'center' })
-        
-        if (pageNumber) {
-          doc.text(`Page ${pageNumber}`, 50, currentY + 30, { align: 'right' })
-        }
-      }
-
-      // Helper function to add gradient background
-      const addGradientBackground = () => {
-        // Create gradient effect with rectangles
-        for (let i = 0; i < 10; i++) {
-          const alpha = 0.02 - (i * 0.002)
-          doc.rect(0, 0, doc.page.width, doc.page.height)
-            .fillColor(`rgba(59, 130, 246, ${alpha})`)
-            .fill()
-        }
-      }
-
-      // Page 1: Cover Page
-      addGradientBackground()
-      
-      // Logo placeholder (in production, embed actual logo)
-      doc.fontSize(24)
-        .fillColor('#3B82F6')
-        .text('SAPPHIRE LEGAL AI', { align: 'center' })
-      
-      doc.moveDown(3)
-      
-      doc.fontSize(32)
-        .fillColor('#1F2937')
-        .text('AI Readiness Assessment Report', { align: 'center' })
-      
-      doc.moveDown(1)
-      doc.fontSize(16)
-        .fillColor('#6B7280')
-        .text('Confidential Findings & Recommendations', { align: 'center' })
-      
-      doc.moveDown(4)
-      
-      // Firm information
-      doc.fontSize(14)
-        .fillColor('#374151')
-        .text('Prepared for:', { align: 'center' })
-      
-      doc.moveDown(0.5)
-      doc.fontSize(18)
-        .fillColor('#1F2937')
-        .text(assessment.firm, { align: 'center' })
-      
-      doc.moveDown(0.5)
-      doc.fontSize(14)
-        .fillColor('#6B7280')
-        .text(assessment.name, { align: 'center' })
-      
-      doc.moveDown(2)
-      doc.fontSize(12)
-        .fillColor('#6B7280')
-        .text(`Assessment Date: ${new Date().toLocaleDateString()}`, { align: 'center' })
-      
-      addFooter()
-
-      // Page 2: Executive Summary
-      doc.addPage()
-      
-      doc.fontSize(24)
-        .fillColor('#1F2937')
-        .text('Executive Summary')
-      
-      doc.moveDown(1)
-      doc.fontSize(12)
-        .fillColor('#374151')
-        .text('Based on your responses, this report highlights your organization\'s current AI readiness across 5 key areas: Strategy, Data, Technology, Team, and Change Management. Each section includes a score, visual benchmarking, and tailored recommendations.')
-      
-      doc.moveDown(2)
-      
-      // Overall Score Box
-      const getScoreColor = (percentage: number) => {
-        if (percentage >= 80) return '#10B981' // green
-        if (percentage >= 60) return '#F59E0B' // yellow
-        return '#EF4444' // red
       }
       
-      const getScoreLabel = (percentage: number) => {
-        if (percentage >= 80) return 'Strong'
-        if (percentage >= 60) return 'Developing'
-        return 'Needs Attention'
-      }
-      
-      const overallColor = getScoreColor(assessment.overallPercentage)
-      const overallLabel = getScoreLabel(assessment.overallPercentage)
-      
-      // Overall score box
-      doc.rect(50, doc.y, 200, 60)
-        .fillColor(overallColor)
-        .fill()
-        .strokeColor(overallColor)
-        .lineWidth(2)
-        .stroke()
-      
-      doc.fontSize(16)
-        .fillColor('white')
-        .text('Overall Score', 60, doc.y + 10)
-      
-      doc.fontSize(24)
-        .fillColor('white')
-        .text(`${Math.round(assessment.overallPercentage)}%`, 60, doc.y + 30)
-      
-      doc.fontSize(12)
-        .fillColor('white')
-        .text(overallLabel, 60, doc.y + 50)
-      
-      doc.moveDown(4)
-      
-      // Category score boxes
-      assessment.results.forEach((result, index) => {
-        const color = getScoreColor(result.percentage)
-        const label = getScoreLabel(result.percentage)
-        const x = 50 + (index % 2) * 250
-        const y = doc.y + (Math.floor(index / 2) * 80)
-        
-        doc.rect(x, y, 200, 60)
-          .fillColor(color)
-          .fill()
-          .strokeColor(color)
-          .lineWidth(2)
-          .stroke()
-        
-        doc.fontSize(12)
-          .fillColor('white')
-          .text(result.category, x + 10, y + 10)
-        
-        doc.fontSize(18)
-          .fillColor('white')
-          .text(`${Math.round(result.percentage)}%`, x + 10, y + 30)
-        
-        doc.fontSize(10)
-          .fillColor('white')
-          .text(label, x + 10, y + 50)
-      })
-      
-      doc.moveDown(6)
-      
-      addFooter(2)
-
-      // Page 3: Spider Chart
-      doc.addPage()
-      
-      doc.fontSize(24)
-        .fillColor('#1F2937')
-        .text('Assessment Results Overview')
-      
-      doc.moveDown(1)
-      doc.fontSize(12)
-        .fillColor('#374151')
-        .text('The spider chart below visualizes your performance across all five assessment categories. Areas closer to the center indicate areas needing attention, while areas extending outward show strengths.')
-      
-      doc.moveDown(2)
-      
-      // Generate and embed spider chart
-      try {
-        const svg = generateSpiderChartSVG(assessment.results)
-        
-        // For now, we'll create a placeholder since PDFKit doesn't directly support SVG
-        // In production, you'd convert SVG to PNG/JPEG and embed the image
-        doc.rect(100, doc.y, 300, 300)
-          .fillColor('#F3F4F6')
-          .fill()
-          .strokeColor('#D1D5DB')
-          .lineWidth(1)
-          .stroke()
-        
-        doc.fontSize(14)
-          .fillColor('#6B7280')
-          .text('Spider Chart Visualization', 250, doc.y + 140, { align: 'center' })
-        
-        doc.fontSize(12)
-          .fillColor('#6B7280')
-          .text('(Chart showing category performance)', 250, doc.y + 160, { align: 'center' })
-        
-        // TODO: In production, convert SVG to image and embed:
-        // const imageBuffer = await convertSVGToImage(svg)
-        // doc.image(imageBuffer, 100, doc.y, { width: 300, height: 300 })
-      } catch (error) {
-        console.error('Failed to generate spider chart:', error)
-        // Fallback to placeholder
-        doc.rect(100, doc.y, 300, 300)
-          .fillColor('#F3F4F6')
-          .fill()
-          .strokeColor('#D1D5DB')
-          .lineWidth(1)
-          .stroke()
-        
-        doc.fontSize(14)
-          .fillColor('#6B7280')
-          .text('Spider Chart Visualization', 250, doc.y + 140, { align: 'center' })
-      }
-      
-      doc.moveDown(8)
-      
-      // Overall readiness rating
-      const readinessLevel = assessment.overallPercentage >= 80 ? 'Mature' : 
-                           assessment.overallPercentage >= 60 ? 'Developing' : 'Emerging'
-      
-      doc.fontSize(16)
-        .fillColor('#1F2937')
-        .text(`Overall Readiness Rating: ${readinessLevel}`)
-      
-      addFooter(3)
-
-      // Page 4+: Detailed Findings
-      assessment.results.forEach((result, index) => {
-        doc.addPage()
-        
-        doc.fontSize(20)
-          .fillColor('#1F2937')
-          .text(`${index + 1}. ${result.category}`)
-        
-        doc.moveDown(1)
-        
-        // Score visualization
-        const scoreBarWidth = 200
-        const scoreBarHeight = 20
-        const scorePercentage = result.percentage / 100
-        
-        // Background bar
-        doc.rect(50, doc.y, scoreBarWidth, scoreBarHeight)
-          .fillColor('#E5E7EB')
-          .fill()
-          .strokeColor('#D1D5DB')
-          .lineWidth(1)
-          .stroke()
-        
-        // Score bar
-        doc.rect(50, doc.y, scoreBarWidth * scorePercentage, scoreBarHeight)
-          .fillColor(getScoreColor(result.percentage))
-          .fill()
-        
-        doc.fontSize(14)
-          .fillColor('#374151')
-          .text(`Score: ${Math.round(result.percentage)}%`, 260, doc.y + 2)
-        
-        doc.moveDown(2)
-        
-        // What This Means
-        doc.fontSize(14)
-          .fillColor('#1F2937')
-          .text('What This Means:')
-        
-        doc.moveDown(0.5)
-        doc.fontSize(12)
-          .fillColor('#374151')
-          .text(getCategoryExplanation(result.category, result.percentage))
-        
-        doc.moveDown(1.5)
-        
-        // Top Recommendations
-        doc.fontSize(14)
-          .fillColor('#1F2937')
-          .text('Top Recommendations:')
-        
-        doc.moveDown(0.5)
-        result.recommendations.slice(0, 3).forEach((rec, recIndex) => {
-          doc.fontSize(12)
-            .fillColor('#374151')
-            .text(`• ${rec}`)
-          doc.moveDown(0.3)
+      if (currentLine) {
+        page.drawText(currentLine, {
+          x,
+          y: currentY,
+          size: fontSize,
+          font,
+          color
         })
-        
-        addFooter(4 + index)
-      })
-
-      // Final Page: Next Steps
-      doc.addPage()
+        currentY -= lineHeight
+      }
       
-      doc.fontSize(24)
-        .fillColor('#1F2937')
-        .text('Next Steps')
-      
-      doc.moveDown(1)
-      doc.fontSize(12)
-        .fillColor('#374151')
-        .text('Based on your assessment results, here are the recommended next steps to accelerate your AI adoption journey:')
-      
-      doc.moveDown(2)
-      
-      const nextSteps = [
-        'Review and prioritize recommendations from each category',
-        'Develop a 90-day action plan focusing on your lowest-scoring areas',
-        'Schedule a consultation with our AI implementation team',
-        'Begin with pilot programs in high-impact, low-risk areas',
-        'Establish regular progress reviews and milestone tracking'
-      ]
-      
-      nextSteps.forEach((step, index) => {
-        doc.fontSize(12)
-          .fillColor('#1F2937')
-          .text(`${index + 1}. ${step}`)
-        doc.moveDown(0.5)
-      })
-      
-      doc.moveDown(3)
-      
-      // Call to Action
-      doc.rect(50, doc.y, 500, 100)
-        .fillColor('#F3F4F6')
-        .fill()
-        .strokeColor('#D1D5DB')
-        .lineWidth(1)
-        .stroke()
-      
-      doc.fontSize(16)
-        .fillColor('#1F2937')
-        .text('Ready to Get Started?', 70, doc.y + 20)
-      
-      doc.fontSize(12)
-        .fillColor('#374151')
-        .text('Schedule a 30-minute consultation with Sapphire Legal AI to review your results and discuss implementation strategies.', 70, doc.y + 45)
-      
-      doc.fontSize(12)
-        .fillColor('#3B82F6')
-        .text('Request a Demo: sapphirelegal.ai/demo', 70, doc.y + 70)
-      
-      doc.fontSize(12)
-        .fillColor('#374151')
-        .text('Contact: info@sapphirelegal.ai', 70, doc.y + 85)
-      
-      addFooter(4 + assessment.results.length)
-
-      doc.end()
-    } catch (error) {
-      reject(error)
+      return currentY
     }
-  })
+
+    // Create the first page
+    const page = pdfDoc.addPage([612, 792]) // Letter size
+    const { width, height } = page.getSize()
+    let currentY = height - 80
+
+    // Title
+    page.drawText("AI Readiness Assessment Report", {
+      x: 50,
+      y: currentY,
+      size: 24,
+      font: helveticaBold,
+      color: rgb(0.12, 0.16, 0.23)
+    })
+
+    currentY -= 60
+
+    // Company Information
+    page.drawText("Company Information", {
+      x: 50,
+      y: currentY,
+      size: 16,
+      font: helveticaBold,
+      color: rgb(0.12, 0.16, 0.23)
+    })
+
+    currentY -= 30
+    page.drawText(`Company Name: ${assessment.firm}`, {
+      x: 50,
+      y: currentY,
+      size: 12,
+      font: helvetica,
+      color: rgb(0.22, 0.26, 0.32)
+    })
+
+    currentY -= 20
+    page.drawText(`Contact: ${assessment.name}`, {
+      x: 50,
+      y: currentY,
+      size: 12,
+      font: helvetica,
+      color: rgb(0.22, 0.26, 0.32)
+    })
+
+    currentY -= 20
+    page.drawText(`Email: ${assessment.email}`, {
+      x: 50,
+      y: currentY,
+      size: 12,
+      font: helvetica,
+      color: rgb(0.22, 0.26, 0.32)
+    })
+
+    currentY -= 40
+
+    // Assessment Results
+    page.drawText("Assessment Results", {
+      x: 50,
+      y: currentY,
+      size: 16,
+      font: helveticaBold,
+      color: rgb(0.12, 0.16, 0.23)
+    })
+
+    currentY -= 30
+
+    // For now, we'll create a placeholder since PDFKit doesn't directly support SVG
+    // In a real implementation, you'd convert the SVG to a PNG or use a different approach
+    page.drawText("Spider Chart Visualization", {
+      x: 50,
+      y: currentY,
+      size: 14,
+      font: helveticaBold,
+      color: rgb(0.12, 0.16, 0.23)
+    })
+
+    currentY -= 30
+
+    // Display results in a table format
+    assessment.results.forEach((result, index) => {
+      const category = ASSESSMENT_CATEGORIES.find(cat => cat.id === result.category)
+      const categoryName = category ? category.name : result.category
+
+      page.drawText(`${categoryName}:`, {
+        x: 50,
+        y: currentY,
+        size: 12,
+        font: helveticaBold,
+        color: rgb(0.12, 0.16, 0.23)
+      })
+
+      currentY -= 20
+      page.drawText(`Score: ${result.score}/5 (${result.percentage}%)`, {
+        x: 70,
+        y: currentY,
+        size: 11,
+        font: helvetica,
+        color: rgb(0.22, 0.26, 0.32)
+      })
+
+      currentY -= 15
+      currentY = drawWrappedText(
+        page,
+        `Recommendations: ${result.recommendations.join(', ')}`,
+        70,
+        currentY,
+        width - 120,
+        10,
+        helvetica,
+        rgb(0.4, 0.45, 0.55)
+      )
+
+      currentY -= 20
+    })
+
+    // Overall Score
+    currentY -= 20
+    page.drawText("Overall Assessment", {
+      x: 50,
+      y: currentY,
+      size: 16,
+      font: helveticaBold,
+      color: rgb(0.12, 0.16, 0.23)
+    })
+
+    currentY -= 30
+    page.drawText(`Total Score: ${assessment.totalScore}/${assessment.maxTotalScore}`, {
+      x: 50,
+      y: currentY,
+      size: 12,
+      font: helveticaBold,
+      color: rgb(0.12, 0.16, 0.23)
+    })
+
+    currentY -= 20
+    page.drawText(`Overall Percentage: ${assessment.overallPercentage}%`, {
+      x: 50,
+      y: currentY,
+      size: 12,
+      font: helveticaBold,
+      color: rgb(0.12, 0.16, 0.23)
+    })
+
+    // Footer
+    currentY -= 40
+    page.drawText("Generated by Sapphire Legal AI", {
+      x: 50,
+      y: currentY,
+      size: 10,
+      font: helvetica,
+      color: rgb(0.4, 0.45, 0.55)
+    })
+
+    currentY -= 15
+    page.drawText(`Report generated on: ${new Date().toLocaleDateString()}`, {
+      x: 50,
+      y: currentY,
+      size: 10,
+      font: helvetica,
+      color: rgb(0.4, 0.45, 0.55)
+    })
+
+    // Save the PDF
+    const pdfBytes = await pdfDoc.save()
+    return Buffer.from(pdfBytes)
+  } catch (error) {
+    console.error("Error generating PDF:", error)
+    throw error
+  }
 }
 
 // Helper function to generate category explanations
