@@ -4,6 +4,9 @@ import { renderRadarBase64, computeCategoryAverages } from '@/lib/assessment/cha
 import { buildReportPDF } from '@/lib/assessment/pdf'
 import { AssessmentPayload } from '@/lib/assessment/types'
 
+export const runtime = "nodejs"           // ensure Node, not Edge
+export const dynamic = "force-dynamic"    // if needed for SSR data
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()

@@ -1,5 +1,11 @@
 import PDFDocument from "pdfkit"
+import fs from "node:fs"
+import path from "node:path"
 import { PDFReportData } from "./types"
+
+function fontPath(rel: string) {
+  return path.join(process.cwd(), "public", "fonts", rel)
+}
 
 export async function buildReportPDF({ 
   firm, 
@@ -19,9 +25,6 @@ export async function buildReportPDF({
         }
       })
 
-      // Use default fonts to avoid serverless font loading issues
-      doc.font('Helvetica')
-
       const chunks: Buffer[] = []
       doc.on("data", (chunk) => chunks.push(chunk))
       doc.on("end", () => {
@@ -31,11 +34,26 @@ export async function buildReportPDF({
           buffer: buffer
         })
       })
+      doc.on("error", (e) => {
+        console.error("PDF error:", e)
+        reject(e)
+      })
+
+      // Register embedded TTF fonts (avoid Helvetica.afm)
+      try {
+        const interRegular = fs.readFileSync(fontPath("Inter-Regular.ttf"))
+        const interBold = fs.readFileSync(fontPath("Inter-Bold.ttf"))
+        doc.registerFont("Inter", interRegular)
+        doc.registerFont("Inter-Bold", interBold)
+      } catch (error) {
+        console.warn("Could not load custom fonts, using defaults:", error)
+        // Fallback to default fonts if custom fonts fail
+      }
 
       // Helper function to add page footer
       const addPageFooter = (pageNumber: number) => {
         const footerText = `Sapphire Legal AI • Confidential • www.sapphirelegal.ai — Page ${pageNumber}`
-        doc.fontSize(8)
+        doc.font("Inter").fontSize(8)
           .fillColor("#64748b")
           .text(footerText, 54, doc.page.height - 80, {
             width: doc.page.width - 108,
@@ -44,28 +62,28 @@ export async function buildReportPDF({
       }
 
       // Cover Page
-      doc.fontSize(24)
+      doc.font("Inter-Bold").fontSize(24)
         .fillColor("#1e293b")
         .text("AI Readiness Assessment Report", { align: "center" })
       
       doc.moveDown(2)
       
-      doc.fontSize(16)
+      doc.font("Inter").fontSize(16)
         .fillColor("#64748b")
         .text("Prepared for:", { align: "center" })
       
       doc.moveDown(0.5)
-      doc.fontSize(18)
+      doc.font("Inter-Bold").fontSize(18)
         .fillColor("#1e293b")
         .text(firm?.name || "—", { align: "center" })
       
       doc.moveDown(1)
-      doc.fontSize(12)
+      doc.font("Inter").fontSize(12)
         .fillColor("#64748b")
         .text(`Assessment Date: ${new Date().toLocaleDateString()}`, { align: "center" })
       
       doc.moveDown(3)
-      doc.fontSize(10)
+      doc.font("Inter").fontSize(10)
         .fillColor("#64748b")
         .text("Confidential — For Internal Use Only", { align: "center" })
 
@@ -73,22 +91,22 @@ export async function buildReportPDF({
       doc.addPage()
 
       // Executive Summary
-      doc.fontSize(16)
+      doc.font("Inter-Bold").fontSize(16)
         .fillColor("#1e293b")
         .text("Executive Summary")
       
       doc.moveDown(0.5)
-      doc.fontSize(11)
+      doc.font("Inter").fontSize(11)
         .fillColor("#374151")
         .text(recommendations?.overall?.summary || "Based on your assessment, your firm shows potential for AI implementation with areas needing attention.")
       
       doc.moveDown(1)
-      doc.fontSize(12)
+      doc.font("Inter-Bold").fontSize(12)
         .fillColor("#1e293b")
         .text(`Overall Level: ${recommendations?.overall?.level || "Emerging"}`)
       
       doc.moveDown(0.5)
-      doc.fontSize(12)
+      doc.font("Inter-Bold").fontSize(12)
         .fillColor("#1e293b")
         .text(`Overall Score: ${recommendations?.overall?.score || 0}%`)
 
@@ -98,7 +116,7 @@ export async function buildReportPDF({
       // Radar Chart
       if (chartBase64 && chartBase64.length > 0) {
         try {
-          doc.fontSize(16)
+          doc.font("Inter-Bold").fontSize(16)
             .fillColor("#1e293b")
             .text("Readiness Radar")
           
@@ -111,7 +129,7 @@ export async function buildReportPDF({
           })
           
           doc.moveDown(1)
-          doc.fontSize(10)
+          doc.font("Inter").fontSize(10)
             .fillColor("#64748b")
             .text("This radar chart shows your performance across all assessment categories. Areas closer to the center need attention, while areas extending outward show strengths.", {
               align: "center",
@@ -119,13 +137,13 @@ export async function buildReportPDF({
             })
         } catch (error) {
           console.error("Error adding chart to PDF:", error)
-          doc.fontSize(12)
+          doc.font("Inter").fontSize(12)
             .fillColor("#64748b")
             .text("Chart visualization could not be generated.", { align: "center" })
         }
       } else {
         // Add a text-based chart representation when chart is not available
-        doc.fontSize(16)
+        doc.font("Inter-Bold").fontSize(16)
           .fillColor("#1e293b")
           .text("Assessment Scores")
         
@@ -139,11 +157,11 @@ export async function buildReportPDF({
           const percentage = Math.round((score / 5) * 100)
           const bars = "█".repeat(Math.round(percentage / 10))
           
-          doc.fontSize(11)
+          doc.font("Inter").fontSize(11)
             .fillColor("#374151")
             .text(`${category}: ${score.toFixed(1)}/5 (${percentage}%)`)
           
-          doc.fontSize(10)
+          doc.font("Inter").fontSize(10)
             .fillColor("#2563eb")
             .text(`${bars}${"░".repeat(10 - Math.round(percentage / 10))}`)
           
@@ -151,7 +169,7 @@ export async function buildReportPDF({
         })
         
         doc.moveDown(0.5)
-        doc.fontSize(10)
+        doc.font("Inter").fontSize(10)
           .fillColor("#64748b")
           .text("Score breakdown: █ = 10% | Higher scores indicate stronger readiness in each category.", {
             align: "center",
@@ -167,26 +185,26 @@ export async function buildReportPDF({
       for (let i = 0; i < categories.length; i++) {
         const category = categories[i]
         
-        doc.fontSize(14)
+        doc.font("Inter-Bold").fontSize(14)
           .fillColor("#1e293b")
           .text(category.key.toUpperCase())
         
         doc.moveDown(0.5)
-        doc.fontSize(11)
+        doc.font("Inter").fontSize(11)
           .fillColor("#374151")
           .text(`Score: ${category.score?.toFixed?.(1) ?? category.score} • Level: ${category.level}`)
         
         doc.moveDown(0.5)
-        doc.text(category.what_this_means || "")
+        doc.font("Inter").text(category.what_this_means || "")
         
         // Quick Wins
         if (Array.isArray(category.quick_wins) && category.quick_wins.length > 0) {
           doc.moveDown(0.7)
-          doc.fontSize(12)
+          doc.font("Inter-Bold").fontSize(12)
             .fillColor("#1e293b")
             .text("Quick Wins")
           
-          doc.fontSize(11)
+          doc.font("Inter").fontSize(11)
             .fillColor("#374151")
           
           category.quick_wins.forEach((win, index) => {
@@ -198,17 +216,17 @@ export async function buildReportPDF({
         // Recommendations
         if (Array.isArray(category.recommendations) && category.recommendations.length > 0) {
           doc.moveDown(0.7)
-          doc.fontSize(12)
+          doc.font("Inter-Bold").fontSize(12)
             .fillColor("#1e293b")
             .text("Recommendations")
           
           category.recommendations.forEach((rec, index) => {
             doc.moveDown(0.3)
-            doc.fontSize(11.5)
+            doc.font("Inter-Bold").fontSize(11.5)
               .fillColor("#1e293b")
               .text(`${index + 1}. ${rec.title}`)
             
-            doc.fontSize(11)
+            doc.font("Inter").fontSize(11)
               .fillColor("#374151")
               .text(`Why it matters: ${rec.why_it_matters}`)
             
@@ -231,7 +249,7 @@ export async function buildReportPDF({
 
       // 30/60/90 Plan
       doc.addPage()
-      doc.fontSize(16)
+      doc.font("Inter-Bold").fontSize(16)
         .fillColor("#1e293b")
         .text("30/60/90 Plan")
       
@@ -247,11 +265,11 @@ export async function buildReportPDF({
           const items = plan[period.key as keyof typeof plan] as string[]
           if (Array.isArray(items) && items.length > 0) {
             doc.moveDown(0.7)
-            doc.fontSize(12)
+            doc.font("Inter-Bold").fontSize(12)
               .fillColor("#1e293b")
               .text(period.label)
             
-            doc.fontSize(11)
+            doc.font("Inter").fontSize(11)
               .fillColor("#374151")
             
             items.forEach((item) => {
@@ -265,12 +283,12 @@ export async function buildReportPDF({
       doc.addPage()
 
       // CTA Footer
-      doc.fontSize(14)
+      doc.font("Inter-Bold").fontSize(14)
         .fillColor("#1e293b")
         .text("Next Steps", { align: "center" })
       
       doc.moveDown(1)
-      doc.fontSize(11)
+      doc.font("Inter").fontSize(11)
         .fillColor("#374151")
         .text(recommendations?.cta?.copy || "Ready to discuss your assessment results and develop a tailored implementation strategy?", {
           align: "center",
@@ -278,7 +296,7 @@ export async function buildReportPDF({
         })
       
       doc.moveDown(1)
-      doc.fontSize(11)
+      doc.font("Inter").fontSize(11)
         .fillColor("#2563eb")
         .text(recommendations?.cta?.link_href || "https://www.sapphirelegal.ai/demo", {
           align: "center",
@@ -286,7 +304,7 @@ export async function buildReportPDF({
         })
       
       doc.moveDown(1)
-      doc.fontSize(10)
+      doc.font("Inter").fontSize(10)
         .fillColor("#64748b")
         .text("Contact us: info@sapphirefive.com | +1 (216) 577-9018", {
           align: "center"

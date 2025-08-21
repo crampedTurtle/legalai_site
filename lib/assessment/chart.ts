@@ -22,56 +22,28 @@ async function getChartJSNodeCanvas() {
 
 export async function renderRadarBase64({ labels, data }: ChartData): Promise<string> {
   try {
-    // Check if we're in a serverless environment
-    if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
-      console.log('Skipping chart generation in serverless environment')
-      return ''
-    }
-
-    const chartCanvas = await getChartJSNodeCanvas()
-    
-    const configuration = {
-      type: 'radar' as const,
+    // Use QuickChart for serverless environments
+    const cfg = {
+      type: "radar",
       data: {
-        labels: labels,
-        datasets: [
-          {
-            label: 'AI Readiness Score',
-            data: data,
-            backgroundColor: 'rgba(37, 99, 235, 0.2)',
-            borderColor: 'rgba(37, 99, 235, 1)',
-            borderWidth: 2,
-            pointBackgroundColor: 'rgba(37, 99, 235, 1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(37, 99, 235, 1)',
-            pointRadius: 4,
-            pointHoverRadius: 6
-          }
-        ]
+        labels,
+        datasets: [{ 
+          label: "Readiness", 
+          data,
+          backgroundColor: 'rgba(37, 99, 235, 0.2)',
+          borderColor: 'rgba(37, 99, 235, 1)',
+          borderWidth: 2,
+          pointBackgroundColor: 'rgba(37, 99, 235, 1)',
+          pointBorderColor: '#fff',
+          pointRadius: 4
+        }]
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          },
-          title: {
-            display: true,
-            text: 'AI Readiness Assessment - Category Scores',
-            font: {
-              size: 16,
-              weight: 'bold' as const
-            },
-            color: '#1e293b'
-          }
-        },
-        scales: {
-          r: {
+      options: { 
+        scales: { 
+          r: { 
+            suggestedMin: 0, 
+            suggestedMax: 5,
             beginAtZero: true,
-            max: 5,
-            min: 0,
             ticks: {
               stepSize: 1,
               font: {
@@ -88,22 +60,38 @@ export async function renderRadarBase64({ labels, data }: ChartData): Promise<st
             pointLabels: {
               font: {
                 size: 12,
-                weight: '500' as const
+                weight: '500'
               },
               color: '#1e293b'
             }
-          }
+          } 
         },
-        elements: {
-          line: {
-            tension: 0.1
+        plugins: {
+          legend: {
+            display: false
+          },
+          title: {
+            display: true,
+            text: 'AI Readiness Assessment - Category Scores',
+            font: {
+              size: 16,
+              weight: 'bold'
+            },
+            color: '#1e293b'
           }
         }
-      }
-    }
+      } 
+    };
 
-    const pngBuffer = await chartCanvas.renderToBuffer(configuration)
-    return pngBuffer.toString('base64')
+    const url = "https://quickchart.io/chart";
+    const res = await fetch(`${url}?w=900&h=600&format=png&backgroundColor=white&c=${encodeURIComponent(JSON.stringify(cfg))}`);
+    
+    if (!res.ok) {
+      throw new Error(`QuickChart failed: ${res.status} ${res.statusText}`);
+    }
+    
+    const buf = Buffer.from(await res.arrayBuffer());
+    return buf.toString("base64");
   } catch (error) {
     console.error('Chart generation error:', error)
     
