@@ -131,7 +131,13 @@ export function AssessmentPage() {
         'technology': 'technology',
         'team': 'team',
         'change': 'implementation', // OpenAI returns 'change' but we expect 'implementation'
-        'implementation': 'implementation'
+        'implementation': 'implementation',
+        // Add any other variations OpenAI might return
+        'ai_strategy': 'strategy',
+        'data_quality': 'data',
+        'tech_infrastructure': 'technology',
+        'team_capabilities': 'team',
+        'change_management': 'implementation'
       }
       
       // Calculate overall percentage from individual scores
@@ -159,7 +165,7 @@ export function AssessmentPage() {
           console.log('Processing category:', cat)
           
           // Map the category key to the expected ID
-          const categoryId = categoryKeyMapping[cat.key] || cat.key
+          const categoryId = categoryKeyMapping[cat.key] || cat.key || `category_${index}`
           const score = typeof cat.score === 'number' && !isNaN(cat.score) ? cat.score : 0
           const percentage = Math.round(score * 20) // Convert to percentage (0-5 scale to 0-100)
           
