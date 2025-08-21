@@ -58,6 +58,13 @@ export async function POST(request: NextRequest) {
     // Step 1: Generate recommendations with OpenAI
     console.log('Generating recommendations with OpenAI...')
     const recommendations = await generateRecommendations(payload)
+    console.log('OpenAI recommendations received:', {
+      overall: recommendations.overall,
+      categoriesCount: recommendations.categories?.length,
+      hasPlan: !!recommendations.plan_30_60_90,
+      planKeys: recommendations.plan_30_60_90 ? Object.keys(recommendations.plan_30_60_90) : [],
+      planData: recommendations.plan_30_60_90
+    })
     
     // Step 2: Generate radar chart
     console.log('Generating radar chart...')

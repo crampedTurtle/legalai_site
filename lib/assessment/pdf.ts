@@ -465,6 +465,8 @@ export async function buildReportPDF({
     })
     
     const plan = recommendations?.plan_30_60_90
+    console.log('30/60/90 Plan data:', plan)
+    
     if (plan) {
       const periods = [
         { key: "day_30", label: "30 DAYS" },
@@ -474,6 +476,8 @@ export async function buildReportPDF({
       
       periods.forEach((period) => {
         const items = plan[period.key as keyof typeof plan] as string[]
+        console.log(`${period.label} items:`, items)
+        
         if (Array.isArray(items) && items.length > 0) {
           currentY -= 40
           planPage.drawText(period.label, {
@@ -495,6 +499,86 @@ export async function buildReportPDF({
             })
           })
         }
+      })
+    } else {
+      // Fallback content if plan is missing
+      console.log('No 30/60/90 plan data found, using fallback')
+      currentY -= 40
+      planPage.drawText("30 DAYS", {
+        x: 50,
+        y: currentY,
+        size: 12,
+        font: interBold!,
+        color: rgb(0.12, 0.16, 0.23)
+      })
+      
+      const fallback30 = [
+        "Complete AI readiness assessment review",
+        "Identify 3 high-impact pilot projects", 
+        "Begin stakeholder interviews"
+      ]
+      
+      fallback30.forEach((item) => {
+        currentY -= 20
+        planPage.drawText(`• ${item}`, {
+          x: 50,
+          y: currentY,
+          size: 11,
+          font: interRegular!,
+          color: rgb(0.22, 0.26, 0.32)
+        })
+      })
+      
+      currentY -= 40
+      planPage.drawText("60 DAYS", {
+        x: 50,
+        y: currentY,
+        size: 12,
+        font: interBold!,
+        color: rgb(0.12, 0.16, 0.23)
+      })
+      
+      const fallback60 = [
+        "Develop AI strategy document",
+        "Start data governance implementation",
+        "Begin team training program"
+      ]
+      
+      fallback60.forEach((item) => {
+        currentY -= 20
+        planPage.drawText(`• ${item}`, {
+          x: 50,
+          y: currentY,
+          size: 11,
+          font: interRegular!,
+          color: rgb(0.22, 0.26, 0.32)
+        })
+      })
+      
+      currentY -= 40
+      planPage.drawText("90 DAYS", {
+        x: 50,
+        y: currentY,
+        size: 12,
+        font: interBold!,
+        color: rgb(0.12, 0.16, 0.23)
+      })
+      
+      const fallback90 = [
+        "Launch first AI pilot project",
+        "Complete infrastructure assessment",
+        "Establish AI governance committee"
+      ]
+      
+      fallback90.forEach((item) => {
+        currentY -= 20
+        planPage.drawText(`• ${item}`, {
+          x: 50,
+          y: currentY,
+          size: 11,
+          font: interRegular!,
+          color: rgb(0.22, 0.26, 0.32)
+        })
       })
     }
 
