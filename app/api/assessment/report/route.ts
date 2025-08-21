@@ -61,6 +61,7 @@ export async function POST(request: NextRequest) {
     console.log('OpenAI recommendations received:', {
       overall: recommendations.overall,
       categoriesCount: recommendations.categories?.length,
+      categories: recommendations.categories, // Add this to see the full categories array
       hasPlan: !!recommendations.plan_30_60_90,
       planKeys: recommendations.plan_30_60_90 ? Object.keys(recommendations.plan_30_60_90) : [],
       planData: recommendations.plan_30_60_90
