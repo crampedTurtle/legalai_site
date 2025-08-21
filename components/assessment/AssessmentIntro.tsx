@@ -28,7 +28,7 @@ export function AssessmentIntro({ onStart }: AssessmentIntroProps) {
     {
       icon: CheckCircle,
       title: 'Free PDF report',
-      description: 'Download your results with actionable next steps'
+      description: 'Receive your results via email with actionable next steps'
     }
   ]
 
