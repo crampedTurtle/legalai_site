@@ -333,6 +333,16 @@ export function LaunchPackTab() {
         </div>
         
         <div className="mb-8">
+          <h4 className="text-lg font-semibold text-white mb-3 text-center">
+            Everything you need to get live and running with Private AI.
+          </h4>
+          <p className="text-sm text-dark-300 mb-4 text-center leading-relaxed">
+            Discovery & risk workshop, guardrails & policy setup, connector configuration, 5 priority workflows, admin training, pilot enablement, go-live support.
+          </p>
+          <p className="text-xs text-sapphire-400 font-medium text-center mb-6">
+            Best for: Firms that want a structured, hands-on rollout with minimal disruption.
+          </p>
+          
           <ul className="space-y-4">
             {features.map((feature, index) => (
               <li key={index} className="flex items-start gap-3">
@@ -366,6 +376,9 @@ export function ManagedOpsTab() {
     {
       title: 'Content & Playbook Ops',
       price: 'from $2,500/mo',
+      heading: 'Keep your AI knowledge sharp and up to date.',
+      description: 'Knowledge packs & updates, prompt libraries, template upkeep, monthly tuning.',
+      bestFor: 'Best for: Firms that want their content library to stay current without manual upkeep.',
       features: [
         'Knowledge packs',
         'Prompt libraries',
@@ -376,6 +389,9 @@ export function ManagedOpsTab() {
     {
       title: 'Intake & Triage Desk',
       price: 'from $3,000/mo',
+      heading: 'Human-in-the-loop review to keep your workflows safe and compliant.',
+      description: 'Intake & routing, SLA-backed support, escalations, human review for edge cases.',
+      bestFor: 'Best for: Firms needing high-volume, quality-controlled intake processes.',
       features: [
         'Human-in-the-loop review',
         'Routing',
@@ -386,6 +402,9 @@ export function ManagedOpsTab() {
     {
       title: 'Data & Evaluation Ops',
       price: 'from $2,000/mo',
+      heading: 'Continuous monitoring for accuracy, compliance, and drift.',
+      description: 'Red-team prompts, evaluation sets, quality scoring, drift watch.',
+      bestFor: 'Best for: Firms that want proactive oversight of AI performance and compliance.',
       features: [
         'Red-team prompts',
         'Eval sets',
@@ -417,6 +436,10 @@ export function ManagedOpsTab() {
             </div>
             
             <div className="mb-6">
+              <h4 className="text-lg font-semibold text-white mb-2">{service.heading}</h4>
+              <p className="text-sm text-dark-300 mb-3 leading-relaxed">{service.description}</p>
+              <p className="text-xs text-sapphire-400 font-medium mb-4">{service.bestFor}</p>
+              
               <ul className="space-y-3">
                 {service.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="flex items-start gap-3">
