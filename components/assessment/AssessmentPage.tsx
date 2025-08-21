@@ -138,7 +138,7 @@ export function AssessmentPage() {
       })
       
       const overallPercentage = categoryScores.length > 0 
-        ? Math.round(categoryScores.reduce((sum, score) => sum + score, 0) / categoryScores.length)
+        ? Math.round(categoryScores.reduce((sum: number, score: number) => sum + score, 0) / categoryScores.length)
         : 0
       
       console.log('Category scores:', categoryScores)
