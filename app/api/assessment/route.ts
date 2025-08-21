@@ -7,6 +7,7 @@ import {
 } from '@/lib/assessment-data'
 import { mauticAPI, MAUTIC_FORMS, formatContactData } from '@/lib/mautic'
 import { generateSimpleAssessmentPDF } from '@/lib/simple-pdf-generator'
+import { generateSpiderChartSVG } from '@/lib/spider-chart-generator'
 import { emailService } from '@/lib/email-service'
 
 // Mock OpenAI recommendations - in production, this would call OpenAI API

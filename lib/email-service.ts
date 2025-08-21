@@ -1,4 +1,5 @@
 import { AssessmentSubmission } from './assessment-data'
+import { generateSpiderChartSVG } from './spider-chart-generator'
 
 interface EmailConfig {
   fromEmail: string
@@ -28,8 +29,14 @@ class EmailService {
     const emailData: EmailData = {
       to: assessment.email,
       subject: `Your AI Readiness Assessment Report - ${assessment.firm}`,
-      htmlBody: this.generateAssessmentEmailHTML(assessment, reportContent.toString('utf-8'))
-      // Removed attachments for now since the report content is included in the email body
+      htmlBody: this.generateAssessmentEmailHTML(assessment, reportContent.toString('utf-8')),
+      attachments: [
+        {
+          filename: `AI-Readiness-Assessment-${assessment.firm.replace(/[^a-zA-Z0-9]/g, '-')}.txt`,
+          content: reportContent,
+          contentType: 'text/plain'
+        }
+      ]
     }
 
     await this.sendEmail(emailData)
@@ -52,6 +59,8 @@ class EmailService {
   }
 
   private generateAssessmentEmailHTML(assessment: AssessmentSubmission, reportContent?: string): string {
+    // Generate spider chart SVG
+    const spiderChartSVG = generateSpiderChartSVG(assessment.results)
     const overallScore = Math.round(assessment.overallPercentage)
     const scoreLevel = overallScore >= 80 ? 'Strong' : overallScore >= 60 ? 'Developing' : 'Needs Attention'
     const scoreColor = overallScore >= 80 ? '#10B981' : overallScore >= 60 ? '#F59E0B' : '#EF4444'
@@ -89,6 +98,16 @@ class EmailService {
             <div class="score-box">
               <h3 style="margin: 0 0 10px 0; font-size: 24px;">Overall Score: ${overallScore}%</h3>
               <p style="margin: 0; font-size: 18px;">${scoreLevel}</p>
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0;">
+              <h3 style="margin-bottom: 20px; color: #1F2937;">Your Assessment Visualization</h3>
+              <div style="display: inline-block; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                ${spiderChartSVG}
+              </div>
+              <p style="margin-top: 15px; font-size: 14px; color: #6B7280;">
+                This spider chart shows your performance across all assessment categories. Areas closer to the center need attention, while areas extending outward show strengths.
+              </p>
             </div>
             
             <h3>Key Findings:</h3>
@@ -263,8 +282,8 @@ class EmailService {
   }
 
   private async sendRawEmailViaSES(ses: any, emailData: EmailData): Promise<void> {
-    // For now, just send the email without attachments to avoid complexity
-    // The report content is already included in the email body
+    // For attachments, we need to use sendRawEmail with MIME formatting
+    // For now, send without attachments to avoid complexity
     const params = {
       Source: this.config.fromEmail,
       Destination: {
