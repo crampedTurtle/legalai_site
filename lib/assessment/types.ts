@@ -47,6 +47,7 @@ export type OpenAIRecommendations = {
     summary: string
     level: "Emerging" | "Developing" | "Mature"
     score: number
+    top_priorities: string[]
   }
   categories: Array<{
     key: string
@@ -69,8 +70,9 @@ export type OpenAIRecommendations = {
     day_90: string[]
   }
   cta: {
-    primary: string
-    secondary: string
+    copy: string
+    link_text: string
+    link_href: string
   }
 }
 

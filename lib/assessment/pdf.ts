@@ -235,7 +235,7 @@ export async function buildReportPDF({
       doc.moveDown(1)
       doc.fontSize(11)
         .fillColor("#374151")
-        .text(recommendations?.cta?.primary || "Schedule a private demo to see how Sapphire Legal AI can accelerate your implementation", {
+        .text(recommendations?.cta?.copy || "Ready to discuss your assessment results and develop a tailored implementation strategy?", {
           align: "center",
           width: 400
         })
@@ -243,9 +243,9 @@ export async function buildReportPDF({
       doc.moveDown(1)
       doc.fontSize(11)
         .fillColor("#2563eb")
-        .text("https://www.sapphirelegal.ai/demo", {
+        .text(recommendations?.cta?.link_href || "https://www.sapphirelegal.ai/demo", {
           align: "center",
-          link: "https://www.sapphirelegal.ai/demo"
+          link: recommendations?.cta?.link_href || "https://www.sapphirelegal.ai/demo"
         })
       
       doc.moveDown(1)
