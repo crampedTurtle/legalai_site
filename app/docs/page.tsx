@@ -28,7 +28,7 @@ export default function Documentation() {
             articles={docsNav[0].items.map(item => ({
               title: item.title,
               description: item.description || "",
-              link: `/docs${item.slug}`,
+              link: `${docsNav[0].base}${item.slug}`,
               icon: item.slug === "/quick-start" ? "rocket" : 
                     item.slug === "/prerequisites" ? "download" : "play"
             }))}
@@ -41,7 +41,7 @@ export default function Documentation() {
             articles={docsNav[1].items.map(item => ({
               title: item.title,
               description: item.description || "",
-              link: `/docs${item.slug}`,
+              link: `${docsNav[1].base}${item.slug}`,
               icon: item.slug === "/document-intelligence" ? "file-text" : 
                     item.slug === "/collaborative-drafting" ? "users" : 
                     item.slug === "/case-management" ? "briefcase" : "bot"
@@ -55,7 +55,7 @@ export default function Documentation() {
             articles={docsNav[2].items.map(item => ({
               title: item.title,
               description: item.description || "",
-              link: `/docs${item.slug}`,
+              link: `${docsNav[2].base}${item.slug}`,
               icon: item.slug === "/user-management" ? "users" : 
                     item.slug === "/security-settings" ? "shield" : 
                     item.slug === "/system-configuration" ? "settings" : "database"
@@ -69,7 +69,7 @@ export default function Documentation() {
             articles={docsNav[3].items.map(item => ({
               title: item.title,
               description: item.description || "",
-              link: `/docs${item.slug}`,
+              link: `${docsNav[3].base}${item.slug}`,
               icon: item.slug === "/authentication" ? "key" : 
                     item.slug === "/endpoints" ? "code" : 
                     item.slug === "/webhooks" ? "bell" : "package"
