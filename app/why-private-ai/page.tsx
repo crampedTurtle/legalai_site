@@ -8,11 +8,11 @@ import { SecurityFeatures } from '@/components/why-private-ai/SecurityFeatures'
 import { ComplianceSection } from '@/components/why-private-ai/ComplianceSection'
 
 export const metadata: Metadata = {
-  title: 'Why Private AI - Your Data Stays Yours, Always',
+  title: 'Why Private AI - Your Data Stays Yours. Always.',
   description: 'Learn why private AI is essential for legal professionals. Unlike public AI tools, Sapphire Legal AI ensures your sensitive data never leaves your control.',
   openGraph: {
     title: 'Why Private AI - Sapphire Legal AI',
-    description: 'Your data stays yours—always. Discover the benefits of private AI for legal professionals.',
+    description: 'Your data stays yours. Always. Discover the benefits of private AI for legal professionals.',
   },
 }
 

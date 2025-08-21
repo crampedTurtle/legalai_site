@@ -41,7 +41,7 @@ export function WhyPrivateAIHero() {
         >
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-balance mb-6">
             Your Data Stays{' '}
-            <span className="gradient-text">Yours—Always</span>
+            <span className="gradient-text">Yours. Always.</span>
           </h1>
           <p className="text-xl text-dark-300 max-w-3xl mx-auto leading-relaxed mb-8">
             Unlike public AI tools that process your confidential legal documents on shared servers, 
