@@ -24,16 +24,16 @@ class EmailService {
     this.config = config
   }
 
-  async sendAssessmentReport(assessment: AssessmentSubmission, pdfBuffer: Buffer): Promise<void> {
+  async sendAssessmentReport(assessment: AssessmentSubmission, reportContent: Buffer): Promise<void> {
     const emailData: EmailData = {
       to: assessment.email,
       subject: `Your AI Readiness Assessment Report - ${assessment.firm}`,
-      htmlBody: this.generateAssessmentEmailHTML(assessment),
+      htmlBody: this.generateAssessmentEmailHTML(assessment, reportContent.toString('utf-8')),
       attachments: [
         {
-          filename: `AI-Readiness-Assessment-${assessment.firm.replace(/[^a-zA-Z0-9]/g, '-')}.pdf`,
-          content: pdfBuffer,
-          contentType: 'application/pdf'
+          filename: `AI-Readiness-Assessment-${assessment.firm.replace(/[^a-zA-Z0-9]/g, '-')}.txt`,
+          content: reportContent,
+          contentType: 'text/plain'
         }
       ]
     }
@@ -57,7 +57,7 @@ class EmailService {
     await this.sendEmail(emailData)
   }
 
-  private generateAssessmentEmailHTML(assessment: AssessmentSubmission): string {
+  private generateAssessmentEmailHTML(assessment: AssessmentSubmission, reportContent?: string): string {
     const overallScore = Math.round(assessment.overallPercentage)
     const scoreLevel = overallScore >= 80 ? 'Strong' : overallScore >= 60 ? 'Developing' : 'Needs Attention'
     const scoreColor = overallScore >= 80 ? '#10B981' : overallScore >= 60 ? '#F59E0B' : '#EF4444'
@@ -115,6 +115,13 @@ class EmailService {
               <li>Implementation roadmap</li>
               <li>Next steps for your AI journey</li>
             </ul>
+            
+            ${reportContent ? `
+            <h3>Your Assessment Report</h3>
+            <div style="background: #F8FAFC; padding: 20px; border-radius: 8px; border-left: 4px solid #3B82F6; margin: 20px 0;">
+              <pre style="white-space: pre-wrap; font-family: monospace; font-size: 12px; margin: 0; color: #374151;">${reportContent}</pre>
+            </div>
+            ` : ''}
             
             <p>Ready to discuss your results and implementation strategy?</p>
             
