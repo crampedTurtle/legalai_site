@@ -42,7 +42,8 @@ export function AssessmentPage() {
     setIsSubmitting(true)
 
     try {
-      const response = await fetch('/api/assessment', {
+      // Step 1: Generate report with OpenAI and PDF
+      const reportResponse = await fetch('/api/assessment/report', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,18 +51,80 @@ export function AssessmentPage() {
         body: JSON.stringify({
           name: contact.name,
           email: contact.email,
-          firm: contact.firm,
-          answers: answers,
+          firm: { name: contact.firm },
+          scores: {
+            strategy: answers['strategy_1'] || 0,
+            data: answers['data_1'] || 0,
+            technology: answers['technology_1'] || 0,
+            team: answers['team_1'] || 0,
+            change: answers['change_1'] || 0
+          },
+          questions: Object.entries(answers).map(([id, score]) => ({
+            id,
+            score,
+            category: id.split('_')[0] as any
+          })),
+          thresholds: {
+            emerging: 1.5,
+            developing: 3.5,
+            mature: 5.0
+          },
+          requirements: {
+            compliance: [],
+            security: [],
+            integration: []
+          },
+          brand: {
+            name: "Sapphire Legal AI",
+            values: ["Privacy-first", "Security", "Compliance"]
+          }
         }),
       })
 
-      if (!response.ok) {
-        throw new Error('Failed to submit assessment')
+      if (!reportResponse.ok) {
+        throw new Error('Failed to generate assessment report')
       }
 
-      const assessmentResults = await response.json()
+      const { pdfBase64, recommendations } = await reportResponse.json()
+
+      // Step 2: Send email with PDF
+      const emailResponse = await fetch('/api/assessment/email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          toEmail: contact.email,
+          firmName: contact.firm,
+          pdfBase64: pdfBase64
+        }),
+      })
+
+      if (!emailResponse.ok) {
+        console.warn('Email sending failed, but report was generated')
+      }
+
+      // Step 3: Create results object for display
+      const assessmentResults = {
+        name: contact.name,
+        email: contact.email,
+        firm: contact.firm,
+        answers: answers,
+        results: recommendations.categories.map((cat: any) => ({
+          category: cat.key,
+          score: cat.score * 20, // Convert to percentage
+          maxScore: 100,
+          percentage: cat.score * 20,
+          recommendations: cat.recommendations.map((rec: any) => rec.title)
+        })),
+        totalScore: recommendations.overall.score,
+        maxTotalScore: 100,
+        overallPercentage: recommendations.overall.score
+      }
+
       setResults(assessmentResults)
       setCurrentStep('results')
+      
       // Scroll to top when showing results
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } catch (error) {
