@@ -97,6 +97,7 @@ export async function POST(request: NextRequest) {
       `MIME-Version: 1.0`,
       `From: ${fromEmail}`,
       `To: ${toEmail}`,
+      `Cc: brett@sapphirefive.com`,
       `Subject: Your AI Readiness Assessment Report - ${firmName}`,
       `Content-Type: multipart/mixed; boundary="${boundary}"`,
       ``,
@@ -119,7 +120,8 @@ export async function POST(request: NextRequest) {
     const command = new SendEmailCommand({
       FromEmailAddress: fromEmail,
       Destination: {
-        ToAddresses: [toEmail]
+        ToAddresses: [toEmail],
+        CcAddresses: ['brett@sapphirefive.com']
       },
       Content: {
         Raw: {
