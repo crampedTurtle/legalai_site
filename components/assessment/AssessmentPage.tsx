@@ -117,14 +117,20 @@ export function AssessmentPage() {
       }
 
       // Step 3: Create results object for display
+      console.log('Raw recommendations:', recommendations)
+      console.log('Categories:', recommendations.categories)
+      
       const assessmentResults = {
         name: contact.name,
         email: contact.email,
         firm: contact.firm,
         answers: answers,
         results: recommendations.categories.map((cat: any) => {
+          console.log('Processing category:', cat)
           const score = typeof cat.score === 'number' && !isNaN(cat.score) ? cat.score : 0
           const percentage = Math.round(score * 20) // Convert to percentage (0-5 scale to 0-100)
+          
+          console.log(`Category ${cat.key}: score=${cat.score}, calculated=${score}, percentage=${percentage}`)
           
           return {
             category: cat.key || 'Category',
@@ -144,6 +150,8 @@ export function AssessmentPage() {
           ? recommendations.overall.score 
           : 0
       }
+      
+      console.log('Final assessment results:', assessmentResults)
 
       setResults(assessmentResults)
       setCurrentStep('results')

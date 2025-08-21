@@ -109,11 +109,11 @@ export async function buildReportPDF({
     try {
       const logoBuffer = fs.readFileSync(logoPath())
       const logoImage = await pdfDoc.embedPng(logoBuffer)
-      const logoDims = logoImage.scale(0.3) // Scale logo to 30% of original size
+      const logoDims = logoImage.scale(0.25) // Scale logo to 25% of original size (smaller)
       
       coverPage.drawImage(logoImage, {
         x: (width - logoDims.width) / 2,
-        y: height - 150,
+        y: height - 200, // Move logo down to prevent cutoff
         width: logoDims.width,
         height: logoDims.height
       })
@@ -124,7 +124,7 @@ export async function buildReportPDF({
     // Title
     coverPage.drawText("AI Readiness Assessment Report", {
       x: 50,
-      y: height - 250,
+      y: height - 300, // Move title down to accommodate logo
       size: 24,
       font: interBold!,
       color: rgb(0.12, 0.16, 0.23)
@@ -133,7 +133,7 @@ export async function buildReportPDF({
     // Subtitle
     coverPage.drawText("Prepared for:", {
       x: 50,
-      y: height - 330,
+      y: height - 380, // Adjust spacing
       size: 16,
       font: interRegular!,
       color: rgb(0.4, 0.45, 0.55)
@@ -142,7 +142,7 @@ export async function buildReportPDF({
     // Firm name
     coverPage.drawText(firm?.name || "—", {
       x: 50,
-      y: height - 370,
+      y: height - 420, // Adjust spacing
       size: 18,
       font: interBold!,
       color: rgb(0.12, 0.16, 0.23)
@@ -151,7 +151,7 @@ export async function buildReportPDF({
     // Date
     coverPage.drawText(`Assessment Date: ${new Date().toLocaleDateString()}`, {
       x: 50,
-      y: height - 430,
+      y: height - 480, // Adjust spacing
       size: 12,
       font: interRegular!,
       color: rgb(0.4, 0.45, 0.55)
@@ -160,7 +160,7 @@ export async function buildReportPDF({
     // Confidential notice
     coverPage.drawText("Confidential — For Internal Use Only", {
       x: 50,
-      y: height - 550,
+      y: height - 600, // Adjust spacing
       size: 10,
       font: interRegular!,
       color: rgb(0.4, 0.45, 0.55)
