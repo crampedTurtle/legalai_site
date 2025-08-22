@@ -12,6 +12,7 @@ import { useEffect } from 'react'
 const navigation = [
   { name: 'Features', href: '/features' },
   { name: 'Solutions', href: '/solutions' },
+  { name: 'Framework', href: '/framework' },
   { name: 'Why Private AI', href: '/why-private-ai' },
   { name: 'Resources', href: '/resources' },
   { name: 'About', href: '/about' },
