@@ -34,9 +34,8 @@ export async function POST(req: NextRequest) {
     const timezone = tz || 'America/New_York'
 
     const booking = await createBooking({
-      eventType: eventTypeSlug,
       start,
-      timezone,
+      timeZone: timezone,
       name,
       email: lead.email,
       notes: (lead.notes || '') + (notes ? `\n\nClient note: ${notes}` : ''),

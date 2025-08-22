@@ -1,101 +1,101 @@
 const CAL_API_BASE = 'https://api.cal.com/v2'
 const CAL_API_KEY = process.env.CAL_API_KEY!
+const CAL_USERNAME = process.env.CAL_USERNAME!
+const CAL_EVENT_TYPE = process.env.CAL_EVENT_TYPE!
+const CAL_EVENT_TYPE_ID = process.env.CAL_EVENT_TYPE_ID // optional numeric/string id
 
-function auth() {
+function hdrSlots() {
   if (!CAL_API_KEY) throw new Error('CAL_API_KEY missing')
   return {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${CAL_API_KEY}`,
+    'cal-api-version': '2024-09-04', // required for /v2/slots
   }
 }
-
-function slotsAuth() {
+function hdrBookings() {
   if (!CAL_API_KEY) throw new Error('CAL_API_KEY missing')
   return {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${CAL_API_KEY}`,
-    'cal-api-version': '2024-09-04',
+    'cal-api-version': '2024-08-13', // required for /v2/bookings
   }
 }
 
-function bookingAuth() {
-  if (!CAL_API_KEY) throw new Error('CAL_API_KEY missing')
-  return {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${CAL_API_KEY}`,
-    'cal-api-version': '2024-08-13',
-  }
+// date → 'YYYY-MM-DD' (Cal prefers date boundaries for slots)
+export function toISODate(d: Date | string) {
+  const dt = typeof d === 'string' ? new Date(d) : d
+  const y = dt.getUTCFullYear()
+  const m = String(dt.getUTCMonth() + 1).padStart(2,'0')
+  const day = String(dt.getUTCDate()).padStart(2,'0')
+  return `${y}-${m}-${day}`
 }
 
-/**
- * Get slots for an event type slug in a time window.
- * Returns [{ start: ISO, end: ISO }]
- */
-export async function getSlots(params: {
-  eventType: string
-  start: string
-  end: string
-  timezone: string
+// Flatten Cal's date-keyed slots object to array
+function flattenSlots(payload: any) {
+  const data = payload?.data ?? payload
+  const days = Array.isArray(data) ? data : Object.values(data || {})
+  return days.flat().map((s: any) => ({
+    start: s.start ?? s.startTime,
+    end: s.end ?? s.endTime,
+  }))
+}
+
+export async function getSlots(params?: {
+  start?: string
+  end?: string
+  timeZone?: string
+  username?: string
+  eventTypeSlug?: string
+  eventTypeId?: string | number
 }) {
-  const username = process.env.CAL_USERNAME
-  if (!username) throw new Error('CAL_USERNAME missing')
-  
+  const username = params?.username || CAL_USERNAME
+  const timeZone = params?.timeZone || 'America/New_York'
+  const start = toISODate(params?.start || new Date())
+  const end = toISODate(params?.end || new Date(Date.now() + 14*24*3600*1000))
+  const eventTypeSlug = params?.eventTypeSlug || CAL_EVENT_TYPE
+  const eventTypeId = params?.eventTypeId || CAL_EVENT_TYPE_ID
+
   const url = new URL(`${CAL_API_BASE}/slots`)
-  url.searchParams.set('eventTypeSlug', params.eventType)
   url.searchParams.set('username', username)
-  url.searchParams.set('start', params.start)
-  url.searchParams.set('end', params.end)
-  url.searchParams.set('timeZone', params.timezone)
-  
-  console.log('Cal.com API request URL:', url.toString())
-  console.log('Cal.com API request headers:', slotsAuth())
-  
-  const res = await fetch(url, { headers: slotsAuth(), cache: 'no-store' })
-  if (!res.ok) {
-    const t = await res.text().catch(() => '')
-    throw new Error(`getSlots ${res.status}: ${t}`)
-  }
-  const data = await res.json()
-  
-  console.log('Cal.com API raw response:', data)
-  
-  // Cal.com v2 returns slots directly
-  const slots = Array.isArray(data) ? data : data?.slots || []
-  return slots.map((s: any) => ({ start: s.start ?? s.startTime, end: s.end ?? s.endTime }))
+  url.searchParams.set('start', start)       // date-only
+  url.searchParams.set('end', end)           // date-only
+  url.searchParams.set('timeZone', timeZone)
+
+  // Prefer id if provided; else slug
+  if (eventTypeId) url.searchParams.set('eventTypeId', String(eventTypeId))
+  else url.searchParams.set('eventTypeSlug', eventTypeSlug)
+
+  const res = await fetch(url, { headers: hdrSlots(), cache: 'no-store' })
+  if (!res.ok) throw new Error(`getSlots ${res.status}: ${await res.text()}`)
+  return flattenSlots(await res.json())
 }
 
-/**
- * Book a slot by event type slug and start time.
- */
 export async function createBooking(payload: {
-  eventType: string
-  start: string
-  timezone: string
+  start: string            // ISO (UTC)
+  timeZone: string
   name: string
   email: string
   notes?: string
   metadata?: Record<string, any>
+  username?: string
+  eventTypeSlug?: string
+  eventTypeId?: string | number
 }) {
-  const username = process.env.CAL_USERNAME
-  if (!username) throw new Error('CAL_USERNAME missing')
-  
-  const body = {
-    eventTypeSlug: payload.eventType,
-    username: username,
+  const body: any = {
     start: payload.start,
-    timeZone: payload.timezone,
-    attendees: [{ name: payload.name, email: payload.email }],
+    attendee: { name: payload.name, email: payload.email, timeZone: payload.timeZone },
     notes: payload.notes || '',
     metadata: payload.metadata || {},
+    username: payload.username || CAL_USERNAME,
   }
+  if (payload.eventTypeId || CAL_EVENT_TYPE_ID) body.eventTypeId = String(payload.eventTypeId || CAL_EVENT_TYPE_ID)
+  else body.eventTypeSlug = payload.eventTypeSlug || CAL_EVENT_TYPE
+
   const res = await fetch(`${CAL_API_BASE}/bookings`, {
     method: 'POST',
-    headers: bookingAuth(),
+    headers: hdrBookings(),
     body: JSON.stringify(body),
   })
-  if (!res.ok) {
-    const t = await res.text().catch(() => '')
-    throw new Error(`createBooking ${res.status}: ${t}`)
-  }
+  if (!res.ok) throw new Error(`createBooking ${res.status}: ${await res.text()}`)
   return res.json()
 }
