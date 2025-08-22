@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
 import { ArrowRight, Loader2, CheckCircle, Calendar, Clock } from 'lucide-react'
 import { submitLead } from '@/lib/lead/submitLead'
+import { useDemoModal } from '@/hooks/useDemoModal'
 
 type Slot = { start: string; end?: string }
 
 export function DemoForm() {
+  const { close } = useDemoModal()
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [leadId, setLeadId] = useState<string>()
@@ -200,16 +202,19 @@ export function DemoForm() {
         <div className="mt-6 text-center">
           <Button 
             onClick={() => {
+              // Reset form state
               setSuccess(false)
               setLeadId(undefined)
               setSlots([])
               setBooking(null)
               setFormData({ firstName: '', lastName: '', email: '', firm: '', title: '', phone: '', notes: '' })
+              // Close the modal
+              close()
             }}
             variant="outline"
             size="sm"
           >
-            Request Another Demo
+            Done
           </Button>
         </div>
       </div>
