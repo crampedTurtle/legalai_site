@@ -10,7 +10,14 @@ export async function GET(req: NextRequest) {
     const start = u.searchParams.get('start') || new Date().toISOString()
     const end = u.searchParams.get('end') || new Date(Date.now() + 14 * 24 * 3600 * 1000).toISOString()
 
-    console.log('Cal.com slots request:', { eventType, tz, start, end })
+    console.log('Cal.com slots request:', { 
+      eventType, 
+      tz, 
+      start, 
+      end,
+      CAL_EVENT_TYPE: process.env.CAL_EVENT_TYPE,
+      CAL_USERNAME: process.env.CAL_USERNAME ? 'SET' : 'MISSING'
+    })
     
     const slots = await getSlots({ eventType, start, end, timezone: tz })
     console.log('Cal.com slots response:', { slotsCount: slots.length, slots })

@@ -47,12 +47,17 @@ export async function getSlots(params: {
   url.searchParams.set('end', params.end)
   url.searchParams.set('timeZone', params.timezone)
   
+  console.log('Cal.com API request URL:', url.toString())
+  console.log('Cal.com API request headers:', slotsAuth())
+  
   const res = await fetch(url, { headers: slotsAuth(), cache: 'no-store' })
   if (!res.ok) {
     const t = await res.text().catch(() => '')
     throw new Error(`getSlots ${res.status}: ${t}`)
   }
   const data = await res.json()
+  
+  console.log('Cal.com API raw response:', data)
   
   // Cal.com v2 returns slots directly
   const slots = Array.isArray(data) ? data : data?.slots || []
