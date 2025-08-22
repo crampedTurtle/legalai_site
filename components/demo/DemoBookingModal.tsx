@@ -18,9 +18,6 @@ interface FormData {
   firm: string
   title: string
   phone: string
-  preferredDate: string
-  preferredTime: string
-  timezone: string
   useCase: string
   teamSize: string
   timeline: string
@@ -34,9 +31,6 @@ export function DemoBookingModal({ isOpen, onClose, source = 'demo:booking' }: D
     firm: '',
     title: '',
     phone: '',
-    preferredDate: '',
-    preferredTime: '',
-    timezone: 'America/New_York',
     useCase: '',
     teamSize: '',
     timeline: '',
@@ -68,7 +62,7 @@ export function DemoBookingModal({ isOpen, onClose, source = 'demo:booking' }: D
         firm_name: formData.firm,
         title: formData.title,
         phone: formData.phone,
-        notes: `Demo Request - Date: ${formData.preferredDate}, Time: ${formData.preferredTime}, Timezone: ${formData.timezone}, Use Case: ${formData.useCase}, Team Size: ${formData.teamSize}, Timeline: ${formData.timeline}, Additional Notes: ${formData.notes}`,
+        notes: `Demo Request - Use Case: ${formData.useCase}, Team Size: ${formData.teamSize}, Timeline: ${formData.timeline}, Additional Notes: ${formData.notes}`,
         wants_demo: true,
         source: source,
       }, 'demo_request')
@@ -93,9 +87,6 @@ export function DemoBookingModal({ isOpen, onClose, source = 'demo:booking' }: D
           firm: '',
           title: '',
           phone: '',
-          preferredDate: '',
-          preferredTime: '',
-          timezone: 'America/New_York',
           useCase: '',
           teamSize: '',
           timeline: '',
@@ -292,74 +283,7 @@ export function DemoBookingModal({ isOpen, onClose, source = 'demo:booking' }: D
                 </div>
               </div>
 
-              {/* Scheduling Preferences */}
-              <div className="border-t border-dark-700 pt-6">
-                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-sapphire-400" />
-                  Scheduling Preferences
-                </h3>
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div>
-                    <label htmlFor="preferredDate" className="block text-sm font-medium text-white mb-2">
-                      Preferred Date
-                    </label>
-                    <input
-                      type="date"
-                      id="preferredDate"
-                      value={formData.preferredDate}
-                      onChange={(e) => handleInputChange('preferredDate', e.target.value)}
-                      className="w-full px-4 py-3 bg-dark-800 border border-dark-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors"
-                      disabled={isSubmitting}
-                    />
-                  </div>
 
-                  <div>
-                    <label htmlFor="preferredTime" className="block text-sm font-medium text-white mb-2">
-                      Preferred Time
-                    </label>
-                    <select
-                      id="preferredTime"
-                      value={formData.preferredTime}
-                      onChange={(e) => handleInputChange('preferredTime', e.target.value)}
-                      className="w-full px-4 py-3 bg-dark-800 border border-dark-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors"
-                      disabled={isSubmitting}
-                    >
-                      <option value="">Select time</option>
-                      <option value="9:00 AM">9:00 AM</option>
-                      <option value="10:00 AM">10:00 AM</option>
-                      <option value="11:00 AM">11:00 AM</option>
-                      <option value="12:00 PM">12:00 PM</option>
-                      <option value="1:00 PM">1:00 PM</option>
-                      <option value="2:00 PM">2:00 PM</option>
-                      <option value="3:00 PM">3:00 PM</option>
-                      <option value="4:00 PM">4:00 PM</option>
-                      <option value="5:00 PM">5:00 PM</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="timezone" className="block text-sm font-medium text-white mb-2">
-                      Timezone
-                    </label>
-                    <select
-                      id="timezone"
-                      value={formData.timezone}
-                      onChange={(e) => handleInputChange('timezone', e.target.value)}
-                      className="w-full px-4 py-3 bg-dark-800 border border-dark-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors"
-                      disabled={isSubmitting}
-                    >
-                      <option value="America/New_York">Eastern Time</option>
-                      <option value="America/Chicago">Central Time</option>
-                      <option value="America/Denver">Mountain Time</option>
-                      <option value="America/Los_Angeles">Pacific Time</option>
-                      <option value="Europe/London">London (GMT)</option>
-                      <option value="Europe/Paris">Paris (CET)</option>
-                      <option value="Asia/Tokyo">Tokyo (JST)</option>
-                      <option value="Australia/Sydney">Sydney (AEDT)</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
 
               {/* Use Case & Timeline */}
               <div className="grid md:grid-cols-2 gap-6">

@@ -61,10 +61,7 @@ export function Header() {
           ))}
         </div>
         
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
-          <Button variant="ghost" size="sm" onClick={() => useDemoModal.getState().open('header:schedule-demo')}>
-            Schedule Demo
-          </Button>
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <Button variant="primary" size="sm" onClick={() => useDemoModal.getState().open('header:request-demo')}>
             Request Demo
           </Button>
@@ -133,13 +130,7 @@ export function Header() {
                       </Link>
                     ))}
                   </div>
-                  <div className="py-6 space-y-4">
-                    <Button variant="ghost" className="w-full" onClick={() => {
-                      useDemoModal.getState().open('header:mobile-schedule-demo')
-                      setMobileMenuOpen(false)
-                    }}>
-                      Schedule Demo
-                    </Button>
+                  <div className="py-6">
                     <Button variant="primary" className="w-full" onClick={() => {
                       useDemoModal.getState().open('header:mobile-request-demo')
                       setMobileMenuOpen(false)

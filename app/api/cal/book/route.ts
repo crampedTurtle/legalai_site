@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     const s = supabaseServer()
     const { data: lead, error } = await s
       .from('leads')
-      .select('id,email,first_name,last_name,firm_name,notes')
+      .select('id,email,first_name,last_name,firm_name,notes,title,phone')
       .eq('id', leadId)
       .maybeSingle()
     if (error) return NextResponse.json({ error: 'DB error' }, { status: 500 })
