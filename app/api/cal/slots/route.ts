@@ -1,0 +1,18 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { getSlots } from '@/lib/cal/api'
+
+export async function GET(req: NextRequest) {
+  try {
+    const u = new URL(req.url)
+    const eventType = u.searchParams.get('eventType') || process.env.CAL_EVENT_TYPE
+    if (!eventType) return NextResponse.json({ error: 'Missing eventType' }, { status: 400 })
+    const tz = u.searchParams.get('tz') || Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/New_York'
+    const start = u.searchParams.get('start') || new Date().toISOString()
+    const end = u.searchParams.get('end') || new Date(Date.now() + 14 * 24 * 3600 * 1000).toISOString()
+
+    const slots = await getSlots({ eventType, start, end, timezone: tz })
+    return NextResponse.json({ slots })
+  } catch (e: any) {
+    return NextResponse.json({ error: e.message || 'Slots error' }, { status: 500 })
+  }
+}
