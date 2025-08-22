@@ -88,8 +88,8 @@ export function HeroSection() {
               transition={{ duration: 0.8, delay: 0.7 }}
             >
               <VideoModal 
-                videoId="a52f3ec0cbb144f18ed654699fd23f8f"
-                buttonLabel="Watch Demo"
+                videoId="cd40e8b0c3a14b9da24f138035ac4772"
+                buttonLabel="Watch 45-sec demo"
                 className="w-full sm:w-auto"
               />
             </motion.div>
