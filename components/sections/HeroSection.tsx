@@ -69,29 +69,17 @@ export function HeroSection() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <Button size="lg" className="group" onClick={() => useDemoModal.getState().open('hero:request-demo')}>
-                Request a Demo
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              <VideoModal 
+                videoId="a52f3ec0cbb144f18ed654699fd23f8f"
+                buttonLabel="Watch Demo"
+                className="group"
+              />
               <Button variant="secondary" size="lg" className="group" asChild>
                 <a href="/resources">
                   <Download className="mr-2 h-5 w-5" />
                   Download Whitepaper
                 </a>
               </Button>
-            </motion.div>
-
-            {/* Video Demo Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.7 }}
-            >
-              <VideoModal 
-                videoId="cd40e8b0c3a14b9da24f138035ac4772"
-                buttonLabel="Watch 45-sec demo"
-                className="w-full sm:w-auto"
-              />
             </motion.div>
 
             {/* Trust Indicators */}

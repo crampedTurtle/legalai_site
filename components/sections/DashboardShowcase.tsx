@@ -5,7 +5,8 @@ import { useInView } from 'react-intersection-observer'
 import CountUp from 'react-countup'
 import Image from 'next/image'
 import { Button } from '@/components/ui/Button'
-import { ArrowRight, Play } from 'lucide-react'
+import { ArrowRight, Play, Shield, Lock, Users, FileText, CheckCircle } from 'lucide-react'
+import { VideoModal } from '@/components/VideoModal'
 
 const metrics = [
   { label: 'Documents', value: 51, icon: '📄' },
@@ -241,11 +242,11 @@ export function DashboardShowcase() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="text-center mt-16"
         >
-          <Button size="lg" className="group">
-            <Play className="mr-2 h-5 w-5" />
-            Watch Demo
-            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          <VideoModal 
+            videoId="a52f3ec0cbb144f18ed654699fd23f8f"
+            buttonLabel="Watch Demo"
+            className="group"
+          />
         </motion.div>
       </div>
     </section>
