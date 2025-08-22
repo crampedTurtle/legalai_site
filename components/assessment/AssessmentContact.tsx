@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/Button'
 import { ArrowRight, CheckCircle, FileText, Mail, Loader2, Sparkles } from 'lucide-react'
+import { submitLead } from '@/lib/lead/submitLead'
 
 interface AssessmentContactProps {
   onSubmit: (contact: { name: string; email: string; firm: string }) => void
@@ -127,10 +128,26 @@ export function AssessmentContact({ onSubmit, isSubmitting }: AssessmentContactP
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (validateForm()) {
-      onSubmit(formData)
+      try {
+        // Capture lead in Supabase
+        await submitLead({
+          email: formData.email,
+          name: formData.name,
+          firm_name: formData.firm,
+          wants_demo: false,
+          source: 'AIassessment',
+        })
+        
+        // Proceed with existing flow
+        onSubmit(formData)
+      } catch (error) {
+        console.error('Failed to capture lead:', error)
+        // Continue with assessment flow even if lead capture fails
+        onSubmit(formData)
+      }
     }
   }
 

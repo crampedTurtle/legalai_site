@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/Button'
 import { X, Download, CheckCircle, AlertCircle } from 'lucide-react'
+import { submitLead } from '@/lib/lead/submitLead'
 
 interface ResourceModalProps {
   isOpen: boolean
@@ -41,6 +42,16 @@ export function ResourceModal({ isOpen, onClose, resource }: ResourceModalProps)
     setError(null)
 
     try {
+      // Capture lead in Supabase
+      await submitLead({
+        email: formData.email,
+        name: formData.name,
+        firm_name: formData.company,
+        notes: `Downloaded: ${resource.title}`,
+        wants_demo: false,
+        source: `whitepaper:${resource.type.toLowerCase().replace(/\s+/g, '-')}`,
+      })
+
       // Determine the correct API endpoint based on resource type
       let apiEndpoint = '/api/lead/resource-download'
       if (resource.type === 'Security Whitepaper') {
@@ -73,6 +84,7 @@ export function ResourceModal({ isOpen, onClose, resource }: ResourceModalProps)
       const result = await response.json()
       setIsSuccess(true)
     } catch (err) {
+      console.error('Failed to capture lead or submit form:', err)
       setError('Failed to submit form. Please try again.')
     } finally {
       setIsSubmitting(false)

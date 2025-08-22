@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button'
 import { ArrowRight, Mail, Linkedin, Calendar } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { useFormSubmission } from '@/hooks/useFormSubmission'
+import { submitLead } from '@/lib/lead/submitLead'
 
 interface ContactPageProps {
   children: React.ReactNode
@@ -69,6 +70,21 @@ export function ContactForm() {
   })
 
   const onSubmit = async (data: ContactFormData) => {
+    try {
+      // Capture lead in Supabase
+      await submitLead({
+        email: data.email,
+        name: data.name,
+        firm_name: data.firm,
+        notes: data.message,
+        wants_demo: false,
+        source: 'contact:general',
+      })
+    } catch (error) {
+      console.error('Failed to capture lead:', error)
+      // Continue with contact form submission even if lead capture fails
+    }
+    
     await submitForm(data)
   }
 

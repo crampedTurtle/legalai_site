@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/Button'
 import { X, Download, CheckCircle, AlertCircle } from 'lucide-react'
+import { submitLead } from '@/lib/lead/submitLead'
 
 interface WhitepaperModalProps {
   isOpen: boolean
@@ -37,6 +38,16 @@ export function WhitepaperModal({ isOpen, onClose }: WhitepaperModalProps) {
     setError(null)
 
     try {
+      // Capture lead in Supabase
+      await submitLead({
+        email: formData.email,
+        name: formData.name,
+        firm_name: formData.company,
+        notes: 'Downloaded: Security Whitepaper',
+        wants_demo: false,
+        source: 'whitepaper:security-whitepaper',
+      })
+
       const response = await fetch('/api/lead/security-whitepaper', {
         method: 'POST',
         headers: {
@@ -53,6 +64,7 @@ export function WhitepaperModal({ isOpen, onClose }: WhitepaperModalProps) {
       setDownloadUrl(result.downloadUrl)
       setIsSuccess(true)
     } catch (err) {
+      console.error('Failed to capture lead or submit form:', err)
       setError('Failed to submit form. Please try again.')
     } finally {
       setIsSubmitting(false)

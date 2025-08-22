@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/Button'
 import { X, Download, CheckCircle, AlertCircle } from 'lucide-react'
+import { submitLead } from '@/lib/lead/submitLead'
 
 interface SigLiteModalProps {
   isOpen: boolean
@@ -37,6 +38,16 @@ export function SigLiteModal({ isOpen, onClose, resourceType = 'SIG-Lite' }: Sig
     setError(null)
 
     try {
+      // Capture lead in Supabase
+      await submitLead({
+        email: formData.email,
+        name: formData.name,
+        firm_name: formData.company,
+        notes: `Downloaded: ${resourceType}`,
+        wants_demo: false,
+        source: `whitepaper:${resourceType.toLowerCase().replace(/\s+/g, '-')}`,
+      })
+
       const response = await fetch(resourceType === 'SIG-Lite' ? '/api/lead/siglite' : '/api/lead/security-whitepaper', {
         method: 'POST',
         headers: {
@@ -56,6 +67,7 @@ export function SigLiteModal({ isOpen, onClose, resourceType = 'SIG-Lite' }: Sig
       const result = await response.json()
       setIsSuccess(true)
     } catch (err) {
+      console.error('Failed to capture lead or submit form:', err)
       setError('Failed to submit form. Please try again.')
     } finally {
       setIsSubmitting(false)
