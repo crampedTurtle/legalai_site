@@ -5,6 +5,7 @@ import { useInView } from 'react-intersection-observer'
 import { Button } from '@/components/ui/Button'
 import { ArrowRight, Download, Shield, Lock, Users } from 'lucide-react'
 import { useDemoModal } from '@/hooks/useDemoModal'
+import { VideoModal } from '@/components/VideoModal'
 
 export function HeroSection() {
   const [ref, inView] = useInView({
@@ -78,6 +79,19 @@ export function HeroSection() {
                   Download Whitepaper
                 </a>
               </Button>
+            </motion.div>
+
+            {/* Video Demo Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.7 }}
+            >
+              <VideoModal 
+                videoId="cd40e8b0c3a14b9da24f138035ac4772"
+                buttonLabel="Watch 3-min demo"
+                className="w-full sm:w-auto"
+              />
             </motion.div>
 
             {/* Trust Indicators */}

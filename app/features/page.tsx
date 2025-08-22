@@ -5,7 +5,8 @@ import { IntroSection, Headline, Paragraph } from '@/components/features/IntroSe
 import { FeaturesHero } from '@/components/features/FeaturesHero'
 import { FeatureSection, Feature } from '@/components/features/FeatureSection'
 import { BenefitsSection, Headline as BenefitsHeadline, Benefit } from '@/components/features/BenefitsSection'
-import { CTASection, Headline as CTAHeadline, Paragraph as CTAParagraph, CTAButton } from '@/components/features/CTASection'
+import { CTASection, Headline as CTAHeadline, Paragraph as CTAParagraph } from '@/components/features/CTASection'
+import { FeaturesCTA } from '@/components/features/FeaturesCTA'
 
 export const metadata: Metadata = {
   title: 'Features - Document Intelligence, Collaborative Drafting, Case Management & AI Assistant',
@@ -139,12 +140,9 @@ export default function FeaturesPage() {
             Early adopters receive priority onboarding, training, and locked-in pricing.
             Don't wait — see how Sapphire Legal AI can transform your practice today.
           </CTAParagraph>
-          <CTAButton asChild>
-            <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
-              Book Your Demo
-            </a>
-          </CTAButton>
         </CTASection>
+
+        <FeaturesCTA />
       </main>
       <Footer />
     </div>

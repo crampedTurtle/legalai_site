@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Button } from '@/components/ui/Button'
 import { ArrowRight, Shield, Lock, Eye } from 'lucide-react'
+import { VideoModal } from '@/components/VideoModal'
 
 const privacyFeatures = [
   {
@@ -77,7 +78,7 @@ export function WhyPrivateAIHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-center"
+          className="text-center space-y-4"
         >
           <Button size="lg" className="group" asChild>
             <a href="/security">
@@ -85,6 +86,14 @@ export function WhyPrivateAIHero() {
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </a>
           </Button>
+          
+          <div>
+            <VideoModal 
+              videoId="cd40e8b0c3a14b9da24f138035ac4772"
+              buttonLabel="Watch 3-min demo"
+              className="w-full sm:w-auto"
+            />
+          </div>
         </motion.div>
       </div>
     </section>
