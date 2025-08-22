@@ -62,9 +62,21 @@ export function DemoForm() {
     try {
       setLoadingSlots(true)
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
+      console.log('Loading Cal.com slots for timezone:', tz)
+      
       const res = await fetch(`/api/cal/slots?tz=${encodeURIComponent(tz)}`)
       const data = await res.json()
+      
+      console.log('Cal.com slots response:', data)
+      
+      if (!res.ok) {
+        console.error('Cal.com slots API error:', data)
+        return
+      }
+      
       const normalized: Slot[] = (data.slots || []).filter(Boolean).map((s: any) => ({ start: s.start ?? s.startTime, end: s.end ?? s.endTime }))
+      console.log('Normalized slots:', normalized)
+      
       setSlots(normalized.slice(0, 12))
     } catch (error) {
       console.error('Failed to load slots:', error)

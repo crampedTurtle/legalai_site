@@ -375,9 +375,7 @@ export function DemoBookingModal({ isOpen, onClose, source = 'demo:booking' }: D
                 )}
               </Button>
 
-              <p className="text-center text-sm text-dark-400">
-                We'll contact you within 24 hours to schedule your personalized demo
-              </p>
+
             </form>
           </motion.div>
         </div>

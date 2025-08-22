@@ -10,9 +10,14 @@ export async function GET(req: NextRequest) {
     const start = u.searchParams.get('start') || new Date().toISOString()
     const end = u.searchParams.get('end') || new Date(Date.now() + 14 * 24 * 3600 * 1000).toISOString()
 
+    console.log('Cal.com slots request:', { eventType, tz, start, end })
+    
     const slots = await getSlots({ eventType, start, end, timezone: tz })
+    console.log('Cal.com slots response:', { slotsCount: slots.length, slots })
+    
     return NextResponse.json({ slots })
   } catch (e: any) {
+    console.error('Cal.com slots error:', e)
     return NextResponse.json({ error: e.message || 'Slots error' }, { status: 500 })
   }
 }
