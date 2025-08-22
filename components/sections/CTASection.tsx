@@ -9,10 +9,11 @@ import {
   Phone, 
   Mail, 
   Clock,
-  CheckCircle
+  CheckCircle,
+  Loader2
 } from 'lucide-react'
-import { useForm } from 'react-hook-form'
-import { useFormSubmission } from '@/hooks/useFormSubmission'
+import { useState } from 'react'
+import { submitLead } from '@/lib/lead/submitLead'
 
 const benefits = [
   '30-minute personalized demo',
@@ -33,15 +34,52 @@ interface DemoFormData {
 }
 
 export function CTASection() {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<DemoFormData>()
-  const { submitForm, isSubmitting, isSuccess, error, reset: resetSubmission } = useFormSubmission('demo', {
-    onSuccess: () => {
-      reset()
-    },
+  const [formData, setFormData] = useState<DemoFormData>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    firm: '',
+    practiceArea: '',
+    message: ''
   })
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const onSubmit = async (data: DemoFormData) => {
-    await submitForm(data)
+  const handleInputChange = (field: keyof DemoFormData, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }))
+    if (error) setError(null)
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!formData.email || !formData.firstName || !formData.lastName || !formData.firm) {
+      setError('Please fill in all required fields')
+      return
+    }
+
+    try {
+      setLoading(true)
+      setError(null)
+      
+      await submitLead({
+        email: formData.email,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        firm_name: formData.firm,
+        notes: `Practice Area: ${formData.practiceArea || 'Not specified'}\nAdditional Information: ${formData.message || 'None provided'}`,
+        wants_demo: true,
+        source: 'demo:landing-page',
+      }, 'demo_request')
+      
+      setSuccess(true)
+      setFormData({ firstName: '', lastName: '', email: '', firm: '', practiceArea: '', message: '' })
+    } catch (err) {
+      console.error('Failed to submit demo request:', err)
+      setError('Could not submit your request. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -132,37 +170,35 @@ export function CTASection() {
             <h3 className="text-2xl font-semibold text-white mb-6">
               Request Your Demo
             </h3>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="firstName" className="block text-sm font-medium text-dark-300 mb-2">
                     First Name *
                   </label>
                   <input
-                    {...register('firstName', { required: 'First name is required' })}
                     type="text"
                     id="firstName"
+                    value={formData.firstName}
+                    onChange={(e) => handleInputChange('firstName', e.target.value)}
                     className="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors"
                     placeholder="John"
+                    disabled={loading}
                   />
-                  {errors.firstName && (
-                    <p className="mt-1 text-sm text-red-400">{errors.firstName.message}</p>
-                  )}
                 </div>
                 <div>
                   <label htmlFor="lastName" className="block text-sm font-medium text-dark-300 mb-2">
                     Last Name *
                   </label>
                   <input
-                    {...register('lastName', { required: 'Last name is required' })}
                     type="text"
                     id="lastName"
+                    value={formData.lastName}
+                    onChange={(e) => handleInputChange('lastName', e.target.value)}
                     className="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors"
                     placeholder="Smith"
+                    disabled={loading}
                   />
-                  {errors.lastName && (
-                    <p className="mt-1 text-sm text-red-400">{errors.lastName.message}</p>
-                  )}
                 </div>
               </div>
 
@@ -171,21 +207,14 @@ export function CTASection() {
                   Email Address *
                 </label>
                 <input
-                  {...register('email', { 
-                    required: 'Email is required',
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: 'Invalid email address'
-                    }
-                  })}
                   type="email"
                   id="email"
+                  value={formData.email}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
                   className="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors"
                   placeholder="john.smith@lawfirm.com"
+                  disabled={loading}
                 />
-                {errors.email && (
-                  <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
-                )}
               </div>
 
               <div>
@@ -193,15 +222,14 @@ export function CTASection() {
                   Firm/Organization *
                 </label>
                 <input
-                  {...register('firm', { required: 'Firm/Organization is required' })}
                   type="text"
                   id="firm"
+                  value={formData.firm}
+                  onChange={(e) => handleInputChange('firm', e.target.value)}
                   className="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors"
                   placeholder="Smith & Associates Law"
+                  disabled={loading}
                 />
-                {errors.firm && (
-                  <p className="mt-1 text-sm text-red-400">{errors.firm.message}</p>
-                )}
               </div>
 
               <div>
@@ -209,9 +237,11 @@ export function CTASection() {
                   Practice Area
                 </label>
                 <select
-                  {...register('practiceArea')}
                   id="practiceArea"
+                  value={formData.practiceArea}
+                  onChange={(e) => handleInputChange('practiceArea', e.target.value)}
                   className="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors"
+                  disabled={loading}
                 >
                   <option value="">Select your practice area</option>
                   <option value="corporate">Corporate Law</option>
@@ -231,11 +261,13 @@ export function CTASection() {
                   Additional Information
                 </label>
                 <textarea
-                  {...register('message')}
                   id="message"
                   rows={4}
+                  value={formData.message}
+                  onChange={(e) => handleInputChange('message', e.target.value)}
                   className="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors resize-none"
                   placeholder="Tell us about your current challenges and what you're looking to achieve..."
+                  disabled={loading}
                 />
               </div>
 
@@ -243,13 +275,22 @@ export function CTASection() {
                 type="submit" 
                 size="lg" 
                 className="w-full group" 
-                disabled={isSubmitting}
+                disabled={loading}
               >
-                {isSubmitting ? 'Submitting...' : 'Schedule Demo'}
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    Schedule Demo
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </>
+                )}
               </Button>
 
-              {isSuccess && (
+              {success && (
                 <div className="mt-4 p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
                   <p className="text-green-400 text-sm">Demo request submitted successfully! We'll contact you soon to schedule your demo.</p>
                 </div>
