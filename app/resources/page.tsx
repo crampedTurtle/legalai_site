@@ -23,7 +23,7 @@ export default function Resources() {
             Sapphire Legal AI curates the latest strategies, guides, and tools to help firms understand and adopt AI responsibly.
           </Intro>
           <ResourceCard title="Why Public AI Tools Put Firms At Risk" type="Whitepaper" link="/docs/sapphire_why_public_ai_put_firms_at_risk.pdf" />
-          <ResourceCard title="Sapphire Legal AI: Your Private & Intelligent Legal Workspace" type="Guide" link="/docs/Sapphire_LegalAI_Features.pdf" />
+          <ResourceCard title="Sapphire Legal AI: Your Private & Intelligent Legal Workspace" type="Guide" link="/docs/sapphire_legalai_features.pdf" />
           <ResourceCard title="AI Readiness Assessment for Mid-Sized Firms" type="Assessment" link="/assessment" />
           <ResourceCard title="Sapphire Legal AI Demo Walkthrough" type="Video" link="/resources/demo-video" />
           <CTA>Book a Demo</CTA>
