@@ -6,6 +6,7 @@ import { useInView } from 'react-intersection-observer'
 import { Button } from '@/components/ui/Button'
 import { ArrowRight, FileText, BookOpen, CheckSquare, Play } from 'lucide-react'
 import { ResourceModal } from './ResourceModal'
+import { useDemoModal } from '@/hooks/useDemoModal'
 
 interface ResourcesPageProps {
   children: React.ReactNode
@@ -206,7 +207,7 @@ export function CTA({ children }: CTAProps) {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <Button size="lg" className="group">
+          <Button size="lg" className="group" onClick={() => useDemoModal.getState().open('resources:book-demo')}>
             {children}
             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
           </Button>

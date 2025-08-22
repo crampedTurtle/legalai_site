@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Button } from '@/components/ui/Button'
 import { ArrowRight, Download, Shield, Lock, Users } from 'lucide-react'
+import { useDemoModal } from '@/hooks/useDemoModal'
 
 export function HeroSection() {
   const [ref, inView] = useInView({
@@ -67,11 +68,9 @@ export function HeroSection() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <Button size="lg" className="group" asChild>
-                <a href="https://cal.com/s5-brett/" target="_blank" rel="noopener noreferrer">
-                  Request a Demo
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </a>
+              <Button size="lg" className="group" onClick={() => useDemoModal.getState().open('hero:request-demo')}>
+                Request a Demo
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button variant="secondary" size="lg" className="group" asChild>
                 <a href="/resources">

@@ -1,11 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { Menu, X } from 'lucide-react'
+import { useDemoModal } from '@/hooks/useDemoModal'
+import { useEffect } from 'react'
 
 const navigation = [
   { name: 'Features', href: '/features' },
@@ -60,11 +62,11 @@ export function Header() {
         </div>
         
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
-          <Button variant="ghost" size="sm" asChild>
-            <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">Schedule Demo</a>
+          <Button variant="ghost" size="sm" onClick={() => useDemoModal.getState().open('header:schedule-demo')}>
+            Schedule Demo
           </Button>
-          <Button variant="primary" size="sm" asChild>
-            <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">Request Demo</a>
+          <Button variant="primary" size="sm" onClick={() => useDemoModal.getState().open('header:request-demo')}>
+            Request Demo
           </Button>
         </div>
         
@@ -132,15 +134,17 @@ export function Header() {
                     ))}
                   </div>
                   <div className="py-6 space-y-4">
-                    <Button variant="ghost" className="w-full" asChild>
-                      <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)}>
-                        Schedule Demo
-                      </a>
+                    <Button variant="ghost" className="w-full" onClick={() => {
+                      useDemoModal.getState().open('header:mobile-schedule-demo')
+                      setMobileMenuOpen(false)
+                    }}>
+                      Schedule Demo
                     </Button>
-                    <Button variant="primary" className="w-full" asChild>
-                      <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)}>
-                        Request Demo
-                      </a>
+                    <Button variant="primary" className="w-full" onClick={() => {
+                      useDemoModal.getState().open('header:mobile-request-demo')
+                      setMobileMenuOpen(false)
+                    }}>
+                      Request Demo
                     </Button>
                   </div>
                 </div>

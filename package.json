@@ -26,7 +26,8 @@
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
     "react-intersection-observer": "^9.5.3",
-    "tailwind-merge": "^2.2.0"
+    "tailwind-merge": "^2.2.0",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@types/fontkit": "^2.0.8",

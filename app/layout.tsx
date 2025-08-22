@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, IBM_Plex_Sans } from 'next/font/google'
 import './globals.css'
+import { DemoModalProvider } from '@/components/demo/DemoModalProvider'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -126,8 +127,9 @@ export default function RootLayout({
         />
       </head>
                    <body className={`${inter.className} antialiased`}>
-               {children}
-               
+        <DemoModalProvider>
+          {children}
+        </DemoModalProvider>
                {/* Mautic Tracking */}
                <script
                  dangerouslySetInnerHTML={{
