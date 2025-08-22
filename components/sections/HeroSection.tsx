@@ -89,7 +89,7 @@ export function HeroSection() {
             >
               <VideoModal 
                 videoId="cd40e8b0c3a14b9da24f138035ac4772"
-                buttonLabel="Watch 3-min demo"
+                buttonLabel="Watch 45-sec demo"
                 className="w-full sm:w-auto"
               />
             </motion.div>

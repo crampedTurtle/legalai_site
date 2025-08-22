@@ -89,8 +89,8 @@ export function WhyPrivateAIHero() {
           
           <div>
             <VideoModal 
-              videoId="cd40e8b0c3a14b9da24f138035ac4772"
-              buttonLabel="Watch 3-min demo"
+              videoId="a52f3ec0cbb144f18ed654699fd23f8f"
+              buttonLabel="Watch 2-min demo"
               className="w-full sm:w-auto"
             />
           </div>
