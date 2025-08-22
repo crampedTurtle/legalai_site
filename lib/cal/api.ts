@@ -9,6 +9,24 @@ function auth() {
   }
 }
 
+function slotsAuth() {
+  if (!CAL_API_KEY) throw new Error('CAL_API_KEY missing')
+  return {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${CAL_API_KEY}`,
+    'cal-api-version': '2024-09-04',
+  }
+}
+
+function bookingAuth() {
+  if (!CAL_API_KEY) throw new Error('CAL_API_KEY missing')
+  return {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${CAL_API_KEY}`,
+    'cal-api-version': '2024-08-13',
+  }
+}
+
 /**
  * Get slots for an event type slug in a time window.
  * Returns [{ start: ISO, end: ISO }]
@@ -19,18 +37,24 @@ export async function getSlots(params: {
   end: string
   timezone: string
 }) {
-  const url = new URL(`${CAL_API_BASE}/availability/slots`)
+  const username = process.env.CAL_USERNAME
+  if (!username) throw new Error('CAL_USERNAME missing')
+  
+  const url = new URL(`${CAL_API_BASE}/slots`)
   url.searchParams.set('eventTypeSlug', params.eventType)
-  url.searchParams.set('startTime', params.start)
-  url.searchParams.set('endTime', params.end)
+  url.searchParams.set('username', username)
+  url.searchParams.set('start', params.start)
+  url.searchParams.set('end', params.end)
   url.searchParams.set('timeZone', params.timezone)
-  const res = await fetch(url, { headers: auth(), cache: 'no-store' })
+  
+  const res = await fetch(url, { headers: slotsAuth(), cache: 'no-store' })
   if (!res.ok) {
     const t = await res.text().catch(() => '')
     throw new Error(`getSlots ${res.status}: ${t}`)
   }
   const data = await res.json()
-  // Normalize: API may return { slots: [...] } or direct array depending on version
+  
+  // Cal.com v2 returns slots directly
   const slots = Array.isArray(data) ? data : data?.slots || []
   return slots.map((s: any) => ({ start: s.start ?? s.startTime, end: s.end ?? s.endTime }))
 }
@@ -47,8 +71,12 @@ export async function createBooking(payload: {
   notes?: string
   metadata?: Record<string, any>
 }) {
+  const username = process.env.CAL_USERNAME
+  if (!username) throw new Error('CAL_USERNAME missing')
+  
   const body = {
     eventTypeSlug: payload.eventType,
+    username: username,
     start: payload.start,
     timeZone: payload.timezone,
     attendees: [{ name: payload.name, email: payload.email }],
@@ -57,7 +85,7 @@ export async function createBooking(payload: {
   }
   const res = await fetch(`${CAL_API_BASE}/bookings`, {
     method: 'POST',
-    headers: auth(),
+    headers: bookingAuth(),
     body: JSON.stringify(body),
   })
   if (!res.ok) {
