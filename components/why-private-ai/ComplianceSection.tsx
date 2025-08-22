@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Button } from '@/components/ui/Button'
 import { ArrowRight, Shield, Lock, Eye, CheckCircle, Server } from 'lucide-react'
+import { useSecurityDemoModal } from '@/hooks/useSecurityDemoModal'
 
 const complianceFrameworks = [
   {
@@ -48,6 +49,7 @@ export function ComplianceSection() {
     triggerOnce: true,
     threshold: 0.1,
   })
+  const { open } = useSecurityDemoModal()
 
   return (
     <section className="py-24 bg-dark-900">
@@ -117,11 +119,9 @@ export function ComplianceSection() {
           <p className="text-lg text-dark-300 mb-6">
             Ready to experience truly private AI for your legal practice?
           </p>
-          <Button size="lg" className="group" asChild>
-            <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
-              Schedule a Security Demo
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </a>
+          <Button size="lg" className="group" onClick={() => open('why-private-ai:security-demo')}>
+            Schedule a Security Demo
+            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
           </Button>
         </motion.div>
       </div>

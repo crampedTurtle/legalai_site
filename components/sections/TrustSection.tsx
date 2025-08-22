@@ -11,6 +11,8 @@ import {
   Users,
   ArrowRight
 } from 'lucide-react'
+import { Button } from '@/components/ui/Button'
+import { useSecurityDemoModal } from '@/hooks/useSecurityDemoModal'
 
 const trustFeatures = [
   {
@@ -60,6 +62,7 @@ export function TrustSection() {
     triggerOnce: true,
     threshold: 0.1,
   })
+  const { open } = useSecurityDemoModal()
 
   return (
     <section className="py-24 bg-dark-950">
@@ -240,10 +243,10 @@ export function TrustSection() {
           <p className="text-lg text-dark-300 mb-6">
             Ready to experience truly private AI for your legal practice?
           </p>
-          <button className="btn-primary group">
+          <Button size="lg" className="group" onClick={() => open('trust-section:security-demo')}>
             Schedule a Security Demo
             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-          </button>
+          </Button>
         </motion.div>
       </div>
     </section>

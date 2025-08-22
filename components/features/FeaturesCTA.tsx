@@ -4,12 +4,14 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Button } from '@/components/ui/Button'
 import { ArrowRight } from 'lucide-react'
+import { useDemoModal } from '@/hooks/useDemoModal'
 
 export function FeaturesCTA() {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   })
+  const { open } = useDemoModal()
 
   return (
     <section className="py-24 bg-dark-900">
@@ -27,12 +29,10 @@ export function FeaturesCTA() {
           <p className="text-xl text-dark-300 max-w-3xl mx-auto mb-8">
             See how Sapphire Legal AI can transform your legal practice.
           </p>
-                        <Button size="lg" className="group" asChild>
-                <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
-                  Schedule a Demo
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </Button>
+          <Button size="lg" className="group" onClick={() => open('features:book-demo')}>
+            Book Your Demo
+            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+          </Button>
         </motion.div>
       </div>
     </section>

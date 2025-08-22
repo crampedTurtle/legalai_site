@@ -3,13 +3,25 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Button } from '@/components/ui/Button'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Download } from 'lucide-react'
+import { useConsultationModal } from '@/hooks/useConsultationModal'
+import { useResourceModal } from '@/hooks/useResourceModal'
 
 export function SolutionsCTA() {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   })
+  const { open: openConsultation } = useConsultationModal()
+  const { open: openResource } = useResourceModal()
+
+  const handleGuideClick = () => {
+    openResource({
+      title: 'Sapphire Legal AI: Your Private & Intelligent Legal Workspace',
+      type: 'Guide',
+      downloadUrl: '/docs/sapphire_legalai_features.pdf'
+    })
+  }
 
   return (
     <section className="py-24 bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900">
@@ -28,12 +40,13 @@ export function SolutionsCTA() {
             Let's discuss how our software + enablement approach can help your firm adapt and thrive in the AI era.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="group">
+            <Button size="lg" className="group" onClick={() => openConsultation('solutions:consultation')}>
               Schedule a Consultation
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button variant="secondary" size="lg" className="group">
-              Download Implementation Guide
+            <Button variant="secondary" size="lg" className="group" onClick={handleGuideClick}>
+              <Download className="mr-2 h-5 w-5" />
+              Sapphire Legal AI Guide
             </Button>
           </div>
         </motion.div>

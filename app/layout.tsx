@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, IBM_Plex_Sans } from 'next/font/google'
 import './globals.css'
-import { DemoModalProvider } from '@/components/demo/DemoModalProvider'
+import { ModalProvider } from '@/components/demo/ModalProvider'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -126,34 +126,34 @@ export default function RootLayout({
           }}
         />
       </head>
-                   <body className={`${inter.className} antialiased`}>
-        <DemoModalProvider>
+      <body className={`${inter.className} antialiased`}>
+        <ModalProvider>
           {children}
-        </DemoModalProvider>
-               {/* Mautic Tracking */}
-               <script
-                 dangerouslySetInnerHTML={{
-                   __html: `
-                     // Set Mautic tracking endpoint before loading the script
-                     window.MauticTrackingObject = 'mt';
-                     window.mt = window.mt || function(){(window.mt.q=window.mt.q||[]).push(arguments)};
-                     window.mt.trackingUrl = 'https://mautic.sapphirefive.com';
-                     
-                     (function(w,d,t,u,n,a,m){
-                         w['MauticTrackingObject']=n;
-                         w[n]=w[n]||function(){(w[n].q=w[n].q||[]).push(arguments)};
-                         a=d.createElement(t);
-                         m=d.getElementsByTagName(t)[0];
-                         a.async=1;
-                         a.src=u;
-                         m.parentNode.insertBefore(a,m);
-                     })(window,document,'script','https://mautic.sapphirefive.com/mtc.js','mt');
+        </ModalProvider>
+        {/* Mautic Tracking */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Set Mautic tracking endpoint before loading the script
+              window.MauticTrackingObject = 'mt';
+              window.mt = window.mt || function(){(window.mt.q=window.mt.q||[]).push(arguments)};
+              window.mt.trackingUrl = 'https://mautic.sapphirefive.com';
+              
+              (function(w,d,t,u,n,a,m){
+                  w['MauticTrackingObject']=n;
+                  w[n]=w[n]||function(){(w[n].q=w[n].q||[]).push(arguments)};
+                  a=d.createElement(t);
+                  m=d.getElementsByTagName(t)[0];
+                  a.async=1;
+                  a.src=u;
+                  m.parentNode.insertBefore(a,m);
+              })(window,document,'script','https://mautic.sapphirefive.com/mtc.js','mt');
 
-                     mt('send', 'pageview');
-                   `
-                 }}
-               />
-             </body>
+              mt('send', 'pageview');
+            `
+          }}
+        />
+      </body>
     </html>
   )
 } 
