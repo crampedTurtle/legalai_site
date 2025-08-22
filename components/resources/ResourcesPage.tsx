@@ -94,9 +94,16 @@ export function ResourceCard({ title, type, link }: ResourceCardProps) {
 
   // Determine if this resource should be gated (whitepapers and guides)
   const isGated = type === 'Whitepaper' || type === 'Guide'
+  
+  // Check if this is the demo walkthrough video
+  const isDemoVideo = title === 'Sapphire Legal AI Demo Walkthrough'
 
   const handleClick = (e: React.MouseEvent) => {
-    if (isGated) {
+    if (isDemoVideo) {
+      e.preventDefault()
+      // For demo video, we'll handle it differently
+      return
+    } else if (isGated) {
       e.preventDefault()
       setIsModalOpen(true)
     }
@@ -165,7 +172,15 @@ export function ResourceCard({ title, type, link }: ResourceCardProps) {
                     {title}
                   </h3>
                 </div>
-                <ArrowRight className="h-6 w-6 text-dark-400 group-hover:text-sapphire-400 group-hover:translate-x-1 transition-all" />
+                {isDemoVideo ? (
+                  <VideoModal 
+                    videoId="a52f3ec0cbb144f18ed654699fd23f8f"
+                    buttonLabel="Watch"
+                    className="bg-sapphire-500 hover:bg-sapphire-600 text-white border-0"
+                  />
+                ) : (
+                  <ArrowRight className="h-6 w-6 text-dark-400 group-hover:text-sapphire-400 group-hover:translate-x-1 transition-all" />
+                )}
               </div>
             </motion.a>
           </div>
@@ -208,11 +223,10 @@ export function CTA({ children }: CTAProps) {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <VideoModal 
-            videoId="a52f3ec0cbb144f18ed654699fd23f8f"
-            buttonLabel={typeof children === 'string' ? children : 'Watch Demo'}
-            className="group"
-          />
+          <Button size="lg" className="group" onClick={() => useDemoModal.getState().open('resources:book-demo')}>
+            {children}
+            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+          </Button>
         </motion.div>
       </div>
     </section>
