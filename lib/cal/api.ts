@@ -75,6 +75,7 @@ export async function createBooking(payload: {
   timeZone: string
   name: string
   email: string
+  // notes?: string   // <-- keep in type if you want, but we won't send it to Cal
   notes?: string
   metadata?: Record<string, any>
   username?: string
@@ -84,12 +85,16 @@ export async function createBooking(payload: {
   const body: any = {
     start: payload.start,
     attendee: { name: payload.name, email: payload.email, timeZone: payload.timeZone },
-    notes: payload.notes || '',
-    metadata: payload.metadata || {},
+    // ❌ DO NOT include `notes` at top-level for Cal v2
+    // notes: payload.notes || '',
+    metadata: { ...(payload.metadata || {}), ...(payload.notes ? { clientNote: payload.notes } : {}) },
     username: payload.username || CAL_USERNAME,
   }
-  if (payload.eventTypeId || CAL_EVENT_TYPE_ID) body.eventTypeId = String(payload.eventTypeId || CAL_EVENT_TYPE_ID)
-  else body.eventTypeSlug = payload.eventTypeSlug || CAL_EVENT_TYPE
+  if (payload.eventTypeId || CAL_EVENT_TYPE_ID) {
+    body.eventTypeId = String(payload.eventTypeId || CAL_EVENT_TYPE_ID)
+  } else {
+    body.eventTypeSlug = payload.eventTypeSlug || CAL_EVENT_TYPE
+  }
 
   const res = await fetch(`${CAL_API_BASE}/bookings`, {
     method: 'POST',

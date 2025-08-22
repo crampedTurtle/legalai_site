@@ -38,7 +38,8 @@ export async function POST(req: NextRequest) {
       timeZone: timezone,
       name,
       email: lead.email,
-      notes: (lead.notes || '') + (notes ? `\n\nClient note: ${notes}` : ''),
+      // previously we concatenated notes; now we pass it as metadata only
+      notes, // optional: will be mapped to metadata.clientNote by createBooking
       metadata: { leadId: lead.id, firm: lead.firm_name || null },
     })
 
