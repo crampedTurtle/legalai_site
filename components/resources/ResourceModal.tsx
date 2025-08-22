@@ -50,7 +50,7 @@ export function ResourceModal({ isOpen, onClose, resource }: ResourceModalProps)
         notes: `Downloaded: ${resource.title}`,
         wants_demo: false,
         source: `whitepaper:${resource.type.toLowerCase().replace(/\s+/g, '-')}`,
-      })
+      }, 'resource_download')
 
       // Determine the correct API endpoint based on resource type
       let apiEndpoint = '/api/lead/resource-download'

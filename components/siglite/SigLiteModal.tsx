@@ -46,7 +46,7 @@ export function SigLiteModal({ isOpen, onClose, resourceType = 'SIG-Lite' }: Sig
         notes: `Downloaded: ${resourceType}`,
         wants_demo: false,
         source: `whitepaper:${resourceType.toLowerCase().replace(/\s+/g, '-')}`,
-      })
+      }, 'resource_download')
 
       const response = await fetch(resourceType === 'SIG-Lite' ? '/api/lead/siglite' : '/api/lead/security-whitepaper', {
         method: 'POST',

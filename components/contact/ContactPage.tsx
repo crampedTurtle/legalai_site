@@ -79,7 +79,7 @@ export function ContactForm() {
         notes: data.message,
         wants_demo: false,
         source: 'contact:general',
-      })
+      }, 'contact_form')
     } catch (error) {
       console.error('Failed to capture lead:', error)
       // Continue with contact form submission even if lead capture fails

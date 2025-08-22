@@ -4,7 +4,7 @@ import { createBooking } from '@/lib/cal/api'
 
 export async function POST(req: NextRequest) {
   try {
-    const { leadId, start, eventType, notes, tz } = await req.json()
+    const { leadId, start, eventType, notes, tz, leadData } = await req.json()
     if (!leadId || !start) return NextResponse.json({ error: 'Missing leadId/start' }, { status: 400 })
     const eventTypeSlug = eventType || process.env.CAL_EVENT_TYPE
     if (!eventTypeSlug) return NextResponse.json({ error: 'Missing eventType' }, { status: 400 })
@@ -17,6 +17,18 @@ export async function POST(req: NextRequest) {
       .maybeSingle()
     if (error) return NextResponse.json({ error: 'DB error' }, { status: 500 })
     if (!lead) return NextResponse.json({ error: 'Lead not found' }, { status: 404 })
+
+    // Update lead information if provided (for existing leads requesting demo again)
+    if (leadData) {
+      await s.from('leads').update({
+        wants_demo: true,
+        notes: leadData.notes || lead.notes,
+        firm_name: leadData.firm_name || lead.firm_name,
+        title: leadData.title || lead.title,
+        phone: leadData.phone || lead.phone,
+        updated_at: new Date().toISOString()
+      }).eq('id', lead.id)
+    }
 
     const name = [lead.first_name, lead.last_name].filter(Boolean).join(' ') || 'Guest'
     const timezone = tz || 'America/New_York'

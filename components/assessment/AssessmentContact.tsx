@@ -139,7 +139,7 @@ export function AssessmentContact({ onSubmit, isSubmitting }: AssessmentContactP
           firm_name: formData.firm,
           wants_demo: false,
           source: 'AIassessment',
-        })
+        }, 'assessment_report')
         
         // Proceed with existing flow
         onSubmit(formData)

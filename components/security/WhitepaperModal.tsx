@@ -46,7 +46,7 @@ export function WhitepaperModal({ isOpen, onClose }: WhitepaperModalProps) {
         notes: 'Downloaded: Security Whitepaper',
         wants_demo: false,
         source: 'whitepaper:security-whitepaper',
-      })
+      }, 'resource_download')
 
       const response = await fetch('/api/lead/security-whitepaper', {
         method: 'POST',

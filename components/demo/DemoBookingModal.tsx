@@ -71,7 +71,7 @@ export function DemoBookingModal({ isOpen, onClose, source = 'demo:booking' }: D
         notes: `Demo Request - Date: ${formData.preferredDate}, Time: ${formData.preferredTime}, Timezone: ${formData.timezone}, Use Case: ${formData.useCase}, Team Size: ${formData.teamSize}, Timeline: ${formData.timeline}, Additional Notes: ${formData.notes}`,
         wants_demo: true,
         source: source,
-      })
+      }, 'demo_request')
 
       setIsSuccess(true)
     } catch (err) {

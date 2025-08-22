@@ -47,7 +47,7 @@ export function DemoForm() {
         notes: formData.notes,
         wants_demo: true,
         source: 'demo:request',
-      })
+      }, 'demo_request')
       setLeadId(id)
       setSuccess(true)
     } catch (err) {
