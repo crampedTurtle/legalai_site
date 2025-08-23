@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ensure anchor targets are visible below fixed header */
+section[id] {
+  scroll-margin-top: 120px;
+}
+
 @layer components {
   .prose {
     @apply text-dark-100;
