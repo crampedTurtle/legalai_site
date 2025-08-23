@@ -18,6 +18,8 @@ interface FormData {
   notes: string
 }
 
+type Slot = { start: string; end?: string }
+
 export function BookingModal() {
   const { isOpen, close } = useBookingModal()
   const [formData, setFormData] = useState<FormData>({
@@ -34,6 +36,13 @@ export function BookingModal() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [leadId, setLeadId] = useState<string>()
+
+  // slots & booking
+  const [slots, setSlots] = useState<Slot[]>([])
+  const [loadingSlots, setLoadingSlots] = useState(false)
+  const [booking, setBooking] = useState<any>(null)
+  const [bookingLoading, setBookingLoading] = useState(false)
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -51,7 +60,7 @@ export function BookingModal() {
       setError(null)
 
       // Capture lead in Supabase
-      await submitLead({
+      const id = await submitLead({
         email: formData.email,
         name: formData.name,
         firm_name: formData.firm,
@@ -62,6 +71,7 @@ export function BookingModal() {
         source: 'framework:implementation-consult',
       }, 'implementation_consult')
 
+      setLeadId(id)
       setIsSuccess(true)
     } catch (err) {
       console.error('Failed to submit implementation consult request:', err)
@@ -71,8 +81,63 @@ export function BookingModal() {
     }
   }
 
+  async function loadSlots() {
+    try {
+      setLoadingSlots(true)
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
+      console.log('Loading Cal.com slots for timezone:', tz)
+      
+      const res = await fetch(`/api/cal/slots?tz=${encodeURIComponent(tz)}`)
+      const data = await res.json()
+      
+      console.log('Cal.com slots response:', data)
+      
+      if (!res.ok) {
+        console.error('Cal.com slots API error:', data)
+        return
+      }
+      
+      const normalized: Slot[] = (data.slots || []).filter(Boolean).map((s: any) => ({ start: s.start ?? s.startTime, end: s.end ?? s.endTime }))
+      console.log('Normalized slots:', normalized)
+      
+      setSlots(normalized.slice(0, 12))
+    } catch (error) {
+      console.error('Failed to load slots:', error)
+    } finally {
+      setLoadingSlots(false)
+    }
+  }
+
+  async function book(startIso: string) {
+    if (!leadId) return
+    try {
+      setBookingLoading(true)
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
+      const res = await fetch('/api/cal/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ leadId, start: startIso, tz })
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        alert(data.error || 'Could not book time')
+        return
+      }
+      setBooking(data.booking)
+    } catch (error) {
+      console.error('Failed to book:', error)
+      alert('Could not book the selected time. Please try again.')
+    } finally {
+      setBookingLoading(false)
+    }
+  }
+
+  useEffect(() => { 
+    if (isSuccess && leadId) loadSlots() 
+  }, [isSuccess, leadId])
+
   const handleClose = () => {
-    if (!isSubmitting) {
+    if (!isSubmitting && !bookingLoading) {
       close()
       // Reset form after a delay to allow animation to complete
       setTimeout(() => {
@@ -89,6 +154,9 @@ export function BookingModal() {
         })
         setIsSuccess(false)
         setError(null)
+        setLeadId(undefined)
+        setSlots([])
+        setBooking(null)
       }, 300)
     }
   }
@@ -122,19 +190,85 @@ export function BookingModal() {
               </div>
               <h3 className="text-xl font-semibold text-white mb-2">Request Submitted!</h3>
               <p className="text-dark-300 mb-6">
-                Thank you for your interest in our implementation framework. We'll be in touch within 24 hours to schedule your consultation.
+                Thanks! Pick a time that works for you:
               </p>
-              <div className="bg-dark-800 rounded-lg p-4 border border-dark-700">
-                <p className="text-sm text-dark-300 mb-2">Or schedule directly:</p>
-                <a 
-                  href="https://cal.com/s5-brett" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sapphire-400 hover:text-sapphire-300 transition-colors"
+
+              {loadingSlots && (
+                <div className="text-center py-8">
+                  <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-sapphire-400" />
+                  <p className="text-dark-300">Loading available times...</p>
+                </div>
+              )}
+
+              {!loadingSlots && slots.length > 0 && (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {slots.map((s) => {
+                      const dt = new Date(s.start)
+                      const label = dt.toLocaleString([], { 
+                        weekday: 'short',
+                        month: 'short', 
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit'
+                      })
+                      return (
+                        <button 
+                          key={s.start} 
+                          onClick={() => book(s.start)}
+                          disabled={bookingLoading}
+                          className="flex items-center justify-between p-4 bg-dark-800 border border-dark-700 rounded-lg hover:bg-dark-700 hover:border-sapphire-500/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <Calendar className="h-5 w-5 text-sapphire-400" />
+                            <span className="text-white font-medium">{label}</span>
+                          </div>
+                          {bookingLoading && <Loader2 className="h-4 w-4 animate-spin text-sapphire-400" />}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {!loadingSlots && slots.length === 0 && (
+                <div className="text-center py-8">
+                  <Clock className="h-8 w-8 mx-auto mb-4 text-dark-400" />
+                  <p className="text-dark-300 mb-4">No available times found for the next 2 weeks.</p>
+                  <p className="text-sm text-dark-400">We'll be in touch to schedule your consultation manually.</p>
+                </div>
+              )}
+
+              {booking && (
+                <div className="mt-6 p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
+                  <div className="flex items-center space-x-3 mb-2">
+                    <CheckCircle className="h-5 w-5 text-green-400" />
+                    <h4 className="font-medium text-white">Consultation Scheduled!</h4>
+                  </div>
+                  <p className="text-dark-300 text-sm mb-3">
+                    We've scheduled your consultation. You'll receive a confirmation email shortly.
+                  </p>
+                  {booking?.htmlLink && (
+                    <a 
+                      href={booking.htmlLink} 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="inline-flex items-center space-x-2 text-sapphire-400 hover:text-sapphire-300 text-sm"
+                    >
+                      <Calendar className="h-4 w-4" />
+                      <span>Open calendar event</span>
+                    </a>
+                  )}
+                </div>
+              )}
+
+              <div className="mt-6 text-center">
+                <button
+                  onClick={handleClose}
+                  className="px-4 py-2 bg-dark-800 hover:bg-dark-700 text-white font-medium rounded-lg border border-dark-600 transition-colors focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:ring-offset-2 focus:ring-offset-dark-900"
                 >
-                  <Calendar className="h-4 w-4" />
-                  cal.com/s5-brett
-                </a>
+                  Done
+                </button>
               </div>
             </div>
           ) : (
@@ -168,7 +302,7 @@ export function BookingModal() {
                       id="email"
                       value={formData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
-                      className="w-full px-3 px-3 py-2 bg-dark-800 border border-dark-600 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-sapphire-500"
+                      className="w-full px-3 py-2 bg-dark-800 border border-dark-600 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-sapphire-500"
                       placeholder="your.email@firm.com"
                       required
                     />
