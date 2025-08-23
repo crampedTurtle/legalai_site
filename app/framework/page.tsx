@@ -9,6 +9,8 @@ import { FractionalCTO } from '@/components/framework/FractionalCTO'
 import { IntegrationsCallout } from '@/components/framework/IntegrationsCallout'
 import { FrameworkFAQ } from '@/components/framework/FrameworkFAQ'
 import { FrameworkCTA } from '@/components/framework/FrameworkCTA'
+import { SocialProofBand } from '@/components/framework/SocialProofBand'
+import { PricingCrossLink } from '@/components/framework/PricingCrossLink'
 
 export const metadata: Metadata = {
   title: 'Sapphire Implementation Framework | Software + Enablement',
@@ -38,6 +40,8 @@ export default function FrameworkPage() {
         <IntegrationsCallout />
         <FrameworkFAQ />
         <FrameworkCTA />
+        <SocialProofBand />
+        <PricingCrossLink />
       </main>
       <Footer />
     </div>

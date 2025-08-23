@@ -40,7 +40,7 @@ export function FrameworkHero() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Software + Enablement
+            Beyond Software: A Proven Framework for Adoption + Success
           </motion.h1>
           
           {/* Subheading */}
@@ -50,7 +50,7 @@ export function FrameworkHero() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            We combine private AI with proven implementation methods so your practice adapts and thrives.
+            More than a platform—we deliver a repeatable enablement model that gets your firm from pilot to value in weeks, not months.
           </motion.p>
 
           {/* Value Points */}

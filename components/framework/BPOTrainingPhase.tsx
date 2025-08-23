@@ -42,15 +42,15 @@ export function BPOTrainingPhase() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            3-Month BPO & Training Phase
+            From Launch to Ongoing Success
           </h2>
           <p className="text-xl text-dark-300 max-w-3xl mx-auto">
-            We operate with you to cement adoption and outcomes.
+            Every firm starts with a structured Launch Pack to configure, train, and go live. Many then continue with Managed Ops for ongoing support, compliance monitoring, and content upkeep.
           </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* Left Column - What We Operate */}
+          {/* Left Column - Launch Pack */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -61,20 +61,42 @@ export function BPOTrainingPhase() {
               <div className="w-12 h-12 rounded-full bg-sapphire-500 flex items-center justify-center">
                 <Users className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-white">What We Operate</h3>
+              <h3 className="text-2xl font-bold text-white">Launch Pack (required for new deployments)</h3>
             </div>
             
-            <ul className="space-y-3">
-              {whatWeOperate.map((item, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-dark-300">{item}</span>
-                </li>
-              ))}
+            <p className="text-sm text-dark-400 mb-4">Fixed $12,000 • 4 weeks</p>
+            
+            <ul className="space-y-3 mb-4">
+              <li className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                <span className="text-dark-300">Discovery & risk workshop</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                <span className="text-dark-300">Guardrails & policy setup</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                <span className="text-dark-300">Connector configuration</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                <span className="text-dark-300">5 priority workflows</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                <span className="text-dark-300">Admin training & pilot enablement</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                <span className="text-dark-300">Go‑live support</span>
+              </li>
             </ul>
+            
+            <p className="text-sm text-dark-400">Maps to Crawl → Design → Build → Validate → Launch.</p>
           </motion.div>
 
-          {/* Right Column - What You Get */}
+          {/* Right Column - Managed Ops */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -85,44 +107,56 @@ export function BPOTrainingPhase() {
               <div className="w-12 h-12 rounded-full bg-sapphire-500 flex items-center justify-center">
                 <TrendingUp className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-white">What You Get</h3>
+              <h3 className="text-2xl font-bold text-white">Managed Ops (optional add‑on)</h3>
             </div>
             
-            <ul className="space-y-3 mb-8">
-              {whatYouGet.map((item, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-dark-300">{item}</span>
-                </li>
-              ))}
+            <p className="text-sm text-dark-400 mb-4">Subscriptions from $2,000/mo</p>
+            
+            <ul className="space-y-3 mb-4">
+              <li className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                <span className="text-dark-300">Content & playbook upkeep (templates, prompts, tuning)</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                <span className="text-dark-300">Intake & triage desk (human‑in‑loop, routing, SLAs)</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                <span className="text-dark-300">Data & evaluation ops (red‑team prompts, drift watch)</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                <span className="text-dark-300">Ongoing admin & compliance support</span>
+              </li>
             </ul>
-
-            {/* SLA Table */}
-            <div>
-              <h4 className="text-lg font-semibold text-white mb-4">Service Level Agreements</h4>
-              <div className="bg-dark-700 rounded-lg overflow-hidden">
-                <table className="w-full">
-                  <thead>
-                    <tr className="bg-dark-600">
-                      <th className="px-4 py-3 text-left text-sm font-medium text-dark-200">Metric</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-dark-200">Target</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-dark-200">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {slaMetrics.map((sla, index) => (
-                      <tr key={index} className="border-t border-dark-600">
-                        <td className="px-4 py-3 text-sm font-medium text-white">{sla.metric}</td>
-                        <td className="px-4 py-3 text-sm text-sapphire-400 font-semibold">{sla.value}</td>
-                        <td className="px-4 py-3 text-sm text-dark-300">{sla.description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <p className="text-sm text-dark-400">Extends the Framework beyond launch.</p>
           </motion.div>
         </div>
+        
+        {/* CTA Row */}
+        <motion.div
+          className="text-center mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.8 }}
+        >
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a
+              href="/pricing"
+              className="bg-sapphire-500 hover:bg-sapphire-600 text-white font-medium py-3 px-6 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:ring-offset-2 focus:ring-offset-dark-950"
+            >
+              See Pricing
+            </a>
+            <a
+              href="/schedule"
+              className="text-sapphire-400 hover:text-sapphire-300 font-medium py-3 px-6 transition-colors focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:ring-offset-2 focus:ring-offset-dark-950"
+            >
+              Get timeline & quote
+            </a>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

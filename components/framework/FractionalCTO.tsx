@@ -47,7 +47,7 @@ export function FractionalCTO() {
             Fractional CTO Opportunities
           </h2>
           <p className="text-xl text-dark-300 max-w-3xl mx-auto">
-            Beyond implementation, we provide strategic technology leadership to help your firm make informed decisions and stay ahead of the curve.
+            As your practice scales, new opportunities emerge. If you want strategic support beyond the product, Sapphire offers optional Fractional CTO services in areas such as:
           </p>
         </motion.div>
 
@@ -92,6 +92,7 @@ export function FractionalCTO() {
               <Shield className="h-4 w-4" />
               Available as add-on to implementation packages
             </div>
+            <p className="text-sm text-dark-400 mt-4">Optional. Month‑to‑month. No long contracts.</p>
           </div>
         </motion.div>
       </div>

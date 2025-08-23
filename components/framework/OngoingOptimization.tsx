@@ -55,6 +55,12 @@ export function OngoingOptimization() {
           </p>
         </motion.div>
 
+        <div className="text-center mb-12">
+          <p className="text-lg text-dark-300">
+            After launch, we don't disappear. Sapphire evolves with your practice and keeps adoption on track.
+          </p>
+        </div>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {optimizationAreas.map((area, index) => (
             <motion.div

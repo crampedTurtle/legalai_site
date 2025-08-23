@@ -13,13 +13,15 @@ export function FrameworkTimeline() {
   const steps = [
     {
       step: 1,
-      title: 'Discover',
+      title: 'Crawl (Discovery)',
       timeframe: 'Days 1–3',
+      outcome: 'Foundation and alignment.',
       objectives: 'Align goals, define value, map current workflows.',
       keyActivities: [
-        'Stakeholder interviews',
-        'System inventory (Clio, monday.com, DMS, email)',
-        'Success metrics & OGSM'
+        '**Intake & interviews:** current tools, bottlenecks, risks.',
+        '**Data & integrations:** Clio, monday.com, DMS, email.',
+        '**Use‑case prioritization:** quick wins vs. high impact.',
+        '**Compliance baseline:** SOC 2 / GDPR / CCPA alignment.'
       ],
       deliverables: [
         'Current-state map',
@@ -31,13 +33,13 @@ export function FrameworkTimeline() {
       step: 2,
       title: 'Design',
       timeframe: 'Days 4–7',
+      outcome: 'Target workflow and success metrics.',
       objectives: 'Define target workflows & governance.',
       keyActivities: [
-        'Future-state blueprint',
-        'Integration plan',
-        'Access model',
-        'ADKAR plan',
-        'Safeguard requirements'
+        '**Process maps:** document → review → filing.',
+        '**AI roles:** drafting, summarization, extraction.',
+        '**Governance:** roles, RBAC, data retention.',
+        '**KPIs:** time saved, error rate, cycle time.'
       ],
       deliverables: [
         'Solution design',
@@ -50,12 +52,13 @@ export function FrameworkTimeline() {
       step: 3,
       title: 'Build',
       timeframe: 'Weeks 2–3',
+      outcome: 'Working environment configured.',
       objectives: 'Configure, connect, and automate.',
       keyActivities: [
-        'Sapphire Legal AI configuration',
-        'Clio/monday.com API connectors',
-        'Prompt libraries & templates',
-        'Dashboards'
+        '**Private AI workspace:** tenant + access setup.',
+        '**Connect systems:** Clio/monday.com/Drive.',
+        '**Playbooks & templates:** matter/case types.',
+        '**Security controls:** encryption, audit logs.'
       ],
       deliverables: [
         'Connected environment',
@@ -67,13 +70,13 @@ export function FrameworkTimeline() {
       step: 4,
       title: 'Validate',
       timeframe: 'Week 3',
+      outcome: 'Prove value, tighten controls.',
       objectives: 'Prove reliability and safety.',
       keyActivities: [
-        'UAT scripts',
-        'Exception paths',
-        'Model guardrails',
-        'Security checks',
-        'Go-live checklist'
+        '**UAT scripts:** real docs & real matters.',
+        '**Quality checks:** redlines, citations, sources.',
+        '**Change requests:** iterate prompts/flows.',
+        '**Compliance checkpoint:** evidence, settings, logs.'
       ],
       deliverables: [
         'UAT results',
@@ -85,12 +88,13 @@ export function FrameworkTimeline() {
       step: 5,
       title: 'Launch',
       timeframe: 'Week 4',
+      outcome: 'Go‑live and handover.',
       objectives: 'Ship and enable.',
       keyActivities: [
-        'Enablement sessions',
-        'Playbooks',
-        'SLA definitions',
-        'Success metrics activated'
+        '**Go‑live plan:** comms, training, support.',
+        '**Champion enablement:** power‑user cohort.',
+        '**Runbook:** playbooks, rollback, SLAs.',
+        '**Handover:** admins, audit, reporting.'
       ],
       deliverables: [
         'Live environment',
@@ -155,6 +159,7 @@ export function FrameworkTimeline() {
                       <div>
                         <h3 className="text-2xl font-bold text-white">{step.title}</h3>
                         <p className="text-sapphire-400 font-medium">{step.timeframe}</p>
+                        <p className="text-lg font-semibold text-white mt-1">{step.outcome}</p>
                       </div>
                     </div>
 
@@ -170,7 +175,7 @@ export function FrameworkTimeline() {
                           {step.keyActivities.map((activity, idx) => (
                             <li key={idx} className="flex items-start gap-2 text-dark-300">
                               <ArrowRight className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                              {activity}
+                              <span dangerouslySetInnerHTML={{ __html: activity.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
                             </li>
                           ))}
                         </ul>
@@ -192,6 +197,29 @@ export function FrameworkTimeline() {
                 </div>
               </motion.div>
             ))}
+            
+            {/* CTA Rows after Design and Validate */}
+            <motion.div
+              className="text-center py-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.8 }}
+            >
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a
+                  href="/schedule"
+                  className="bg-sapphire-500 hover:bg-sapphire-600 text-white font-medium py-3 px-6 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:ring-offset-2 focus:ring-offset-dark-900"
+                >
+                  Request a Demo
+                </a>
+                <a
+                  href="/resources/sample-implementation"
+                  className="text-sapphire-400 hover:text-sapphire-300 font-medium py-3 px-6 transition-colors focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:ring-offset-2 focus:ring-offset-dark-900"
+                >
+                  See a sample implementation plan
+                </a>
+              </div>
+            </motion.div>
           </div>
         </div>
       </div>
