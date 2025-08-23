@@ -54,6 +54,18 @@ export async function POST(req: NextRequest) {
       cal_event_url: link
     }).eq('id', lead.id)
 
+    await s.from('lead_events').insert({
+      lead_id: lead.id,
+      event_type: 'demo_booked',
+      source: 'cal_api',
+      payload: {
+        start: startIso,
+        booking_id: calId,
+        event_url: link,
+        tz: timezone,
+      },
+    })
+
     return NextResponse.json({ ok: true, booking })
   } catch (e: any) {
     return NextResponse.json({ error: e.message || 'Book error' }, { status: 500 })
