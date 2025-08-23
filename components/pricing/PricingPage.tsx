@@ -208,7 +208,8 @@ export function PlatformTab() {
         'Custom SLAs',
         'BAA/HIPAA',
         'Advanced governance',
-        'Dedicated success'
+        'Dedicated success',
+        'Fractional CTO advisory (optional)'
       ],
       popular: false
     }
@@ -221,6 +222,12 @@ export function PlatformTab() {
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8 }}
     >
+      <div className="text-center mb-8">
+        <p className="text-dark-300 leading-relaxed">
+          Choose your Sapphire Legal AI platform tier. All tiers are deployed through the <strong>Launch Pack</strong> and can be extended with <strong>Managed Ops</strong>, as outlined in the Sapphire Implementation Framework.
+        </p>
+      </div>
+      
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {plans.map((plan, index) => (
           <motion.div
@@ -325,19 +332,18 @@ export function LaunchPackTab() {
     >
       <div className="p-8 rounded-xl border border-sapphire-500 bg-dark-800">
         <div className="text-center mb-8">
-          <h3 className="text-2xl font-bold text-white mb-2">Launch Pack</h3>
+          <h3 className="text-2xl font-bold text-white mb-2">The Sapphire Launch Pack</h3>
           <div className="mb-4">
             <span className="text-4xl font-bold text-white">$12,000</span>
-            <span className="text-dark-300 ml-2">fixed (4 weeks)</span>
           </div>
+          <p className="text-sm text-dark-400 mb-4">
+            Fixed $12,000 • 4 weeks • Required for all new deployments
+          </p>
         </div>
         
         <div className="mb-8">
-          <h4 className="text-lg font-semibold text-white mb-3 text-center">
-            Everything you need to get live and running with Private AI.
-          </h4>
           <p className="text-sm text-dark-300 mb-4 text-center leading-relaxed">
-            Discovery & risk workshop, guardrails & policy setup, connector configuration, 5 priority workflows, admin training, pilot enablement, go-live support.
+            A structured, 4‑week rollout that maps to the first phases of the Sapphire Implementation Framework (Crawl → Design → Build → Validate → Launch).
           </p>
           <p className="text-xs text-sapphire-400 font-medium text-center mb-6">
             Best for: Firms that want a structured, hands-on rollout with minimal disruption.
@@ -421,6 +427,13 @@ export function ManagedOpsTab() {
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8 }}
     >
+      <div className="text-center mb-8">
+        <h2 className="text-2xl font-bold text-white mb-4">Ongoing Managed Ops</h2>
+        <p className="text-dark-300 leading-relaxed">
+          Continuous services that extend the Sapphire Implementation Framework beyond launch. Choose the level of oversight your firm needs — from content upkeep to intake desk to compliance monitoring.
+        </p>
+      </div>
+      
       <div className="grid md:grid-cols-3 gap-6">
         {services.map((service, index) => (
           <motion.div
@@ -461,7 +474,44 @@ export function ManagedOpsTab() {
           </motion.div>
         ))}
       </div>
+      
+      <div className="mt-8 text-center">
+        <p className="text-sm text-dark-400">
+          Managed Ops are optional subscriptions layered on top of your platform tier.
+        </p>
+      </div>
     </motion.div>
+  )
+}
+
+export function FrameworkCTABand() {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  })
+
+  return (
+    <section className="py-16 bg-dark-950">
+      <div className="mx-auto max-w-4xl px-6 lg:px-8">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center"
+        >
+          <p className="text-lg text-dark-300 mb-6">
+            Not sure how tiers, the Launch Pack, and Managed Ops fit together? See the Sapphire Implementation Framework for how we deliver adoption step‑by‑step.
+          </p>
+          <Button variant="secondary" size="lg" className="group" asChild>
+            <a href="/framework">
+              View the Framework
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </a>
+          </Button>
+        </motion.div>
+      </div>
+    </section>
   )
 }
 

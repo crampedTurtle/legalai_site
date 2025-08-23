@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { PricingPage, Headline, Subhead, PricingTabs, PlatformTab, LaunchPackTab, ManagedOpsTab, FAQSection } from '@/components/pricing/PricingPage'
+import { PricingPage, Headline, Subhead, PricingTabs, PlatformTab, LaunchPackTab, ManagedOpsTab, FAQSection, FrameworkCTABand } from '@/components/pricing/PricingPage'
 
 export const metadata: Metadata = {
   title: 'Pricing - Hybrid Platform & Services Model | Sapphire Legal AI',
@@ -27,6 +27,7 @@ export default function Pricing() {
             <ManagedOpsTab />
           </PricingTabs>
           
+          <FrameworkCTABand />
           <FAQSection />
         </PricingPage>
       </main>
