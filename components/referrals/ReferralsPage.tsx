@@ -5,6 +5,7 @@ import { useInView } from 'react-intersection-observer'
 import { Button } from '@/components/ui/Button'
 import { ArrowRight, ShieldCheck, Workflow, Users, Copy, CheckCircle } from 'lucide-react'
 import { useDemoModal } from '@/hooks/useDemoModal'
+import { usePartnerCallModal } from '@/hooks/usePartnerCallModal'
 import { useState } from 'react'
 
 export function ReferralsPage() {
@@ -27,6 +28,10 @@ I'd like to introduce you to **Sapphire Legal AI**. They provide a **private, co
 
   const openDemoModal = (utm: string) => {
     useDemoModal.getState().open(`referrals:${utm}`)
+  }
+  
+  const openPartnerCallModal = (utm: string) => {
+    usePartnerCallModal.getState().open(`referrals:${utm}`)
   }
 
   return (
@@ -80,13 +85,12 @@ I'd like to introduce you to **Sapphire Legal AI**. They provide a **private, co
               <Button 
                 variant="secondary" 
                 size="lg" 
-                className="group" 
-                asChild
+                className="group"
+                onClick={() => openPartnerCallModal('hero')}
+                data-utm="referrals-hero-partner"
               >
-                <a href="https://cal.com/s5-brett?utm=referrals" target="_blank" rel="noopener noreferrer">
-                  Book a Partner Call
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </a>
+                Book a Partner Call
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </motion.div>
 
@@ -495,12 +499,11 @@ I'd like to introduce you to **Sapphire Legal AI**. They provide a **private, co
                 variant="secondary"
                 size="lg"
                 className="group"
-                asChild
+                onClick={() => openPartnerCallModal('footer')}
+                data-utm="referrals-footer-partner"
               >
-                <a href="https://cal.com/s5-brett?utm=referrals" target="_blank" rel="noopener noreferrer">
-                  Book a Partner Call
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </a>
+                Book a Partner Call
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
           </motion.div>
