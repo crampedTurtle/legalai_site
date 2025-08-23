@@ -6,16 +6,17 @@ import { useInView } from 'react-intersection-observer'
 interface FeatureSectionProps {
   title: string
   children: React.ReactNode
+  id?: string
 }
 
-export function FeatureSection({ title, children }: FeatureSectionProps) {
+export function FeatureSection({ title, children, id }: FeatureSectionProps) {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   })
 
   return (
-    <section className="py-20 bg-dark-900">
+    <section className="py-20 bg-dark-900" id={id}>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           ref={ref}

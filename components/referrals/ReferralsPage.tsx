@@ -290,7 +290,7 @@ I'd like to introduce you to **Sapphire Legal AI**. They provide a **private, co
             className="text-center"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Typical Payout Examples
+              Partner Earnings (Year 1)
             </h2>
             <p className="text-xl text-dark-300 mb-12">
               See what you can earn by introducing firms to Sapphire Legal AI.
@@ -302,29 +302,24 @@ I'd like to introduce you to **Sapphire Legal AI**. They provide a **private, co
                   <thead>
                     <tr className="border-b border-dark-700">
                       <th className="py-3 px-4 text-white font-semibold">Firm Size</th>
-                      <th className="py-3 px-4 text-white font-semibold">Typical Revenue</th>
-                      <th className="py-3 px-4 text-white font-semibold">Your Commission</th>
+                      <th className="py-3 px-4 text-white font-semibold">Partner Payout</th>
                     </tr>
                   </thead>
                   <tbody className="text-dark-300">
                     <tr className="border-b border-dark-800">
                       <td className="py-3 px-4">Small Practice (2-5 attorneys)</td>
-                      <td className="py-3 px-4">$25,000/year</td>
                       <td className="py-3 px-4 text-sapphire-400 font-semibold">$2,500/year</td>
                     </tr>
                     <tr className="border-b border-dark-800">
                       <td className="py-3 px-4">Mid-size Firm (10-25 attorneys)</td>
-                      <td className="py-3 px-4">$75,000/year</td>
                       <td className="py-3 px-4 text-sapphire-400 font-semibold">$7,500/year</td>
                     </tr>
                     <tr className="border-b border-dark-800">
                       <td className="py-3 px-4">Large Practice (50+ attorneys)</td>
-                      <td className="py-3 px-4">$200,000/year</td>
                       <td className="py-3 px-4 text-sapphire-400 font-semibold">$20,000/year</td>
                     </tr>
                     <tr>
                       <td className="py-3 px-4">Implementation (Launch Pack)</td>
-                      <td className="py-3 px-4">$12,000 (one-time)</td>
                       <td className="py-3 px-4 text-sapphire-400 font-semibold">$1,200 (one-time)</td>
                     </tr>
                   </tbody>

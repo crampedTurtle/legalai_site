@@ -41,7 +41,7 @@ export default function FeaturesPage() {
           </Feature>
         </FeatureSection>
 
-        <FeatureSection title="Document Intelligence">
+        <FeatureSection title="Document Intelligence" id="document-intelligence">
           <Feature title="Upload & Process">
             Securely upload case files, evidence, and documents — instantly structured and searchable.
           </Feature>
@@ -53,7 +53,7 @@ export default function FeaturesPage() {
           </Feature>
         </FeatureSection>
 
-        <FeatureSection title="Collaborative Drafting">
+        <FeatureSection title="Collaborative Drafting" id="collaborative-drafting">
           <Feature title="Document Editor">
             Draft motions, contracts, and pleadings collaboratively with built-in AI assistance.
           </Feature>
@@ -74,7 +74,7 @@ export default function FeaturesPage() {
           </Feature>
         </FeatureSection>
 
-        <FeatureSection title="Case Management">
+        <FeatureSection title="Case Management" id="case-management">
           <Feature title="Case Management Hub">
             Track every case from intake to closure in one unified system.
           </Feature>
@@ -89,7 +89,7 @@ export default function FeaturesPage() {
           </Feature>
         </FeatureSection>
 
-        <FeatureSection title="AI Assistant">
+        <FeatureSection title="AI Assistant" id="ai-assistant">
           <Feature title="AI Chat">
             Ask case questions in natural language — get instant, cited answers.
           </Feature>

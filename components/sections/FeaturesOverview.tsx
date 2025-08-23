@@ -108,9 +108,11 @@ export function FeaturesOverview() {
                 
                 {/* Learn More Link */}
                 <div className="mt-auto">
-                  <Button variant="ghost" size="sm" className="group/link">
-                    Learn More
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
+                  <Button variant="ghost" size="sm" className="group/link" asChild>
+                    <a href={`/features#${feature.title.toLowerCase().replace(/\s+/g, '-')}`}>
+                      Learn More
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
+                    </a>
                   </Button>
                 </div>
               </div>
