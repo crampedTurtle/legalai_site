@@ -9,7 +9,7 @@ import { useDemoModal } from '@/hooks/useDemoModal'
 type Slot = { start: string; end?: string }
 
 export function DemoForm() {
-  const { close } = useDemoModal()
+  const { close, source } = useDemoModal()
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [leadId, setLeadId] = useState<string>()
@@ -28,6 +28,43 @@ export function DemoForm() {
   const [loadingSlots, setLoadingSlots] = useState(false)
   const [booking, setBooking] = useState<any>(null)
   const [bookingLoading, setBookingLoading] = useState(false)
+
+  const isReferralRequest = source?.startsWith('referrals:')
+  
+  const getModalTitle = () => {
+    if (isReferralRequest) {
+      return 'Introduce a Law Firm'
+    }
+    return 'Request Your Demo'
+  }
+  
+  const getSubmitButtonText = () => {
+    if (isReferralRequest) {
+      return 'Submit Introduction'
+    }
+    return 'Schedule Demo'
+  }
+  
+  const getSuccessTitle = () => {
+    if (isReferralRequest) {
+      return 'Introduction Submitted!'
+    }
+    return 'Demo Request Submitted!'
+  }
+  
+  const getSuccessMessage = () => {
+    if (isReferralRequest) {
+      return 'Thanks! We\'ll review the firm and get back to you within 24 hours.'
+    }
+    return 'Thanks! Pick a time that works for you:'
+  }
+  
+  const getNotesPlaceholder = () => {
+    if (isReferralRequest) {
+      return 'Tell us about the law firm, their needs, and why you think they\'d be a good fit...'
+    }
+    return 'Tell us about your specific needs, use cases, or questions...'
+  }
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -48,7 +85,7 @@ export function DemoForm() {
         phone: formData.phone,
         notes: formData.notes,
         wants_demo: true,
-        source: 'demo:request',
+        source: source || 'demo:request',
       }, 'demo_request')
       setLeadId(id)
       setSuccess(true)
@@ -116,6 +153,42 @@ export function DemoForm() {
   }, [success, leadId])
 
   if (success) {
+    // For referral requests, don't show the Cal.com booking flow
+    if (isReferralRequest) {
+      return (
+        <div className="card-hover p-8">
+          <div className="text-center mb-6">
+            <div className="inline-flex p-3 bg-green-500/20 border border-green-500/30 rounded-lg mb-4">
+              <CheckCircle className="h-8 w-8 text-green-400" />
+            </div>
+            <h3 className="text-2xl font-semibold text-white mb-4">
+              {getSuccessTitle()}
+            </h3>
+            <p className="text-dark-300">
+              {getSuccessMessage()}
+            </p>
+          </div>
+          
+          <div className="mt-6 text-center">
+            <Button 
+              onClick={() => {
+                // Reset form state
+                setSuccess(false)
+                setLeadId(undefined)
+                setFormData({ firstName: '', lastName: '', email: '', firm: '', title: '', phone: '', notes: '' })
+                // Close the modal
+                close()
+              }}
+              variant="outline"
+              size="sm"
+            >
+              Done
+            </Button>
+          </div>
+        </div>
+      )
+    }
+    
     return (
       <div className="card-hover p-8">
         <div className="text-center mb-6">
@@ -123,10 +196,10 @@ export function DemoForm() {
             <CheckCircle className="h-8 w-8 text-green-400" />
           </div>
           <h3 className="text-2xl font-semibold text-white mb-4">
-            Demo Request Submitted!
+            {getSuccessTitle()}
           </h3>
           <p className="text-dark-300">
-            Thanks! Pick a time that works for you:
+            {getSuccessMessage()}
           </p>
         </div>
 
@@ -224,7 +297,7 @@ export function DemoForm() {
   return (
     <div className="card-hover p-8">
       <h3 className="text-2xl font-semibold text-white mb-6">
-        Request Your Demo
+        {getModalTitle()}
       </h3>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid md:grid-cols-2 gap-4">
@@ -339,7 +412,7 @@ export function DemoForm() {
             value={formData.notes}
             onChange={(e) => handleInputChange('notes', e.target.value)}
             className="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors min-h-[100px] resize-none"
-            placeholder="Tell us about your specific needs, use cases, or questions..."
+            placeholder={getNotesPlaceholder()}
             disabled={loading}
           />
         </div>
@@ -352,7 +425,7 @@ export function DemoForm() {
             </>
           ) : (
             <>
-              Schedule Demo
+              {getSubmitButtonText()}
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </>
           )}

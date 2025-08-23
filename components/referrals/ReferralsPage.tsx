@@ -83,7 +83,7 @@ I'd like to introduce you to **Sapphire Legal AI**. They provide a **private, co
                 className="group" 
                 asChild
               >
-                <a href="/schedule?utm=referrals">
+                <a href="https://cal.com/s5-brett?utm=referrals" target="_blank" rel="noopener noreferrer">
                   Book a Partner Call
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </a>
@@ -497,7 +497,7 @@ I'd like to introduce you to **Sapphire Legal AI**. They provide a **private, co
                 className="group"
                 asChild
               >
-                <a href="/schedule?utm=referrals">
+                <a href="https://cal.com/s5-brett?utm=referrals" target="_blank" rel="noopener noreferrer">
                   Book a Partner Call
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </a>
