@@ -435,7 +435,7 @@ export function BookingModal() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex-1 bg-sapphire-500 hover:bg-sapphire-600 disabled:bg-sapphire-500/50 text-white font-medium py-3 px-6 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:ring-offset-2 focus:ring-offset-dark-900"
+                    className="w-full bg-sapphire-500 hover:bg-sapphire-600 disabled:bg-sapphire-500/50 text-white font-medium py-3 px-6 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:ring-offset-2 focus:ring-offset-dark-900"
                   >
                     {isSubmitting ? (
                       <>
@@ -446,15 +446,6 @@ export function BookingModal() {
                       'Submit Request'
                     )}
                   </button>
-                  <a
-                    href="https://cal.com/s5-brett"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 bg-dark-800 hover:bg-dark-700 text-white font-medium py-3 px-6 rounded-lg border border-dark-600 transition-colors focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:ring-offset-2 focus:ring-offset-dark-900 text-center"
-                  >
-                    <Calendar className="h-5 w-5 inline mr-2" />
-                    Schedule Directly
-                  </a>
                 </div>
               </form>
             </div>
