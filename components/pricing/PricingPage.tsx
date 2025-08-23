@@ -5,15 +5,20 @@ import { useInView } from 'react-intersection-observer'
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { ArrowRight, Check, Star, ChevronDown, ChevronUp } from 'lucide-react'
+import { usePricingBookingModal } from '@/hooks/usePricingBookingModal'
+import { PricingBookingModal } from './PricingBookingModal'
 
 interface PricingPageProps {
   children: React.ReactNode
 }
 
 export function PricingPage({ children }: PricingPageProps) {
+  const { isOpen, close, source } = usePricingBookingModal()
+  
   return (
     <div className="pt-32 pb-24">
       {children}
+      <PricingBookingModal isOpen={isOpen} onClose={close} source={source} />
     </div>
   )
 }
@@ -138,6 +143,7 @@ export function PlatformTab() {
     triggerOnce: true,
     threshold: 0.1,
   })
+  const { open } = usePricingBookingModal()
 
   const plans = [
     {
@@ -283,13 +289,11 @@ export function PlatformTab() {
               <Button 
                 size="lg" 
                 className={`w-full group ${plan.popular ? 'bg-sapphire-500 hover:bg-sapphire-600' : ''}`}
-                asChild
+                onClick={() => open('platform')}
                 data-cta="pricing"
               >
-                <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
-                  Book a 20-min scoping call
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </a>
+                Schedule a Meeting
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
           </motion.div>
@@ -311,6 +315,7 @@ export function LaunchPackTab() {
     triggerOnce: true,
     threshold: 0.1,
   })
+  const { open } = usePricingBookingModal()
 
   const features = [
     'Discovery & risk workshop',
@@ -360,11 +365,9 @@ export function LaunchPackTab() {
         </div>
         
         <div className="text-center">
-          <Button size="lg" className="w-full group" asChild data-cta="pricing">
-            <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
-              Get timeline & quote
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </a>
+          <Button size="lg" className="w-full group" onClick={() => open('launch-pack')} data-cta="pricing">
+            Schedule a Meeting
+            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
       </div>
@@ -377,6 +380,7 @@ export function ManagedOpsTab() {
     triggerOnce: true,
     threshold: 0.1,
   })
+  const { open } = usePricingBookingModal()
 
   const services = [
     {
@@ -464,11 +468,9 @@ export function ManagedOpsTab() {
             </div>
             
             <div className="text-center">
-              <Button size="lg" className="w-full group" asChild data-cta="pricing">
-                <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
-                  Get timeline & quote
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </a>
+              <Button size="lg" className="w-full group" onClick={() => open('managed-ops')} data-cta="pricing">
+                Schedule a Meeting
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
           </motion.div>
