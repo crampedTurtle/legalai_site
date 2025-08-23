@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Button } from '@/components/ui/Button'
 import { ArrowRight, CheckCircle } from 'lucide-react'
+import Link from 'next/link'
 
 const benefits = [
   'Complete implementation framework',
@@ -60,9 +61,11 @@ export function SolutionsHero() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-center"
         >
-          <Button size="lg" className="group">
-            Explore Our Framework
-            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+          <Button size="lg" className="group" asChild>
+            <Link href="/framework">
+              Explore Our Framework
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </Button>
         </motion.div>
       </div>
