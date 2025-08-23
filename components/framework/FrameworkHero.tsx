@@ -20,13 +20,6 @@ export function FrameworkHero() {
     'Fractional CTO opportunities'
   ]
 
-  const scrollToTimeline = () => {
-    const timelineElement = document.getElementById('framework-timeline')
-    if (timelineElement) {
-      timelineElement.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950 pt-32 pb-20">
       {/* Background Elements */}
@@ -81,17 +74,13 @@ export function FrameworkHero() {
             ))}
           </motion.div>
 
-          {/* CTA Buttons */}
+          {/* CTA Button */}
           <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            className="flex justify-center"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 1.0 }}
           >
-            <Button size="lg" className="group" onClick={scrollToTimeline}>
-              Explore Our Framework
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
             <Button variant="secondary" size="lg" className="group" onClick={() => open()}>
               Book Implementation Consult
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
