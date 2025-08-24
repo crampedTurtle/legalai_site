@@ -108,16 +108,26 @@ export function FeaturesOverview() {
                 
                 {/* Learn More Link */}
                 <div className="mt-auto">
-                  <a 
-                    href={`/features#${feature.title.toLowerCase().replace(/\s+/g, '-')}`}
+                  <button 
                     onClick={(e) => {
-                      console.log(`Navigating to: /features#${feature.title.toLowerCase().replace(/\s+/g, '-')}`)
+                      e.preventDefault()
+                      console.log(`CLICKED! Navigating to: /features#${feature.title.toLowerCase().replace(/\s+/g, '-')}`)
+                      console.log('Feature title:', feature.title)
+                      console.log('Generated href:', `/features#${feature.title.toLowerCase().replace(/\s+/g, '-')}`)
+                      
+                      // Try programmatic navigation
+                      window.location.href = `/features#${feature.title.toLowerCase().replace(/\s+/g, '-')}`
                     }}
-                    className="inline-flex items-center justify-center font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sapphire-400 focus:ring-offset-2 focus:ring-offset-dark-950 h-9 px-3 text-sm rounded-md bg-transparent text-sapphire-400 hover:text-white hover:bg-sapphire-500/10 group/link"
+                    className="inline-flex items-center justify-center font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sapphire-400 focus:ring-offset-2 focus:ring-offset-dark-950 h-9 px-3 text-sm rounded-md bg-transparent text-sapphire-400 hover:text-white hover:bg-sapphire-500/10 group/link cursor-pointer"
                   >
                     Learn More
                     <ArrowRight className="ml-2 h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
-                  </a>
+                  </button>
+                  
+                  {/* Debug info */}
+                  <div className="text-xs text-dark-400 mt-2">
+                    Target: {`/features#${feature.title.toLowerCase().replace(/\s+/g, '-')}`}
+                  </div>
                 </div>
               </div>
             </motion.div>
