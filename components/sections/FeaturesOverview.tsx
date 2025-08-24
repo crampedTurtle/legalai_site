@@ -81,7 +81,7 @@ export function FeaturesOverview() {
             >
               <div className="card-hover h-full p-6 relative overflow-hidden">
                 {/* Background Gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none`} />
                 
                 {/* Icon */}
                 <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${feature.color} mb-6`}>
@@ -107,7 +107,7 @@ export function FeaturesOverview() {
                 </ul>
                 
                 {/* Learn More Link */}
-                <div className="mt-auto">
+                <div className="mt-auto relative z-10">
                   <button 
                     onClick={(e) => {
                       e.preventDefault()
@@ -125,7 +125,7 @@ export function FeaturesOverview() {
                     style={{ 
                       pointerEvents: 'auto',
                       position: 'relative',
-                      zIndex: 10,
+                      zIndex: 30,
                       userSelect: 'none'
                     }}
                   >
