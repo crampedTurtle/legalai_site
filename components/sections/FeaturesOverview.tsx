@@ -114,11 +114,20 @@ export function FeaturesOverview() {
                       console.log(`CLICKED! Navigating to: /features#${feature.title.toLowerCase().replace(/\s+/g, '-')}`)
                       console.log('Feature title:', feature.title)
                       console.log('Generated href:', `/features#${feature.title.toLowerCase().replace(/\s+/g, '-')}`)
+                      console.log('Button clicked successfully!')
                       
                       // Try programmatic navigation
                       window.location.href = `/features#${feature.title.toLowerCase().replace(/\s+/g, '-')}`
                     }}
+                    onMouseEnter={() => console.log('Mouse entered button')}
+                    onMouseDown={() => console.log('Mouse down on button')}
                     className="inline-flex items-center justify-center font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sapphire-400 focus:ring-offset-2 focus:ring-offset-dark-950 h-9 px-3 text-sm rounded-md bg-transparent text-sapphire-400 hover:text-white hover:bg-sapphire-500/10 group/link cursor-pointer"
+                    style={{ 
+                      pointerEvents: 'auto',
+                      position: 'relative',
+                      zIndex: 10,
+                      userSelect: 'none'
+                    }}
                   >
                     Learn More
                     <ArrowRight className="ml-2 h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
