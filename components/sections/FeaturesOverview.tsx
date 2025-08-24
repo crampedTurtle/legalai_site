@@ -108,17 +108,16 @@ export function FeaturesOverview() {
                 
                 {/* Learn More Link */}
                 <div className="mt-auto">
-                  <Button variant="ghost" size="sm" className="group/link" asChild>
-                    <a 
-                      href={`/features#${feature.title.toLowerCase().replace(/\s+/g, '-')}`}
-                      onClick={(e) => {
-                        console.log(`Navigating to: /features#${feature.title.toLowerCase().replace(/\s+/g, '-')}`)
-                      }}
-                    >
-                      Learn More
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
-                    </a>
-                  </Button>
+                  <a 
+                    href={`/features#${feature.title.toLowerCase().replace(/\s+/g, '-')}`}
+                    onClick={(e) => {
+                      console.log(`Navigating to: /features#${feature.title.toLowerCase().replace(/\s+/g, '-')}`)
+                    }}
+                    className="inline-flex items-center justify-center font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sapphire-400 focus:ring-offset-2 focus:ring-offset-dark-950 h-9 px-3 text-sm rounded-md bg-transparent text-sapphire-400 hover:text-white hover:bg-sapphire-500/10 group/link"
+                  >
+                    Learn More
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
+                  </a>
                 </div>
               </div>
             </motion.div>
@@ -172,12 +171,13 @@ export function FeaturesOverview() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="text-center mt-16"
         >
-          <Button size="lg" className="group" asChild>
-            <a href="/features">
-              Explore All Features
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </a>
-          </Button>
+          <a 
+            href="/features"
+            className="inline-flex items-center justify-center font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sapphire-400 focus:ring-offset-2 focus:ring-offset-dark-950 h-14 px-8 text-lg rounded-xl bg-gradient-to-r from-sapphire-500 to-primary-600 hover:from-sapphire-600 hover:to-primary-700 text-white transform hover:scale-105 hover:shadow-glow group"
+          >
+            Explore All Features
+            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+          </a>
         </motion.div>
       </div>
     </section>
