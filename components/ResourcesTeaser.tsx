@@ -9,21 +9,21 @@ const resources = [
     title: "Why Every Mid-Sized Firm Needs a Legal OS",
     description: "The case for consolidating your tech stack into one intelligent platform.",
     icon: FileText,
-    href: "/blog/why-every-mid-sized-firm-needs-legal-os",
+    href: "/features#client-experience",
     color: "from-blue-500 to-cyan-500"
   },
   {
     title: "AI + Compliance: Adopt Safely, Move Faster",
     description: "How private AI enables innovation without compromising security.",
     icon: Shield,
-    href: "/blog/ai-compliance-adopt-safely",
+    href: "/features#ai-docs",
     color: "from-purple-500 to-pink-500"
   },
   {
     title: "From 6 Tools to 1: The Economics of Consolidation",
     description: "Real ROI calculations from firms that made the switch.",
     icon: TrendingUp,
-    href: "/blog/economics-of-consolidation",
+    href: "/features#case-workflow",
     color: "from-green-500 to-emerald-500"
   }
 ]
