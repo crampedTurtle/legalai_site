@@ -10,19 +10,26 @@ interface VideoModalProps {
   buttonLabel?: string
   thumbnailUrl?: string
   className?: string
+  onOpen?: () => void
 }
 
 export function VideoModal({ 
   videoId, 
   buttonLabel = "Watch Demo", 
   thumbnailUrl,
-  className = ""
+  className = "",
+  onOpen
 }: VideoModalProps) {
   const [isOpen, setIsOpen] = useState(false)
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
   const handleOpen = async () => {
     setIsOpen(true)
+    
+    // Call onOpen callback if provided
+    if (onOpen) {
+      onOpen()
+    }
     
     // Track video view
     try {

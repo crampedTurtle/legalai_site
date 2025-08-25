@@ -2,9 +2,13 @@ import { Metadata } from 'next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { HeroSection } from '@/components/sections/HeroSection'
+import { FeaturePills } from '@/components/FeaturePills'
 import { DashboardShowcase } from '@/components/sections/DashboardShowcase'
+import { BenefitStrip } from '@/components/BenefitStrip'
 import { FeaturesOverview } from '@/components/sections/FeaturesOverview'
 import { TrustSection } from '@/components/sections/TrustSection'
+import { ResourcesTeaser } from '@/components/ResourcesTeaser'
+import { Testimonials } from '@/components/Testimonials'
 import { CTASection } from '@/components/sections/CTASection'
 
 export const metadata: Metadata = {
@@ -22,9 +26,13 @@ export default function HomePage() {
       <Header />
       <main>
         <HeroSection />
+        <FeaturePills />
         <DashboardShowcase />
+        <BenefitStrip />
         <FeaturesOverview />
         <TrustSection />
+        <ResourcesTeaser />
+        <Testimonials />
         <CTASection />
       </main>
       <Footer />

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     default: 'Sapphire Legal AI - All Your Legal Work. One Private, Intelligent Workspace.',
     template: '%s | Sapphire Legal AI'
   },
-  description: 'AI-powered platform built exclusively for law firms and legal teams—secure, private, and tailored to your practice. Document intelligence, collaborative drafting, case management, and AI assistance in one private workspace.',
+  description: 'AI-powered platform built exclusively for law firms and legal teams—secure, private, and tailored to your practice. All-in-One Legal Operating System with document intelligence, collaborative drafting, case management, and AI assistance in one private workspace.',
   keywords: [
     'legal AI',
     'law firm software',
@@ -108,20 +108,11 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "SoftwareApplication",
               "name": "Sapphire Legal AI",
-              "description": "AI-powered platform built exclusively for law firms and legal teams—secure, private, and tailored to your practice.",
-              "url": "https://sapphirelegal.ai",
-              "applicationCategory": "LegalApplication",
+              "applicationCategory": "BusinessApplication",
               "operatingSystem": "Web",
-              "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "USD"
-              },
-              "provider": {
-                "@type": "Organization",
-                "name": "Sapphire Five",
-                "url": "https://sapphirefive.com"
-              }
+              "description": "All-in-one Legal Operating System for mid-sized law firms: client portal & CRM, AI-powered doc processing, workflow automation, billing & scheduling, and enterprise-grade compliance.",
+              "offers": { "@type": "Offer", "priceCurrency": "USD" },
+              "publisher": { "@type": "Organization", "name": "Sapphire Legal AI" }
             })
           }}
         />

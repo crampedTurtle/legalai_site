@@ -7,6 +7,7 @@ import { FeatureSection, Feature } from '@/components/features/FeatureSection'
 import { BenefitsSection, Headline as BenefitsHeadline, Benefit } from '@/components/features/BenefitsSection'
 import { CTASection, Headline as CTAHeadline, Paragraph as CTAParagraph } from '@/components/features/CTASection'
 import { FeaturesCTA } from '@/components/features/FeaturesCTA'
+import { HowItWorks } from '@/components/HowItWorks'
 
 export const metadata: Metadata = {
   title: 'Features - Document Intelligence, Collaborative Drafting, Case Management & AI Assistant',
@@ -104,6 +105,55 @@ export default function FeaturesPage() {
           </Feature>
         </FeatureSection>
 
+        {/* New anchor sections for feature pills */}
+        <FeatureSection title="Client Experience & Intake" id="client-experience">
+          <Feature title="Guided Intake Forms">
+            Guided intake forms, secure client portal, CRM analytics.
+          </Feature>
+          <Feature title="Secure Client Portal">
+            Professional client portal with secure document sharing and communication.
+          </Feature>
+          <Feature title="CRM Analytics">
+            Track client relationships and conversion metrics in real-time.
+          </Feature>
+        </FeatureSection>
+
+        <FeatureSection title="AI-Powered Document Processing" id="ai-docs">
+          <Feature title="Upload → OCR → Extraction">
+            Upload → OCR → extraction, smart categorization, compliance flags, instant generation from templates.
+          </Feature>
+          <Feature title="Smart Categorization">
+            Automatically categorize and tag documents for easy retrieval.
+          </Feature>
+          <Feature title="Compliance Flags">
+            Built-in compliance checking and risk assessment for all documents.
+          </Feature>
+        </FeatureSection>
+
+        <FeatureSection title="Case & Workflow" id="case-workflow">
+          <Feature title="Matter Timelines">
+            Matter timelines, automated assignments, escalation rules, collaborative drafting w/ version history.
+          </Feature>
+          <Feature title="Automated Assignments">
+            Intelligent task assignment based on workload and expertise.
+          </Feature>
+          <Feature title="Escalation Rules">
+            Automated escalation for missed deadlines and critical issues.
+          </Feature>
+        </FeatureSection>
+
+        <FeatureSection title="Financials & Scheduling" id="billing-scheduling">
+          <Feature title="Time Capture">
+            Time capture, invoicing, trust accounting + reconciliation, court-aware calendars and conflicts.
+          </Feature>
+          <Feature title="Trust Accounting">
+            Built-in trust account management with automatic reconciliation.
+          </Feature>
+          <Feature title="Court-Aware Calendars">
+            Calendar integration with court deadlines and conflict checking.
+          </Feature>
+        </FeatureSection>
+
         <FeatureSection title="Administration">
           <Feature title="Admin Dashboard">
             Control access, permissions, and user activity at a glance.
@@ -142,6 +192,7 @@ export default function FeaturesPage() {
           </CTAParagraph>
         </CTASection>
 
+        <HowItWorks />
         <FeaturesCTA />
       </main>
       <Footer />

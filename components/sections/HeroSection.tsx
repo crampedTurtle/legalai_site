@@ -60,6 +60,15 @@ export function HeroSection() {
               >
                 Sapphire Legal AI is built exclusively for law firms. Unlike public AI tools, your data stays private, compliant, and tailored to your practice.
               </motion.p>
+              
+              <motion.p 
+                className="text-lg text-dark-400 leading-relaxed max-w-2xl"
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.5 }}
+              >
+                <strong>The All-in-One Legal Operating System for Mid-Sized Firms — Client Portal & CRM, AI-Powered Docs, Billing & Scheduling, and Enterprise-Grade Compliance.</strong>
+              </motion.p>
             </div>
 
             {/* CTA Buttons */}
