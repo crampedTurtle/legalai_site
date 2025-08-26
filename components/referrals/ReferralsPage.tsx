@@ -17,9 +17,9 @@ export function ReferralsPage() {
   const [copied, setCopied] = useState(false)
 
   const copyIntroScript = () => {
-    const script = `Hi [Law Firm Contact],
+    const script = `I'd like to introduce you to **Sapphire Legal AI**. Their platform helps mid-sized law firms **save 20+ hours a week** by automating intake, compliance, and document prep — all within a **private, compliant AI workspace**.
 
-I'd like to introduce you to **Sapphire Legal AI**. They provide a **private, compliant AI workspace** built for law firms and a structured **4‑week Launch Pack** for adoption. I think this could save your team significant time while tightening compliance. Looping in Brett to take it from here.`
+They provide a structured **4-week Launch Pack** so adoption is fast and low-risk. Looping in Brett to share more.`
 
     navigator.clipboard.writeText(script)
     setCopied(true)
@@ -358,15 +358,11 @@ I'd like to introduce you to **Sapphire Legal AI**. They provide a **private, co
             <div className="bg-dark-800 rounded-2xl p-8 border border-dark-700 text-left">
               <div className="bg-dark-950 rounded-lg p-6 mb-6">
                 <p className="text-white leading-relaxed">
-                  Hi [Law Firm Contact],
+                  I'd like to introduce you to <strong>Sapphire Legal AI</strong>. Their platform helps mid-sized law firms <strong>save 20+ hours a week</strong> by automating intake, compliance, and document prep — all within a <strong>private, compliant AI workspace</strong>.
                 </p>
                 <br />
                 <p className="text-white leading-relaxed">
-                  I'd like to introduce you to <strong>Sapphire Legal AI</strong>. They provide a <strong>private, compliant AI workspace</strong> built for law firms and a structured <strong>4‑week Launch Pack</strong> for adoption.
-                </p>
-                <br />
-                <p className="text-white leading-relaxed">
-                  I think this could save your team significant time while tightening compliance. Looping in Brett to take it from here.
+                  They provide a structured <strong>4-week Launch Pack</strong> so adoption is fast and low-risk. Looping in Brett to share more.
                 </p>
               </div>
 
