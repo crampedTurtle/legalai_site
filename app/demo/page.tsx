@@ -6,11 +6,32 @@ import { DemoForm } from '@/components/demo/DemoForm'
 import { ContactInfo } from '@/components/demo/ContactInfo'
 
 export const metadata: Metadata = {
-  title: 'Request Demo - See Sapphire Legal AI in Action',
-  description: 'Schedule a personalized demo of Sapphire Legal AI. See how our private AI platform can transform your legal practice with document intelligence, collaborative drafting, and case management.',
+  title: 'Book a Demo | Sapphire Legal AI',
+  description: 'See how Sapphire Legal AI saves hours, captures billables, and reduces compliance headaches.',
   openGraph: {
-    title: 'Request Demo - Sapphire Legal AI',
-    description: 'Schedule a personalized demo and see how Sapphire Legal AI can transform your legal practice.',
+    title: 'Book a Demo | Sapphire Legal AI',
+    description: 'See how Sapphire Legal AI saves hours, captures billables, and reduces compliance headaches.',
+    url: 'https://sapphirelegal.ai/demo',
+    siteName: 'Sapphire Legal AI',
+    images: [
+      {
+        url: 'https://sapphirelegal.ai/images/slai_demo_sm.png',
+        width: 1200,
+        height: 630,
+        alt: 'Book Your Demo - Sapphire Legal AI',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Book a Demo | Sapphire Legal AI',
+    description: 'See how Sapphire Legal AI saves hours, captures billables, and reduces compliance headaches.',
+    images: ['https://sapphirelegal.ai/images/slai_demo_sm.png'],
+  },
+  alternates: {
+    canonical: 'https://sapphirelegal.ai/demo',
   },
 }
 
