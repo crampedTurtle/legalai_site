@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Button } from '@/components/ui/Button'
 import { ArrowRight, Calendar, Play, CheckCircle } from 'lucide-react'
+import { useDemoModal } from '@/hooks/useDemoModal'
 
 const demoBenefits = [
   '30-minute personalized walkthrough',
@@ -68,16 +69,14 @@ export function DemoHero() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <Button size="lg" className="group" asChild>
-            <a href="https://cal.com/s5-brett" target="_blank" rel="noopener noreferrer">
-              <Calendar className="mr-2 h-5 w-5" />
-              Schedule Demo
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </a>
-          </Button>
-          <Button variant="secondary" size="lg" className="group">
-            <Play className="mr-2 h-5 w-5" />
-            Watch Product Demo
+          <Button 
+            size="lg" 
+            className="group"
+            onClick={() => useDemoModal.getState().open('demo:page')}
+          >
+            <Calendar className="mr-2 h-5 w-5" />
+            Schedule Demo
+            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
           </Button>
         </motion.div>
 
