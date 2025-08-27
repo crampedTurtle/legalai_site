@@ -56,7 +56,7 @@ export function DemoBookingModal({ isOpen, onClose, source = 'demo:booking' }: D
       setError(null)
 
       // Capture lead in Supabase
-      await submitLead({
+      const leadId = await submitLead({
         email: formData.email,
         name: formData.name,
         firm_name: formData.firm,
@@ -68,6 +68,11 @@ export function DemoBookingModal({ isOpen, onClose, source = 'demo:booking' }: D
       }, 'demo_request')
 
       setIsSuccess(true)
+      
+      // Redirect to Cal.com booking page
+      const calUrl = `https://cal.com/s5-brett?utm_source=${encodeURIComponent(source)}&utm_medium=demo_modal&utm_campaign=booking`
+      window.open(calUrl, '_blank')
+      
     } catch (err) {
       console.error('Failed to submit demo request:', err)
       setError('Could not submit your request. Please try again.')
@@ -125,15 +130,28 @@ export function DemoBookingModal({ isOpen, onClose, source = 'demo:booking' }: D
                     Demo Request Submitted!
                   </h3>
                   <p className="text-dark-300 mb-6">
-                    Thanks! We've received your demo request and will be in touch within 24 hours to schedule your personalized walkthrough.
+                    Thanks! We've received your demo request. A new tab should have opened with our calendar where you can choose your preferred time slot.
                   </p>
                   <p className="text-sm text-dark-400">
-                    In the meantime, feel free to explore our resources or reach out if you have any questions.
+                    If the calendar didn't open automatically, please check your browser's popup blocker or click the button below to schedule your demo.
                   </p>
                 </div>
-                <Button onClick={handleClose} size="lg">
-                  Close
-                </Button>
+                <div className="space-y-3">
+                  <Button 
+                    onClick={() => {
+                      const calUrl = `https://cal.com/s5-brett?utm_source=${encodeURIComponent(source)}&utm_medium=demo_modal&utm_campaign=booking`
+                      window.open(calUrl, '_blank')
+                    }} 
+                    size="lg"
+                    className="group"
+                  >
+                    <Calendar className="mr-2 h-5 w-5" />
+                    Schedule Demo Now
+                  </Button>
+                  <Button onClick={handleClose} variant="outline" size="lg">
+                    Close
+                  </Button>
+                </div>
               </div>
             </motion.div>
           </div>
