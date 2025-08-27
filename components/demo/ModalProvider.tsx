@@ -1,6 +1,6 @@
 'use client'
 
-import { DemoBookingModal } from './DemoBookingModal'
+import { DemoModal } from './DemoModal'
 import { ConsultationModal } from './ConsultationModal'
 import { SecurityDemoModal } from './SecurityDemoModal'
 import { ResourceModal } from '@/components/resources/ResourceModal'
@@ -28,7 +28,7 @@ export function ModalProvider({ children }: ModalProviderProps) {
   return (
     <>
       {children}
-      <DemoBookingModal isOpen={isDemoOpen} onClose={closeDemo} source={demoSource} />
+      <DemoModal />
       <ConsultationModal isOpen={isConsultationOpen} onClose={closeConsultation} source={consultationSource} />
       <SecurityDemoModal isOpen={isSecurityDemoOpen} onClose={closeSecurityDemo} source={securityDemoSource} />
       {resource && (<ResourceModal isOpen={isResourceOpen} onClose={closeResource} resource={resource} />)}
