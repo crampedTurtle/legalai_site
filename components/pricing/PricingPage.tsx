@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/Button'
 import { ArrowRight, Check, Star, ChevronDown, ChevronUp } from 'lucide-react'
 import { usePricingBookingModal } from '@/hooks/usePricingBookingModal'
 import { PricingBookingModal } from './PricingBookingModal'
+import { pricingTiers, pricingFootnote, planMatrix, featureTooltips, FeatureKey } from '@/data/pricing'
+import { Tooltip } from '@/components/ui/Tooltip'
 
 interface PricingPageProps {
   children: React.ReactNode
@@ -145,82 +147,6 @@ export function PlatformTab() {
   })
   const { open } = usePricingBookingModal()
 
-  const plans = [
-    {
-      title: 'Core',
-      users: 'Up to 10 users',
-      price: '$1,500',
-      perUser: '$39',
-      heading: 'The safest way to start with Private AI.',
-      description: 'Secure private workspace, guardrails & redaction, policy controls, basic workflows, audit logs, and email support.',
-      bestFor: 'Best for: Solo attorneys & small firms ready to explore AI safely.',
-      features: [
-        'Private workspace',
-        'Guardrails & redaction',
-        'Policy controls',
-        'Basic workflows',
-        'Email support',
-        'Standard audit logs'
-      ],
-      popular: false
-    },
-    {
-      title: 'Practice',
-      users: 'Up to 25 users',
-      price: '$3,500',
-      perUser: '$35',
-      heading: 'Add power and automation for growing practices.',
-      description: 'Includes everything in Core, plus advanced workflow builder, model routing, DMS connectors (NetDocs/iManage on roadmap), priority support, usage analytics.',
-      bestFor: 'Best for: Firms scaling up automation & collaboration.',
-      features: [
-        'Everything in Core',
-        'Advanced workflow builder',
-        'Model routing',
-        'DMS connectors*',
-        'Priority support',
-        'Usage analytics'
-      ],
-      popular: true
-    },
-    {
-      title: 'Firm',
-      users: 'Up to 50 users',
-      price: '$6,000',
-      perUser: '$32',
-      heading: 'Enterprise-grade security and control.',
-      description: 'Includes everything in Practice, plus SSO/SAML, granular policy controls, sandbox environments, admin insights, and scheduled exports.',
-      bestFor: 'Best for: Mid-size firms with compliance & IT requirements.',
-      features: [
-        'Everything in Practice',
-        'SSO/SAML',
-        'Granular policy controls',
-        'Sandbox envs',
-        'Admin insights',
-        'Scheduled exports'
-      ],
-      popular: false
-    },
-    {
-      title: 'Enterprise',
-      users: 'Contact us',
-      price: 'Custom',
-      perUser: '',
-      heading: 'Tailored deployments for the largest firms.',
-      description: 'Private VPC or on-premise hosting, custom SLAs, BAA/HIPAA compliance, advanced governance, dedicated success manager.',
-      bestFor: 'Best for: AmLaw 200 firms, in-house legal, or regulated industries.',
-      features: [
-        'Unlimited org size',
-        'Private VPC/on-prem',
-        'Custom SLAs',
-        'BAA/HIPAA',
-        'Advanced governance',
-        'Dedicated success',
-        'Fractional CTO advisory (optional)'
-      ],
-      popular: false
-    }
-  ]
-
   return (
     <motion.div
       ref={ref}
@@ -235,64 +161,80 @@ export function PlatformTab() {
       </div>
       
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {plans.map((plan, index) => (
+        {pricingTiers.map((tier, index) => (
           <motion.div
-            key={plan.title}
+            key={tier.id}
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: index * 0.1 }}
             className={`relative p-6 rounded-xl border ${
-              plan.popular 
+              tier.badge === "Most Popular"
                 ? 'border-sapphire-500 bg-dark-800' 
                 : 'border-dark-700 bg-dark-800'
             }`}
           >
-            {plan.popular && (
+            {tier.badge === "Most Popular" && (
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-sapphire-500 text-white rounded-full text-xs font-medium">
                   <Star className="h-3 w-3" />
-                  Most Popular
+                  {tier.badge}
                 </div>
               </div>
             )}
             
             <div className="text-center mb-6">
-              <h3 className="text-xl font-bold text-white mb-2">{plan.title}</h3>
-              <p className="text-sm text-dark-300 mb-3">{plan.users}</p>
+              <h3 className="text-xl font-bold text-white mb-2">{tier.name}</h3>
+              <p className="text-sm text-dark-300 mb-3">{tier.userCap}</p>
               <div className="mb-2">
-                <span className="text-3xl font-bold text-white">{plan.price}</span>
-                {plan.price !== 'Custom' && <span className="text-dark-300 ml-1">/mo</span>}
+                <span className="text-3xl font-bold text-white">
+                  {typeof tier.monthlyPrice === 'number' ? `$${tier.monthlyPrice.toLocaleString()}` : tier.monthlyPrice}
+                </span>
+                {typeof tier.monthlyPrice === 'number' && <span className="text-dark-300 ml-1">/mo</span>}
               </div>
-              {plan.perUser && (
-                <p className="text-sm text-dark-400">+ {plan.perUser}/user/mo</p>
+              {tier.perUser && (
+                <p className="text-sm text-dark-400">+ {tier.perUser}</p>
               )}
             </div>
             
             <div className="mb-6">
-              <h4 className="text-lg font-semibold text-white mb-2">{plan.heading}</h4>
-              <p className="text-sm text-dark-300 mb-3 leading-relaxed">{plan.description}</p>
-              <p className="text-xs text-sapphire-400 font-medium">{plan.bestFor}</p>
+              <h4 className="text-lg font-semibold text-white mb-2">{tier.blurb}</h4>
+              <p className="text-xs text-sapphire-400 font-medium">{tier.bestFor}</p>
             </div>
             
             <div className="mb-6">
               <ul className="space-y-3">
-                {plan.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-start gap-3">
-                    <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-dark-300">{feature}</span>
-                  </li>
-                ))}
+                {tier.features.map((feature, featureIndex) => {
+                  const featureKey = tier.featureKeys?.[featureIndex];
+                  const hasTooltip = featureKey && featureTooltips[featureKey];
+                  
+                  return (
+                    <li key={featureIndex} className="flex items-start gap-3">
+                      <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                      {hasTooltip ? (
+                        <Tooltip content={featureTooltips[featureKey!]}>
+                          <span className="text-sm text-dark-300 underline decoration-dotted cursor-help">
+                            {feature}
+                          </span>
+                        </Tooltip>
+                      ) : (
+                        <span className="text-sm text-dark-300">{feature}</span>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
             
             <div className="text-center">
               <Button 
                 size="lg" 
-                className={`w-full group ${plan.popular ? 'bg-sapphire-500 hover:bg-sapphire-600' : ''}`}
+                className={`w-full group ${tier.badge === "Most Popular" ? 'bg-sapphire-500 hover:bg-sapphire-600' : ''}`}
                 onClick={() => open('platform')}
                 data-cta="pricing"
+                data-track="pricing_cta"
+                data-tier={tier.id}
               >
-                Schedule a Meeting
+                {tier.ctaLabel}
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
@@ -303,9 +245,48 @@ export function PlatformTab() {
       {/* Footnote */}
       <div className="mt-8 text-center">
         <p className="text-sm text-dark-400">
-          *NetDocuments / iManage connectors on the roadmap. Contact us for timeline.
+          {pricingFootnote}
         </p>
       </div>
+      
+      {/* Compare Plans Matrix */}
+      <section className="mt-12">
+        <h2 className="text-xl font-semibold mb-6 text-center text-white">Compare plans</h2>
+        <div className="overflow-x-auto rounded-xl border border-white/10 bg-white/5">
+          <table className="w-full text-sm">
+            <thead className="text-left">
+              <tr>
+                <th className="p-3 text-white font-medium">Feature</th>
+                <th className="p-3 text-center text-white font-medium">Core</th>
+                <th className="p-3 text-center text-white font-medium">Practice</th>
+                <th className="p-3 text-center text-white font-medium">Firm</th>
+                <th className="p-3 text-center text-white font-medium">Enterprise</th>
+              </tr>
+            </thead>
+            <tbody>
+              {planMatrix.map((row) => (
+                <tr key={row.key} className="border-t border-white/10 hover:bg-white/5 transition-colors">
+                  <td className="p-3">
+                    <Tooltip content={featureTooltips[row.key]}>
+                      <span className="cursor-help underline decoration-dotted text-white" aria-label={`Info: ${row.label}`}>
+                        {row.label}
+                      </span>
+                    </Tooltip>
+                  </td>
+                  {(["core","practice","firm","enterprise"] as const).map((tier) => (
+                    <td key={tier} className="p-3 text-center">
+                      {row.tiers[tier] ? "✔️" : "—"}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-3 text-xs text-white/60 text-center">
+          *NetDocuments / iManage connectors on the roadmap. Contact us for timeline.
+        </p>
+      </section>
     </motion.div>
   )
 }
@@ -365,7 +346,7 @@ export function LaunchPackTab() {
         </div>
         
         <div className="text-center">
-          <Button size="lg" className="w-full group" onClick={() => open('launch-pack')} data-cta="pricing">
+          <Button size="lg" className="w-full group" onClick={() => open('launch-pack')} data-cta="pricing" data-track="pricing_cta" data-tier="launch-pack">
             Schedule a Meeting
             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
           </Button>
@@ -468,7 +449,7 @@ export function ManagedOpsTab() {
             </div>
             
             <div className="text-center">
-              <Button size="lg" className="w-full group" onClick={() => open('managed-ops')} data-cta="pricing">
+              <Button size="lg" className="w-full group" onClick={() => open('managed-ops')} data-cta="pricing" data-track="pricing_cta" data-tier="managed-ops">
                 Schedule a Meeting
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
