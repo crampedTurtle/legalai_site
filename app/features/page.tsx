@@ -49,6 +49,12 @@ export default function FeaturesPage() {
           <Feature title="Smart Search">
             Find exactly what you need in seconds with AI-powered search across your entire knowledge base.
           </Feature>
+          <Feature title="Structure & Grammar Checks">
+            AI-powered document quality assessment with structure and grammar validation.
+          </Feature>
+          <Feature title="Anomaly Detection">
+            Advanced anomaly detection and risk assessment for document compliance and quality.
+          </Feature>
           <Feature title="Documents">
             Organize, tag, and manage all case materials in a central, private repository.
           </Feature>
@@ -105,6 +111,27 @@ export default function FeaturesPage() {
           </Feature>
         </FeatureSection>
 
+        <FeatureSection title="Advanced AI Services" id="advanced-ai">
+          <Feature title="Workflow Optimization Service">
+            AI-driven bottleneck detection, performance scoring, and optimization recommendations to streamline your firm's processes.
+          </Feature>
+          <Feature title="Document Intelligence (Full)">
+            Advanced anomaly detection, risk & compliance assessment, and formatting consistency checks for enterprise-grade document quality.
+          </Feature>
+          <Feature title="Citation Validation Service">
+            Real-time citation verification, overruling detection, related suggestions, and batch validation to ensure legal accuracy.
+          </Feature>
+          <Feature title="Contract Intelligence Service">
+            Risk detection, compliance validation (GDPR/HIPAA/SOX/CCPA), industry benchmarking, optimization recommendations, and risk scoring.
+          </Feature>
+          <Feature title="Client Intelligence Service">
+            Risk profiling, churn prediction, segmentation, payment risk assessment, opportunity identification, and communications analysis.
+          </Feature>
+          <Feature title="Enhanced Client Retention Service">
+            Predictive churn with timeline, ROI calculation, and segment-based retention strategies to maximize client lifetime value.
+          </Feature>
+        </FeatureSection>
+
         {/* New anchor sections for feature pills */}
         <FeatureSection title="Client Experience & Intake" id="client-experience">
           <Feature title="Guided Intake Forms">
@@ -134,11 +161,29 @@ export default function FeaturesPage() {
           <Feature title="Matter Timelines">
             Matter timelines, automated assignments, escalation rules, collaborative drafting w/ version history.
           </Feature>
+          <Feature title="Advanced Workflow Builder">
+            Drag-and-drop workflow creation with conditional logic and multi-step approvals.
+          </Feature>
+          <Feature title="Model Routing">
+            Route tasks by type: local (Ollama), vendor, or custom models for optimal performance.
+          </Feature>
           <Feature title="Automated Assignments">
             Intelligent task assignment based on workload and expertise.
           </Feature>
           <Feature title="Escalation Rules">
             Automated escalation for missed deadlines and critical issues.
+          </Feature>
+        </FeatureSection>
+
+        <FeatureSection title="Integrations & Connectivity" id="integrations">
+          <Feature title="DMS Connectors">
+            Connect with NetDocuments and iManage (roadmap) for seamless document management.
+          </Feature>
+          <Feature title="Usage Analytics">
+            Feature adoption & usage dashboards to optimize your team's productivity.
+          </Feature>
+          <Feature title="Priority Support">
+            Priority ticket routing and faster SLAs for critical issues.
           </Feature>
         </FeatureSection>
 
@@ -154,12 +199,39 @@ export default function FeaturesPage() {
           </Feature>
         </FeatureSection>
 
+        <FeatureSection title="Enterprise Security & Compliance" id="enterprise-security">
+          <Feature title="SSO/SAML Integration">
+            Single Sign-On with SAML/SSO providers for seamless enterprise authentication.
+          </Feature>
+          <Feature title="Granular Policy Controls">
+            Per-role and per-feature policy & permission controls for maximum security.
+          </Feature>
+          <Feature title="Sandbox Environments">
+            Dedicated test environments for safe experimentation and training.
+          </Feature>
+          <Feature title="Advanced Governance">
+            Enterprise-grade governance with audit & retention policies for regulated industries.
+          </Feature>
+          <Feature title="BAA/HIPAA Compliance">
+            Full HIPAA/BAA compliance support & controls for healthcare and sensitive data.
+          </Feature>
+          <Feature title="Private VPC/On-Premise">
+            Private VPC or on-premise deployment options for maximum data control.
+          </Feature>
+        </FeatureSection>
+
         <FeatureSection title="Administration">
           <Feature title="Admin Dashboard">
             Control access, permissions, and user activity at a glance.
           </Feature>
+          <Feature title="Admin Insights">
+            Admin-only dashboards for usage & risk monitoring across your organization.
+          </Feature>
           <Feature title="Audit Logs">
             Maintain full compliance with detailed audit trails.
+          </Feature>
+          <Feature title="Scheduled Exports">
+            Automated exports to your DMS/data lake for backup and integration.
           </Feature>
           <Feature title="Data Management">
             Secure, private storage with full control of your data.
