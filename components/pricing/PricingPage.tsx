@@ -7,8 +7,7 @@ import { Button } from '@/components/ui/Button'
 import { ArrowRight, Check, Star, ChevronDown, ChevronUp } from 'lucide-react'
 import { usePricingBookingModal } from '@/hooks/usePricingBookingModal'
 import { PricingBookingModal } from './PricingBookingModal'
-import { pricingTiers, pricingFootnote, planMatrix, featureTooltips, FeatureKey } from '@/data/pricing'
-import { Tooltip } from '@/components/ui/Tooltip'
+import { pricingTiers, pricingFootnote, planMatrix } from '@/data/pricing'
 
 interface PricingPageProps {
   children: React.ReactNode
@@ -198,30 +197,18 @@ export function PlatformTab() {
             
             <div className="mb-6">
               <h4 className="text-lg font-semibold text-white mb-2">{tier.blurb}</h4>
+              <p className="text-sm text-dark-300 mb-3 leading-relaxed">{tier.paragraph}</p>
               <p className="text-xs text-sapphire-400 font-medium">{tier.bestFor}</p>
             </div>
             
             <div className="mb-6">
               <ul className="space-y-3">
-                {tier.features.map((feature, featureIndex) => {
-                  const featureKey = tier.featureKeys?.[featureIndex];
-                  const hasTooltip = featureKey && featureTooltips[featureKey];
-                  
-                  return (
-                    <li key={featureIndex} className="flex items-start gap-3">
-                      <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                      {hasTooltip ? (
-                        <Tooltip content={featureTooltips[featureKey!]}>
-                          <span className="text-sm text-dark-300 underline decoration-dotted cursor-help">
-                            {feature}
-                          </span>
-                        </Tooltip>
-                      ) : (
-                        <span className="text-sm text-dark-300">{feature}</span>
-                      )}
-                    </li>
-                  );
-                })}
+                {tier.features.map((feature, featureIndex) => (
+                  <li key={featureIndex} className="flex items-start gap-3">
+                    <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm text-dark-300">{feature}</span>
+                  </li>
+                ))}
               </ul>
             </div>
             
@@ -253,25 +240,23 @@ export function PlatformTab() {
       <section className="mt-12">
         <h2 className="text-xl font-semibold mb-6 text-center text-white">Compare plans</h2>
         <div className="overflow-x-auto rounded-xl border border-white/10 bg-white/5">
-          <table className="w-full text-sm">
+          <table className="w-full text-sm min-w-[800px]">
             <thead className="text-left">
               <tr>
-                <th className="p-3 text-white font-medium">Feature</th>
-                <th className="p-3 text-center text-white font-medium">Core</th>
-                <th className="p-3 text-center text-white font-medium">Practice</th>
-                <th className="p-3 text-center text-white font-medium">Firm</th>
-                <th className="p-3 text-center text-white font-medium">Enterprise</th>
+                <th className="p-3 text-white font-medium min-w-[200px]">Feature</th>
+                <th className="p-3 text-center text-white font-medium min-w-[120px]">Core</th>
+                <th className="p-3 text-center text-white font-medium min-w-[120px]">Practice</th>
+                <th className="p-3 text-center text-white font-medium min-w-[120px]">Firm</th>
+                <th className="p-3 text-center text-white font-medium min-w-[120px]">Enterprise</th>
               </tr>
             </thead>
             <tbody>
               {planMatrix.map((row) => (
                 <tr key={row.key} className="border-t border-white/10 hover:bg-white/5 transition-colors">
                   <td className="p-3">
-                    <Tooltip content={featureTooltips[row.key]}>
-                      <span className="cursor-help underline decoration-dotted text-white" aria-label={`Info: ${row.label}`}>
-                        {row.label}
-                      </span>
-                    </Tooltip>
+                    <span className="text-white">
+                      {row.label}
+                    </span>
                   </td>
                   {(["core","practice","firm","enterprise"] as const).map((tier) => (
                     <td key={tier} className="p-3 text-center">

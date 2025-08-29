@@ -71,6 +71,7 @@ export interface PricingTier {
   userCap?: string;       // "Up to 10 users", etc.
   badge?: "Most Popular" | null;
   blurb: string;
+  paragraph: string;
   bestFor: string;
   ctaLabel: string;       // "Schedule a Meeting"
   features: string[];
@@ -86,6 +87,7 @@ export const pricingTiers: PricingTier[] = [
     perUser: "$39/user/mo",
     badge: null,
     blurb: "The safest way to start with Private AI.",
+    paragraph: "Get started with a safe, private AI workspace designed for smaller firms. Core gives you guardrails, policy controls, and simple workflows so you can explore AI without risk.",
     bestFor: "Solo attorneys & small firms ready to explore AI safely.",
     ctaLabel: "Schedule a Meeting",
     features: [
@@ -113,6 +115,7 @@ export const pricingTiers: PricingTier[] = [
     perUser: "$35/user/mo",
     badge: "Most Popular",
     blurb: "Add power and automation for growing practices.",
+    paragraph: "Scale your practice with advanced automation and AI optimization. Connect your DMS, streamline workflows, and capture more billable hours as your firm grows.",
     bestFor: "Firms scaling up automation & collaboration.",
     ctaLabel: "Schedule a Meeting",
     features: [
@@ -143,6 +146,7 @@ export const pricingTiers: PricingTier[] = [
     perUser: "$32/user/mo",
     badge: null,
     blurb: "Enterprise-grade security and control.",
+    paragraph: "Built for mid-sized firms that need enterprise-grade compliance and control. Firm adds SSO, granular policies, and sandbox environments to keep teams secure and efficient.",
     bestFor: "Mid-size firms with compliance & IT requirements.",
     ctaLabel: "Schedule a Meeting",
     features: [
@@ -173,6 +177,7 @@ export const pricingTiers: PricingTier[] = [
     perUser: null,
     badge: null,
     blurb: "Tailored deployments for the largest firms.",
+    paragraph: "Tailored for the largest firms, in-house legal, and regulated industries. Enterprise unlocks the full Legal Intelligence Suite plus custom deployments, governance, and dedicated success support.",
     bestFor: "AmLaw 200, in-house legal, or regulated industries.",
     ctaLabel: "Schedule a Meeting",
     features: [
