@@ -161,6 +161,18 @@ export function FeaturesOverview() {
           </div>
         </motion.div>
 
+        {/* Database Isolation Note */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.7 }}
+          className="text-center mt-12"
+        >
+          <p className="text-lg text-sapphire-400 font-medium">
+            Every tenant runs in its own Postgres database (no shared schemas) for maximum isolation and compliance.
+          </p>
+        </motion.div>
+
         {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

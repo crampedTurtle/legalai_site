@@ -350,7 +350,7 @@ export function CTASection() {
                   </>
                 ) : (
                   <>
-                    Schedule Demo
+                    Start 14-Day Trial
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </>
                 )}
@@ -361,6 +361,10 @@ export function CTASection() {
                   <p className="text-red-400 text-sm">{error}</p>
                 </div>
               )}
+
+              <p className="text-sm text-dark-400 text-center mt-4">
+                On-premise or AWS—your choice. Provisioned in minutes.
+              </p>
 
               <p className="text-xs text-dark-400 text-center">
                 By submitting this form, you agree to our{' '}

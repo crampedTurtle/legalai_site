@@ -10,13 +10,15 @@ import { TrustSection } from '@/components/sections/TrustSection'
 import { ResourcesTeaser } from '@/components/ResourcesTeaser'
 import { Testimonials } from '@/components/Testimonials'
 import { CTASection } from '@/components/sections/CTASection'
+import { VectorHighlights } from '@/components/VectorHighlights'
 
 export const metadata: Metadata = {
-  title: 'Sapphire Legal AI - All Your Legal Work. One Private, Intelligent Workspace.',
-  description: 'AI-powered platform built exclusively for law firms and legal teams—secure, private, and tailored to your practice. Document intelligence, collaborative drafting, case management, and AI assistance in one private workspace.',
+  title: 'Sapphire Legal AI — Private Legal AI on AWS with Vector Intelligence',
+  description: 'Run Sapphire on-premise or on AWS with a dedicated Postgres database. Built-in Vector Intelligence delivers semantic search, contract similarity, and automatic document relationships — all private and compliant.',
   openGraph: {
-    title: 'Sapphire Legal AI - All Your Legal Work. One Private, Intelligent Workspace.',
-    description: 'AI-powered platform built exclusively for law firms and legal teams—secure, private, and tailored to your practice.',
+    title: 'Sapphire Legal AI — Private Legal AI on AWS with Vector Intelligence',
+    description: 'Run Sapphire on-premise or on AWS with a dedicated Postgres database. Built-in Vector Intelligence delivers semantic search, contract similarity, and automatic document relationships — all private and compliant.',
+    images: ['/og/aws-vector.png'],
   },
 }
 
@@ -30,6 +32,7 @@ export default function HomePage() {
         <DashboardShowcase />
         <BenefitStrip />
         <FeaturesOverview />
+        <VectorHighlights />
         <TrustSection />
         <ResourcesTeaser />
         <Testimonials />

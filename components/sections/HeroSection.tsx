@@ -58,7 +58,7 @@ export function HeroSection() {
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                Sapphire Legal AI is built exclusively for law firms. Unlike public AI tools, your data stays private, compliant, and tailored to your practice.
+                Private, compliant legal AI—now on AWS with your own dedicated Postgres database. New: Vector Intelligence turns your documents into a private, searchable AI brain.
               </motion.p>
               
               <motion.p 
@@ -112,15 +112,19 @@ export function HeroSection() {
             >
               <div className="flex items-center gap-2">
                 <Shield className="h-4 w-4 text-sapphire-400" />
-                <span>SOC 2 Type II</span>
+                <span>AWS</span>
               </div>
               <div className="flex items-center gap-2">
                 <Lock className="h-4 w-4 text-sapphire-400" />
-                <span>GDPR & CCPA Compliant</span>
+                <span>SOC-2 Ready</span>
               </div>
               <div className="flex items-center gap-2">
                 <Users className="h-4 w-4 text-sapphire-400" />
-                <span>Built for Legal Teams</span>
+                <span>HIPAA Ready</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Shield className="h-4 w-4 text-sapphire-400" />
+                <span>ISO-Ready</span>
               </div>
             </motion.div>
           </motion.div>

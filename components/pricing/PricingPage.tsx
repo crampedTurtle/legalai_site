@@ -234,6 +234,9 @@ export function PlatformTab() {
         <p className="text-sm text-dark-400">
           {pricingFootnote}
         </p>
+        <p className="text-sm text-sapphire-400 mt-2">
+          All tiers include a <strong>dedicated Postgres database</strong>. Hosted <strong>on-premise</strong> or <strong>on AWS</strong>. 14-day trial with commitment; invoice on Day 14 unless cancelled.
+        </p>
       </div>
       
       {/* Compare Plans Matrix */}
@@ -520,6 +523,18 @@ export function FAQSection() {
     {
       question: 'What\'s your cancellation policy?',
       answer: 'You can cancel your subscription at any time with 30 days notice. We\'ll help you export your data and ensure a smooth transition.'
+    },
+    {
+      question: 'Do we share a database with other firms?',
+      answer: 'No. Every tenant has a **dedicated Postgres database** for isolation and performance.'
+    },
+    {
+      question: 'Can we run Sapphire on AWS?',
+      answer: 'Yes. We provision a private tenant on AWS (App Runner + Aurora + S3 with KMS). Your data remains encrypted in your tenant.'
+    },
+    {
+      question: 'What is Vector Intelligence?',
+      answer: 'A built-in vector database that powers semantic search, contract similarity, automatic relationships, practice-specific results, and explainable similarity scores.'
     }
   ]
 
