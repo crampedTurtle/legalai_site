@@ -1,0 +1,43 @@
+{
+  "maxSlots": 25,
+  "claimedSlots": 2,
+  "ctaHref": "/demo",
+  "hero": {
+    "eyebrow": "Founding Firm Program",
+    "headline": "Firm Features at Practice Pricing (12 Months)",
+    "subhead": "Join a select cohort of firms modernizing research and workflows with vector-powered semantic search.",
+    "bullets": [
+      "12 months: Firm-tier features at Practice pricing",
+      "Preferred Founder discount locked forever after year one",
+      "White-glove onboarding and priority support",
+      "Input on roadmap + early access to new features"
+    ]
+  },
+  "logos": [
+    {
+      "name": "Moran Law (example)",
+      "src": "/images/logos/moran-law.svg",
+      "href": "#",
+      "alt": "Moran Law"
+    }
+  ],
+  "pricing": {
+    "practiceMonthly": 3500,
+    "firmMonthly": 6000,
+    "founderDiscountPctAfterYear": 25
+  },
+  "faq": [
+    {
+      "q": "Why limit to 25 firms?",
+      "a": "We're offering white-glove onboarding and direct roadmap input. Keeping the cohort small ensures quality and speed."
+    },
+    {
+      "q": "What happens after 12 months?",
+      "a": "You keep a preferred Founder discount for life (currently 25% below public pricing)."
+    },
+    {
+      "q": "Is data isolated?",
+      "a": "Yes. Each tenant is isolated, and semantic search respects tenant boundaries."
+    }
+  ]
+}

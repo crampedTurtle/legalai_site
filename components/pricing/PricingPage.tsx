@@ -8,6 +8,7 @@ import { ArrowRight, Check, Star, ChevronDown, ChevronUp } from 'lucide-react'
 import { usePricingBookingModal } from '@/hooks/usePricingBookingModal'
 import { PricingBookingModal } from './PricingBookingModal'
 import { pricingTiers, pricingFootnote, planMatrix } from '@/data/pricing'
+import content from '@/content/foundingFirm.json'
 
 interface PricingPageProps {
   children: React.ReactNode
@@ -146,6 +147,8 @@ export function PlatformTab() {
   })
   const { open } = usePricingBookingModal()
 
+  const slotsLeft = Math.max(0, content.maxSlots - content.claimedSlots)
+
   return (
     <motion.div
       ref={ref}
@@ -153,6 +156,42 @@ export function PlatformTab() {
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8 }}
     >
+      {/* Founding Firm Program Banner */}
+      <div className="mb-8 p-6 rounded-xl border border-sapphire-500/20 bg-gradient-to-r from-sapphire-500/10 to-indigo-500/10">
+        <div className="text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-sapphire-500 text-white rounded-full text-sm font-medium mb-3">
+            <Star className="h-4 w-4" />
+            Founding Firm Program
+          </div>
+          <h3 className="text-xl font-bold text-white mb-2">
+            Firm features at Practice pricing for 12 months
+          </h3>
+          <p className="text-dark-300 mb-4">
+            Join {content.claimedSlots} firms already in the program. Only {slotsLeft} slots left.
+          </p>
+          <div className="flex items-center justify-center gap-4">
+            <div className="text-center">
+              <p className="text-sm text-dark-400">Public Firm price</p>
+              <p className="text-lg font-bold line-through text-dark-400">${content.pricing.firmMonthly.toLocaleString()}/mo</p>
+            </div>
+            <div className="text-center">
+              <p className="text-sm text-sapphire-400">Your Founder price (Year 1)</p>
+              <p className="text-2xl font-bold text-sapphire-400">${content.pricing.practiceMonthly.toLocaleString()}/mo</p>
+            </div>
+          </div>
+          <div className="mt-4">
+            <Button 
+              size="lg" 
+              className="bg-sapphire-500 hover:bg-sapphire-600"
+              onClick={() => window.open('/founding-firm', '_blank')}
+            >
+              Learn More About Founding Firm Program
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
+
       <div className="text-center mb-8">
         <p className="text-dark-300 leading-relaxed">
           Choose your Sapphire Legal AI platform tier. All tiers are deployed through the <strong>Launch Pack</strong> and can be extended with <strong>Managed Ops</strong>, as outlined in the Sapphire Implementation Framework.
@@ -180,15 +219,36 @@ export function PlatformTab() {
                 </div>
               </div>
             )}
+            {tier.id === "practice" && (
+              <div className="absolute -top-3 right-4">
+                <div className="inline-flex items-center gap-1 px-2 py-1 bg-emerald-500 text-white rounded-full text-xs font-medium">
+                  Founder Forever Discount
+                </div>
+              </div>
+            )}
             
             <div className="text-center mb-6">
               <h3 className="text-xl font-bold text-white mb-2">{tier.name}</h3>
               <p className="text-sm text-dark-300 mb-3">{tier.userCap}</p>
               <div className="mb-2">
-                <span className="text-3xl font-bold text-white">
-                  {typeof tier.monthlyPrice === 'number' ? `$${tier.monthlyPrice.toLocaleString()}` : tier.monthlyPrice}
-                </span>
-                {typeof tier.monthlyPrice === 'number' && <span className="text-dark-300 ml-1">/mo</span>}
+                {tier.id === "practice" ? (
+                  <div className="space-y-1">
+                    <div className="text-sm text-dark-400 line-through">
+                      Firm features at Practice pricing (12 months)
+                    </div>
+                    <span className="text-3xl font-bold text-white">
+                      {typeof tier.monthlyPrice === 'number' ? `$${tier.monthlyPrice.toLocaleString()}` : tier.monthlyPrice}
+                    </span>
+                    {typeof tier.monthlyPrice === 'number' && <span className="text-dark-300 ml-1">/mo</span>}
+                  </div>
+                ) : (
+                  <>
+                    <span className="text-3xl font-bold text-white">
+                      {typeof tier.monthlyPrice === 'number' ? `$${tier.monthlyPrice.toLocaleString()}` : tier.monthlyPrice}
+                    </span>
+                    {typeof tier.monthlyPrice === 'number' && <span className="text-dark-300 ml-1">/mo</span>}
+                  </>
+                )}
               </div>
               {tier.perUser && (
                 <p className="text-sm text-dark-400">+ {tier.perUser}</p>
