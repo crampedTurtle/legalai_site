@@ -3,6 +3,13 @@ import Link from "next/link";
 import content from "@/content/foundingFirm.json";
 import { useState, useEffect } from "react";
 
+// Extend Window interface for gtag
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
 export default function FoundingFirmBanner() {
   const [hidden, setHidden] = useState(false);
   

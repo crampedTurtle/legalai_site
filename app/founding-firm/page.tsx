@@ -3,6 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import content from "@/content/foundingFirm.json";
 
+// Extend Window interface for gtag
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
 function money(n: number) {
   return `$${n.toLocaleString()}`;
 }
