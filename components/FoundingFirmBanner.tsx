@@ -23,7 +23,7 @@ export default function FoundingFirmBanner() {
   const slotsLeft = Math.max(0, content.maxSlots - content.claimedSlots);
 
   return (
-    <div className="bg-indigo-600 text-white">
+    <div className="bg-indigo-600 text-white sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 py-2 flex items-center justify-between gap-4">
         <p className="text-sm">
           <strong>Founding Firm Program:</strong> Firm features at Practice pricing (12 months). {slotsLeft} slots left.

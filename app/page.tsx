@@ -11,6 +11,7 @@ import { ResourcesTeaser } from '@/components/ResourcesTeaser'
 import { Testimonials } from '@/components/Testimonials'
 import { CTASection } from '@/components/sections/CTASection'
 import { VectorHighlights } from '@/components/VectorHighlights'
+import FoundingFirmBanner from '@/components/FoundingFirmBanner'
 
 export const metadata: Metadata = {
   title: 'Sapphire Legal AI — Private Legal AI on AWS with Vector Intelligence',
@@ -26,6 +27,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-dark-950">
       <Header />
+      <FoundingFirmBanner />
       <main>
         <HeroSection />
         <FeaturePills />

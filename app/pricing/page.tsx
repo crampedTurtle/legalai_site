@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { PricingPage, Headline, Subhead, PricingTabs, PlatformTab, LaunchPackTab, ManagedOpsTab, FAQSection, FrameworkCTABand } from '@/components/pricing/PricingPage'
+import FoundingFirmBanner from '@/components/FoundingFirmBanner'
 
 export const metadata: Metadata = {
   title: 'Pricing - Hybrid Platform & Services Model | Sapphire Legal AI',
@@ -16,6 +17,7 @@ export default function Pricing() {
   return (
     <div className="min-h-screen bg-dark-950">
       <Header />
+      <FoundingFirmBanner />
       <main>
         <PricingPage>
           <Headline>Flexible Pricing for Every Stage</Headline>
