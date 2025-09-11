@@ -2,6 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import content from "@/content/foundingFirm.json";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 
 // Extend Window interface for gtag
 declare global {
@@ -30,7 +32,8 @@ export default function FoundingFirmPage() {
   const hasAutoScroll = content.logos.length >= 3;
 
   return (
-    <>
+    <div className="min-h-screen bg-dark-950">
+      <Header />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -77,7 +80,7 @@ export default function FoundingFirmPage() {
           })
         }}
       />
-      <main className="mx-auto max-w-7xl px-6 py-16">
+      <main className="mx-auto max-w-7xl px-6 py-16 pt-32">
         <section className="text-center space-y-4">
           <p className="text-sm font-semibold tracking-wide text-indigo-600">{content.hero.eyebrow}</p>
           <h1 className="text-3xl sm:text-5xl font-bold">{content.hero.headline}</h1>
@@ -208,7 +211,8 @@ export default function FoundingFirmPage() {
           </dl>
         </section>
       </main>
-    </>
+      <Footer />
+    </div>
   );
 }
 
