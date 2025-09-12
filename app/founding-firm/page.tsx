@@ -4,6 +4,7 @@ import Link from "next/link";
 import content from "@/content/foundingFirm.json";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { useDemoModal } from "@/hooks/useDemoModal";
 
 // Extend Window interface for gtag
 declare global {
@@ -18,7 +19,6 @@ function money(n: number) {
 
 export default function FoundingFirmPage() {
   const slotsLeft = Math.max(0, content.maxSlots - content.claimedSlots);
-  const ctaHref = content.ctaHref || "https://cal.com/stylere/30min";
   const yearOne = {
     label: "Year 1 (Founder Promo)",
     practicePrice: content.pricing.practiceMonthly,
@@ -30,6 +30,11 @@ export default function FoundingFirmPage() {
   };
 
   const hasAutoScroll = content.logos.length >= 3;
+
+  const handleDemoClick = (location: string) => {
+    useDemoModal.getState().open(`founding-firm:${location}`);
+    window?.gtag?.("event", "cta_click", { location: `founding_firm_${location}` });
+  };
 
   return (
     <div className="min-h-screen bg-dark-950">
@@ -95,13 +100,12 @@ export default function FoundingFirmPage() {
           </ul>
 
           <div className="mt-6 inline-flex items-center gap-3">
-            <Link
-              href={ctaHref}
+            <button
+              onClick={() => handleDemoClick("hero")}
               className="rounded-md bg-indigo-600 px-5 py-3 text-white font-semibold hover:bg-indigo-700"
-              onClick={() => window?.gtag?.("event", "cta_click", { location: "founding_firm_hero" })}
             >
               Book a Demo
-            </Link>
+            </button>
             <div
               className="text-sm text-gray-600"
               aria-live="polite"
@@ -188,13 +192,12 @@ export default function FoundingFirmPage() {
             </div>
           </div>
           <div className="mt-6">
-            <Link
-              href={ctaHref}
+            <button
+              onClick={() => handleDemoClick("pricing")}
               className="inline-flex rounded-md bg-indigo-600 px-5 py-3 text-white font-semibold hover:bg-indigo-700"
-              onClick={() => window?.gtag?.("event", "cta_click", { location: "founding_firm_pricing" })}
             >
               Claim a Founder Slot
-            </Link>
+            </button>
           </div>
         </section>
 
