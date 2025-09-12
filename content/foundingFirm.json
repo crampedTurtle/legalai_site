@@ -15,10 +15,16 @@
   },
   "logos": [
     {
-      "name": "Moran Law (example)",
-      "src": "/images/logos/moran-law.svg",
+      "name": "Moran Law",
+      "src": "/images/logos/moran%20law.jpg",
       "href": "#",
       "alt": "Moran Law"
+    },
+    {
+      "name": "RVMRLaw",
+      "src": "/images/logos/rvmrlaw.jpg",
+      "href": "#",
+      "alt": "RVMRLaw"
     }
   ],
   "pricing": {
