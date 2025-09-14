@@ -11,6 +11,8 @@ export type LeadPayload = {
   phone?: string
   firm_name?: string
   title?: string
+  role?: string
+  pain?: string
   notes?: string
   wants_demo?: boolean
   source?: string
@@ -32,6 +34,8 @@ export async function submitLead(raw: LeadPayload, eventType?: string) {
     phone: sanitizePhone(raw.phone),
     firm_name: raw.firm_name?.trim() || null,
     title: raw.title?.trim() || null,
+    role: raw.role?.trim() || null,
+    pain: raw.pain?.trim() || null,
     notes: raw.notes?.trim() || null,
     wants_demo: !!raw.wants_demo,
     source,
