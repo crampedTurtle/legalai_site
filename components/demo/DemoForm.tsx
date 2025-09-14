@@ -20,6 +20,8 @@ export function DemoForm() {
     firm: '',
     title: '',
     phone: '',
+    role: '',
+    pain: '',
     notes: ''
   })
 
@@ -83,6 +85,8 @@ export function DemoForm() {
         firm_name: formData.firm,
         title: formData.title,
         phone: formData.phone,
+        role: formData.role,
+        pain: formData.pain,
         notes: formData.notes,
         wants_demo: true,
         source: source || 'demo:request',
@@ -175,7 +179,7 @@ export function DemoForm() {
                 // Reset form state
                 setSuccess(false)
                 setLeadId(undefined)
-                setFormData({ firstName: '', lastName: '', email: '', firm: '', title: '', phone: '', notes: '' })
+                setFormData({ firstName: '', lastName: '', email: '', firm: '', title: '', phone: '', role: '', pain: '', notes: '' })
                 // Close the modal
                 close()
               }}
@@ -280,7 +284,7 @@ export function DemoForm() {
               setLeadId(undefined)
               setSlots([])
               setBooking(null)
-              setFormData({ firstName: '', lastName: '', email: '', firm: '', title: '', phone: '', notes: '' })
+              setFormData({ firstName: '', lastName: '', email: '', firm: '', title: '', phone: '', role: '', pain: '', notes: '' })
               // Close the modal
               close()
             }}
@@ -400,6 +404,51 @@ export function DemoForm() {
             placeholder="+1 (555) 123-4567"
             disabled={loading}
           />
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="role" className="block text-sm font-medium text-dark-300 mb-2">
+              Your role
+            </label>
+            <select
+              id="role"
+              name="role"
+              value={formData.role}
+              onChange={(e) => handleInputChange('role', e.target.value)}
+              className="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors"
+              disabled={loading}
+            >
+              <option value="">Select your role</option>
+              <option value="Managing Partner">Managing Partner</option>
+              <option value="COO / Operations">COO / Operations</option>
+              <option value="CFO / Finance">CFO / Finance</option>
+              <option value="CIO / IT">CIO / IT</option>
+              <option value="Practice Chair">Practice Chair</option>
+              <option value="Paralegal / Staff">Paralegal / Staff</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="pain" className="block text-sm font-medium text-dark-300 mb-2">
+              Primary pain to solve
+            </label>
+            <select
+              id="pain"
+              name="pain"
+              value={formData.pain}
+              onChange={(e) => handleInputChange('pain', e.target.value)}
+              className="w-full px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-sapphire-500 focus:border-transparent transition-colors"
+              disabled={loading}
+            >
+              <option value="">Select primary pain</option>
+              <option value="Lost billable hours">Lost billable hours</option>
+              <option value="Client confidentiality risk">Client confidentiality risk</option>
+              <option value="Write-offs / leakage">Write-offs / leakage</option>
+              <option value="Operational inefficiency">Operational inefficiency</option>
+              <option value="Shadow IT / security">Shadow IT / security</option>
+              <option value="Inconsistent documents">Inconsistent documents</option>
+            </select>
+          </div>
         </div>
 
         <div>
