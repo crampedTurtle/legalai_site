@@ -9,7 +9,7 @@ import { useDemoModal } from '@/hooks/useDemoModal'
 type Slot = { start: string; end?: string }
 
 export function DemoForm() {
-  const { close, source } = useDemoModal()
+  const { close, source, persona } = useDemoModal()
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [leadId, setLeadId] = useState<string>()
@@ -24,6 +24,13 @@ export function DemoForm() {
     pain: '',
     notes: ''
   })
+
+  // Set role from persona when modal opens
+  useEffect(() => {
+    if (persona) {
+      setFormData(prev => ({ ...prev, role: persona }))
+    }
+  }, [persona])
 
   // slots & booking
   const [slots, setSlots] = useState<Slot[]>([])
@@ -89,7 +96,7 @@ export function DemoForm() {
         pain: formData.pain,
         notes: formData.notes,
         wants_demo: true,
-        source: source || 'demo:request',
+        source: persona ? `${source || 'demo:request'}:${persona}` : (source || 'demo:request'),
       }, 'demo_request')
       setLeadId(id)
       setSuccess(true)

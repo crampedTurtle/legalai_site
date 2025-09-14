@@ -2,16 +2,20 @@
 
 import { create } from 'zustand'
 
+type Persona = "partner" | "cfo" | "cio" | "coo" | "chair" | "paralegal"
+
 interface DemoModalState {
   isOpen: boolean
   source: string
-  open: (source?: string) => void
+  persona?: Persona
+  open: (source?: string, persona?: Persona) => void
   close: () => void
 }
 
 export const useDemoModal = create<DemoModalState>((set) => ({
   isOpen: false,
   source: 'demo:booking',
-  open: (source = 'demo:booking') => set({ isOpen: true, source }),
-  close: () => set({ isOpen: false }),
+  persona: undefined,
+  open: (source = 'demo:booking', persona) => set({ isOpen: true, source, persona }),
+  close: () => set({ isOpen: false, persona: undefined }),
 })) 

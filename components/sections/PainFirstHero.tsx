@@ -10,8 +10,8 @@ export function PainFirstHero() {
     threshold: 0.1,
   })
 
-  const handlePersonaClick = (persona: string) => {
-    useDemoModal.getState().open(`hero:${persona}`)
+  const handlePersonaClick = (persona: 'partner' | 'cfo' | 'cio') => {
+    useDemoModal.getState().open(`hero:${persona}`, persona)
   }
 
   return (
@@ -73,24 +73,33 @@ export function PainFirstHero() {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <div className="flex flex-wrap gap-3">
-                <button 
-                  onClick={() => handlePersonaClick('partner')}
+                <a
+                  href="/demo?persona=partner"
+                  onClick={(e) => { e.preventDefault(); handlePersonaClick('partner'); }}
                   className="inline-flex items-center justify-center rounded-md bg-sapphire-600 hover:bg-sapphire-500 text-white px-5 py-3 text-sm font-medium transition"
+                  data-track="open_demo_modal"
+                  data-persona="partner"
                 >
                   Protect revenue (Partner demo)
-                </button>
-                <button 
-                  onClick={() => handlePersonaClick('cfo')}
+                </a>
+                <a
+                  href="/demo?persona=cfo"
+                  onClick={(e) => { e.preventDefault(); handlePersonaClick('cfo'); }}
                   className="inline-flex items-center justify-center rounded-md border border-neutral-600 hover:border-neutral-500 text-white px-5 py-3 text-sm font-medium transition"
+                  data-track="open_demo_modal"
+                  data-persona="cfo"
                 >
                   Control costs (CFO briefing)
-                </button>
-                <button 
-                  onClick={() => handlePersonaClick('cio')}
+                </a>
+                <a
+                  href="/demo?persona=cio"
+                  onClick={(e) => { e.preventDefault(); handlePersonaClick('cio'); }}
                   className="inline-flex items-center justify-center rounded-md border border-neutral-600 hover:border-neutral-500 text-white px-5 py-3 text-sm font-medium transition"
+                  data-track="open_demo_modal"
+                  data-persona="cio"
                 >
                   Secure AI (CIO walkthrough)
-                </button>
+                </a>
               </div>
               
               {/* Urgency markers */}
