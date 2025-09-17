@@ -7,6 +7,8 @@ import { FeaturePills } from '@/components/FeaturePills'
 import { DashboardShowcase } from '@/components/sections/DashboardShowcase'
 import { BenefitStrip } from '@/components/BenefitStrip'
 import { FeaturesOverview } from '@/components/sections/FeaturesOverview'
+import { PracticeAreas } from '@/components/PracticeAreas'
+import { IntegrationsStrip } from '@/components/IntegrationsStrip'
 import SemanticSearchPrivate from '@/components/SemanticSearchPrivate'
 import MaslowMini from '@/components/MaslowMini'
 import FoundingProof from '@/components/FoundingProof'
@@ -38,6 +40,8 @@ export default function HomePage() {
         <DashboardShowcase />
         <BenefitStrip />
         <FeaturesOverview />
+        <PracticeAreas />
+        <IntegrationsStrip />
         <SemanticSearchPrivate />
         <MaslowMini />
         <FoundingProof />
