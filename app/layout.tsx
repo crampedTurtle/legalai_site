@@ -106,11 +106,32 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Sapphire Legal AI",
+              "url": "https://sapphirelegal.ai",
+              "logo": "https://sapphirelegal.ai/images/logo.png",
+              "description": "Private AI-powered legal operating system that eliminates backlogs, unifies tools, and helps law firms practice more profitably.",
+              "sameAs": [
+                "https://www.linkedin.com/company/sapphire-legal-ai"
+              ],
+              "foundingDate": "2024",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "US"
+              }
+            })
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
               "@type": "SoftwareApplication",
               "name": "Sapphire Legal AI",
               "applicationCategory": "BusinessApplication",
               "operatingSystem": "Web",
-              "description": "All-in-one Legal Operating System for mid-sized law firms: client portal & CRM, AI-powered doc processing, workflow automation, billing & scheduling, and enterprise-grade compliance.",
+              "description": "Private AI-powered legal operating system with 12 practice packs, EMR automation, discovery, billing, and compliance for mid-sized law firms.",
               "offers": { "@type": "Offer", "priceCurrency": "USD" },
               "publisher": { "@type": "Organization", "name": "Sapphire Legal AI" }
             })
