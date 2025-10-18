@@ -13,8 +13,8 @@ export default function PracticeAreas() {
       description: "Discovery acceleration and knowledge retrieval."
     },
     {
-      title: "Probate",
-      description: "Document automation and task orchestration."
+      title: "Estate Planning",
+      description: "Wills/trusts, probate filings, and asset management."
     },
     {
       title: "Family Law",
@@ -23,6 +23,30 @@ export default function PracticeAreas() {
     {
       title: "Real Estate",
       description: "Document intelligence and closing workflows."
+    },
+    {
+      title: "Employment",
+      description: "Policies, investigations, and separation agreements."
+    },
+    {
+      title: "Immigration",
+      description: "Petitions, RFE responses, and document checklists."
+    },
+    {
+      title: "Bankruptcy",
+      description: "Petitions, schedules, and claims analysis."
+    },
+    {
+      title: "IP",
+      description: "Office actions, prior-art search, and docketing support."
+    },
+    {
+      title: "Tax",
+      description: "Memoranda, compliance workpapers, and ruling requests."
+    },
+    {
+      title: "Compliance / Regulatory",
+      description: "Audits, policy management, and reporting."
     }
   ];
 
@@ -39,7 +63,7 @@ export default function PracticeAreas() {
         </div>
         
         <div className="mt-16">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {practiceAreas.map((area, index) => (
               <div key={index} className="rounded-xl bg-slate-800 p-6 border border-slate-700 hover:border-slate-600 transition-colors">
                 <h3 className="text-lg font-semibold text-white mb-2">{area.title}</h3>
