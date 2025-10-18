@@ -8,6 +8,8 @@ import Guide from '@/components/landing/Guide'
 import Plan from '@/components/landing/Plan'
 import PracticeAreas from '@/components/landing/PracticeAreas'
 import Trust from '@/components/landing/Trust'
+import Testimonials from '@/components/landing/Testimonials'
+import PressRow from '@/components/landing/PressRow'
 import Stakes from '@/components/landing/Stakes'
 import Success from '@/components/landing/Success'
 import CTA from '@/components/landing/CTA'
@@ -37,6 +39,8 @@ export default function HomePage() {
         <Plan />
         <PracticeAreas />
         <Trust />
+        <Testimonials />
+        <PressRow />
         <Stakes />
         <Success />
         <Suspense fallback={<div className="h-32 bg-slate-800" />}>

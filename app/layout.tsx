@@ -137,6 +137,47 @@ export default function RootLayout({
             })
           }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Product",
+              "name": "Sapphire Legal AI",
+              "url": "https://sapphirelegal.ai/",
+              "description": "The private AI-powered legal operating system for mid-sized law firms.",
+              "brand": {
+                "@type": "Brand",
+                "name": "Sapphire Legal AI",
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.8",
+                "reviewCount": "27",
+              },
+              "review": [
+                {
+                  "@type": "Review",
+                  "reviewBody": "We cleared a backlog of over 500 cases in the first month—without hiring.",
+                  "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+                  "author": { "@type": "Person", "name": "Jordan Patel" },
+                },
+                {
+                  "@type": "Review",
+                  "reviewBody": "Discovery time dropped by 30%. Our attorneys finally focus on strategy.",
+                  "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+                  "author": { "@type": "Person", "name": "Alicia Romero" },
+                },
+                {
+                  "@type": "Review",
+                  "reviewBody": "Contract review is faster and safer—AI with proper controls changed the game.",
+                  "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+                  "author": { "@type": "Person", "name": "David Chen" },
+                },
+              ],
+            })
+          }}
+        />
       </head>
       <body className={`${inter.className} antialiased`}>
         <ModalProvider>
