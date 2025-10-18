@@ -40,7 +40,7 @@ export default function HomePage() {
         <PracticeAreas />
         <Trust />
         <Testimonials />
-        <PressRow />
+        {/* <PressRow /> - Disabled for now, will re-enable when we have actual logos */}
         <Stakes />
         <Success />
         <Suspense fallback={<div className="h-32 bg-slate-800" />}>
