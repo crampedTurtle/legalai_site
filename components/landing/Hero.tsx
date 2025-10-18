@@ -17,7 +17,7 @@ export default function Hero() {
 
   return (
     <section className="relative isolate overflow-hidden bg-slate-900">
-      <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+      <div className="mx-auto max-w-6xl px-6 pt-32 pb-20 lg:pt-40 lg:pb-28">
         <h1 className="text-3xl sm:text-5xl font-semibold text-white tracking-tight">{h1}</h1>
         <p className="mt-5 max-w-2xl text-slate-300">{sub}</p>
         <div className="mt-8 flex items-center gap-4">
