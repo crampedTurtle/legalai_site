@@ -105,9 +105,9 @@ export function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-[calc(48px+88px)] right-0 bottom-0 z-50 w-full max-w-sm overflow-y-auto bg-slate-900 shadow-2xl"
+              className="fixed top-[calc(48px+88px)] right-0 z-50 w-full max-w-sm h-auto max-h-[calc(100vh-48px-88px)] overflow-y-auto bg-slate-900 shadow-2xl"
             >
-              <div className="flex flex-col h-full">
+              <div className="flex flex-col">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-slate-800">
                   <Link href="/" className="-m-1.5 p-1.5" onClick={() => setMobileMenuOpen(false)}>
