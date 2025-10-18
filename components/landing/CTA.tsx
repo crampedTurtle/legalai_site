@@ -2,6 +2,7 @@
 import { track } from "@/lib/analytics";
 import { useSearchParams } from "next/navigation";
 import { useDemoModal } from "@/hooks/useDemoModal";
+import { useResourceModal } from "@/hooks/useResourceModal";
 
 interface CTAProps {
   variant: "mid" | "footer";
@@ -65,15 +66,21 @@ export default function CTA({ variant, id }: CTAProps) {
           >
             Book a Demo
           </button>
-          <a
-            href="/whitepaper.pdf"
-            onClick={() => track("cta_download_whitepaper_clicked")}
+          <button
+            onClick={() => {
+              track("cta_download_whitepaper_clicked");
+              useResourceModal.getState().open({
+                title: "Why Public AI Tools Put Firms At Risk",
+                type: "Whitepaper",
+                downloadUrl: "/docs/sapphire_why_public_ai_put_firms_at_risk.pdf"
+              });
+            }}
             className="inline-flex rounded-xl border border-slate-600 px-8 py-4 text-slate-200 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-600"
             aria-label="Download compliance whitepaper"
             title="Download Whitepaper"
           >
             Download Whitepaper
-          </a>
+          </button>
         </div>
       </div>
     </section>
