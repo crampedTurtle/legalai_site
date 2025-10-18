@@ -1,6 +1,7 @@
 "use client";
 import { track } from "@/lib/analytics";
 import { useSearchParams } from "next/navigation";
+import { useDemoModal } from "@/hooks/useDemoModal";
 
 export default function Hero() {
   const params = useSearchParams();
@@ -19,15 +20,17 @@ export default function Hero() {
         <h1 className="text-3xl sm:text-5xl font-semibold text-white tracking-tight">{h1}</h1>
         <p className="mt-5 max-w-2xl text-slate-300">{sub}</p>
         <div className="mt-8 flex items-center gap-4">
-          <a
-            href="#book-demo"
-            onClick={() => track("cta_book_demo_clicked")}
+          <button
+            onClick={() => {
+              track("cta_book_demo_clicked");
+              useDemoModal.getState().open('hero:book-demo');
+            }}
             className="rounded-xl bg-sky-500 px-5 py-3 text-white font-medium shadow hover:bg-sky-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
             aria-label="Book a demo of Sapphire Legal AI"
             title="Book a Demo"
           >
             Book a Demo
-          </a>
+          </button>
           <a
             href="/whitepaper.pdf"
             onClick={() => track("cta_download_whitepaper_clicked")}

@@ -1,6 +1,7 @@
 "use client";
 import { track } from "@/lib/analytics";
 import { useSearchParams } from "next/navigation";
+import { useDemoModal } from "@/hooks/useDemoModal";
 
 interface CTAProps {
   variant: "mid" | "footer";
@@ -26,15 +27,17 @@ export default function CTA({ variant, id }: CTAProps) {
             Join forward-thinking firms already transforming their practice
           </p>
           <div className="mt-8">
-            <a
-              href="#book-demo"
-              onClick={() => track("cta_midpage_book_demo_clicked")}
+            <button
+              onClick={() => {
+                track("cta_midpage_book_demo_clicked");
+                useDemoModal.getState().open('midpage:book-demo');
+              }}
               className="inline-flex rounded-xl bg-sky-500 px-8 py-4 text-white font-medium shadow hover:bg-sky-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
               aria-label="Book a demo to see how 500 cases can be cleared"
               title="Book a Demo"
             >
               Book a Demo
-            </a>
+            </button>
           </div>
         </div>
       </section>
@@ -51,15 +54,17 @@ export default function CTA({ variant, id }: CTAProps) {
           Start your transformation today with a private AI platform built for law firms
         </p>
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href="#book-demo"
-            onClick={() => track("cta_footer_book_demo_clicked")}
+          <button
+            onClick={() => {
+              track("cta_footer_book_demo_clicked");
+              useDemoModal.getState().open('footer:book-demo');
+            }}
             className="inline-flex rounded-xl bg-sky-500 px-8 py-4 text-white font-medium shadow hover:bg-sky-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
             aria-label="Book a demo to start eliminating your firm's backlog"
             title="Book a Demo"
           >
             Book a Demo
-          </a>
+          </button>
           <a
             href="/whitepaper.pdf"
             onClick={() => track("cta_download_whitepaper_clicked")}
