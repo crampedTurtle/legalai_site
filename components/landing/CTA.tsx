@@ -33,11 +33,12 @@ export default function CTA({ variant, id }: CTAProps) {
                 track("cta_midpage_book_demo_clicked");
                 useDemoModal.getState().open('midpage:book-demo');
               }}
-              className="inline-flex rounded-xl bg-sky-500 px-8 py-4 text-white font-medium shadow hover:bg-sky-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
+              className="group relative inline-flex rounded-xl bg-gradient-to-r from-sky-500 to-sky-600 px-8 py-4 text-white font-semibold shadow-lg hover:shadow-xl hover:shadow-sky-500/25 transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
               aria-label="Book a demo to see how 500 cases can be cleared"
               title="Book a Demo"
             >
-              Book a Demo
+              <span className="relative z-10">Book a Demo</span>
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-sky-400 to-sky-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
           </div>
         </div>
@@ -60,11 +61,12 @@ export default function CTA({ variant, id }: CTAProps) {
               track("cta_footer_book_demo_clicked");
               useDemoModal.getState().open('footer:book-demo');
             }}
-            className="inline-flex rounded-xl bg-sky-500 px-8 py-4 text-white font-medium shadow hover:bg-sky-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
+            className="group relative inline-flex rounded-xl bg-gradient-to-r from-sky-500 to-sky-600 px-8 py-4 text-white font-semibold shadow-lg hover:shadow-xl hover:shadow-sky-500/25 transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
             aria-label="Book a demo to start eliminating your firm's backlog"
             title="Book a Demo"
           >
-            Book a Demo
+            <span className="relative z-10">Book a Demo</span>
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-sky-400 to-sky-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </button>
           <button
             onClick={() => {
@@ -75,7 +77,7 @@ export default function CTA({ variant, id }: CTAProps) {
                 downloadUrl: "/docs/sapphire_why_public_ai_put_firms_at_risk.pdf"
               });
             }}
-            className="inline-flex rounded-xl border border-slate-600 px-8 py-4 text-slate-200 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-600"
+            className="group inline-flex rounded-xl border-2 border-slate-600 px-8 py-4 text-slate-200 font-semibold hover:border-slate-500 hover:bg-slate-800/50 hover:text-white transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-600"
             aria-label="Download compliance whitepaper"
             title="Download Whitepaper"
           >
