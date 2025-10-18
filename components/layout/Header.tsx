@@ -105,7 +105,7 @@ export function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed inset-y-0 right-0 z-50 w-full max-w-sm overflow-y-auto bg-slate-900 shadow-2xl"
+              className="fixed top-[calc(48px+88px)] right-0 bottom-0 z-50 w-full max-w-sm overflow-y-auto bg-slate-900 shadow-2xl"
             >
               <div className="flex flex-col h-full">
                 {/* Header */}
