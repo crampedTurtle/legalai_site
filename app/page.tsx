@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { Suspense } from 'react'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import Hero from '@/components/landing/Hero'
@@ -28,7 +29,9 @@ export default function HomePage() {
       <Header />
       <FoundingFirmBanner />
       <main>
-        <Hero />
+        <Suspense fallback={<div className="h-96 bg-slate-900" />}>
+          <Hero />
+        </Suspense>
         <Problem />
         <Guide />
         <Plan />
@@ -36,8 +39,12 @@ export default function HomePage() {
         <Trust />
         <Stakes />
         <Success />
-        <CTA variant="mid" />
-        <CTA variant="footer" id="book-demo" />
+        <Suspense fallback={<div className="h-32 bg-slate-800" />}>
+          <CTA variant="mid" />
+        </Suspense>
+        <Suspense fallback={<div className="h-32 bg-slate-900" />}>
+          <CTA variant="footer" id="book-demo" />
+        </Suspense>
       </main>
       <Footer />
     </div>
