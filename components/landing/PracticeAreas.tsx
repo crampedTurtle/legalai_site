@@ -6,11 +6,11 @@ export default function PracticeAreas() {
     },
     {
       title: "Corporate", 
-      description: "Contract intelligence and compliance automation."
+      description: "Contract analysis, due diligence automation, and entity formation workflows."
     },
     {
       title: "Litigation",
-      description: "Discovery acceleration and knowledge retrieval."
+      description: "Discovery request generation, gap analysis, and case intelligence."
     },
     {
       title: "Estate Planning",
@@ -18,7 +18,7 @@ export default function PracticeAreas() {
     },
     {
       title: "Family Law",
-      description: "Intake, forms, and secure client communications."
+      description: "Divorce petitions, custody agreements, and client portal intelligence."
     },
     {
       title: "Real Estate",
@@ -26,7 +26,7 @@ export default function PracticeAreas() {
     },
     {
       title: "Employment",
-      description: "Policies, investigations, and separation agreements."
+      description: "Employment agreements, policy analysis, and investigation workflows."
     },
     {
       title: "Immigration",
@@ -38,7 +38,7 @@ export default function PracticeAreas() {
     },
     {
       title: "IP",
-      description: "Office actions, prior-art search, and docketing support."
+      description: "Trademark applications, IP analysis, and patent workflows."
     },
     {
       title: "Tax",
@@ -46,7 +46,7 @@ export default function PracticeAreas() {
     },
     {
       title: "Compliance / Regulatory",
-      description: "Audits, policy management, and reporting."
+      description: "Regulatory analysis, compliance templates, and audit workflows."
     }
   ];
 
