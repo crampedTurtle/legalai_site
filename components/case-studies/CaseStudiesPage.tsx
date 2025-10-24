@@ -105,7 +105,7 @@ const caseStudies: CaseStudy[] = [
     firm: 'Mid-Sized Law Firm',
     practiceArea: 'Multi-Practice',
     challenge: 'Managing 6 different software tools for case management, billing, document storage, communication, calendaring, and client intake.',
-    solution: 'Consolidated all operations into Sapphire Legal AI's unified platform with integrated workflows and single sign-on.',
+    solution: 'Consolidated all operations into Sapphire Legal AI\'s unified platform with integrated workflows and single sign-on.',
     results: [
       { metric: 'Tools Consolidated', value: '6→1', description: 'Single platform solution' },
       { metric: 'Training Time', value: '-80%', description: 'Reduction in onboarding time' },

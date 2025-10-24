@@ -42,12 +42,12 @@ export async function submitLead(raw: LeadPayload, eventType?: string) {
     ...utm,
   }
 
-  const { data, error } = await supabase.from('leads').insert(insert).select('id').single()
+  const { data, error } = await supabase().from('leads').insert(insert).select('id').single()
 
   let leadId: string | undefined
   if (error && (error as any).code === '23505') {
     // duplicate email, look up existing lead
-    const { data: existing } = await supabase.from('leads')
+    const { data: existing } = await supabase().from('leads')
       .select('id')
       .eq('email', insert.email)
       .maybeSingle()
@@ -61,7 +61,7 @@ export async function submitLead(raw: LeadPayload, eventType?: string) {
 
   // Always insert an event
   if (leadId) {
-    await supabase.from('lead_events').insert({
+    await supabase().from('lead_events').insert({
       lead_id: leadId,
       event_type: eventType || (raw.wants_demo ? 'demo_request' : 'download'),
       payload: insert,
