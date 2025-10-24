@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/Button'
 import { Menu, X } from 'lucide-react'
 import { useDemoModal } from '@/hooks/useDemoModal'
-import { useEffect } from 'react'
 
 const navigation = [
   { name: 'Features', href: '/features' },
@@ -20,20 +19,9 @@ const navigation = [
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   return (
-    <header className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
-      isScrolled ? 'bg-dark-950/95 backdrop-blur-md border-b border-dark-800' : 'bg-transparent'
-    }`} style={{ top: '48px' }}>
+    <header className="relative bg-slate-950 border-b border-slate-800">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
@@ -105,7 +93,7 @@ export function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-[calc(48px+88px)] right-0 z-50 w-full max-w-sm h-auto max-h-[calc(100vh-48px-88px)] overflow-y-auto bg-slate-900 shadow-2xl"
+              className="fixed top-0 right-0 z-50 w-full max-w-sm h-screen overflow-y-auto bg-slate-900 shadow-2xl"
             >
               <div className="flex flex-col">
                 {/* Header */}
