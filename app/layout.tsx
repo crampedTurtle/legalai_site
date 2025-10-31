@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, IBM_Plex_Sans } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 import { ModalProvider } from '@/components/demo/ModalProvider'
 
@@ -183,6 +184,7 @@ export default function RootLayout({
         <ModalProvider>
           {children}
         </ModalProvider>
+        <Analytics />
         {/* Mautic Tracking */}
         <script
           dangerouslySetInnerHTML={{
