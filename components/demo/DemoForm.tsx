@@ -85,20 +85,29 @@ export function DemoForm() {
 
     try {
       setLoading(true)
-      const id = await submitLead({
-        email: formData.email,
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-        firm_name: formData.firm,
-        title: formData.title,
-        phone: formData.phone,
-        role: formData.role,
-        pain: formData.pain,
-        notes: formData.notes,
-        wants_demo: true,
-        source: persona ? `${source || 'demo:request'}:${persona}` : (source || 'demo:request'),
-      }, 'demo_request')
-      setLeadId(id)
+      // Try to save lead to Supabase, but don't block the flow if it fails
+      try {
+        const id = await submitLead({
+          email: formData.email,
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          firm_name: formData.firm,
+          title: formData.title,
+          phone: formData.phone,
+          role: formData.role,
+          pain: formData.pain,
+          notes: formData.notes,
+          wants_demo: true,
+          source: persona ? `${source || 'demo:request'}:${persona}` : (source || 'demo:request'),
+        }, 'demo_request')
+        setLeadId(id)
+      } catch (leadError) {
+        console.error('Failed to save lead to Supabase (continuing anyway):', leadError)
+        // Generate a temporary ID for Cal.com booking if Supabase fails
+        // This allows the booking flow to continue
+        setLeadId(`temp-${Date.now()}`)
+      }
+      // Proceed to show Cal.com slots regardless of Supabase success
       setSuccess(true)
     } catch (err) {
       console.error('Failed to submit demo request:', err)
@@ -136,7 +145,35 @@ export function DemoForm() {
   }
 
   async function book(startIso: string) {
-    if (!leadId) return
+    if (!leadId) {
+      alert('Please try submitting the form again.')
+      return
+    }
+    
+    // If we have a temporary ID (Supabase not configured), try to save lead first
+    if (leadId.startsWith('temp-')) {
+      try {
+        const id = await submitLead({
+          email: formData.email,
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          firm_name: formData.firm,
+          title: formData.title,
+          phone: formData.phone,
+          role: formData.role,
+          pain: formData.pain,
+          notes: formData.notes,
+          wants_demo: true,
+          source: persona ? `${source || 'demo:request'}:${persona}` : (source || 'demo:request'),
+        }, 'demo_request')
+        setLeadId(id)
+      } catch (leadError) {
+        console.error('Failed to save lead before booking:', leadError)
+        alert('Could not save your information. Please ensure Supabase is configured or try again later.')
+        return
+      }
+    }
+    
     try {
       setBookingLoading(true)
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
