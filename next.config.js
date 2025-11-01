@@ -10,7 +10,7 @@ const nextConfig = {
   experimental: { serverActions: { allowedOrigins: ['*'] } },
   env: {
     NEXT_PUBLIC_SUPABASE_URL: process.env.SUPABASE_URL,
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.SUPABASE_PUBLIC_KEY,
+    NEXT_PUBLIC_SB_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_SB_PUBLISHABLE_KEY,
   },
 }
 
