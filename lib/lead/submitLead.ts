@@ -43,11 +43,17 @@ export async function submitLead(raw: LeadPayload, eventType?: string) {
     firm_name: raw.firm_name?.trim() || null,
     title: raw.title?.trim() || null,
     role: raw.role?.trim() || null,
-    pain: raw.pain?.trim() || null,
+    // Note: 'pain' field is not in the leads table schema, but is stored in lead_events.payload
     notes: raw.notes?.trim() || null,
     wants_demo: !!raw.wants_demo,
     source,
     ...utm,
+  }
+  
+  // Full payload including pain for lead_events
+  const eventPayload = {
+    ...insert,
+    pain: raw.pain?.trim() || null,
   }
 
   const { data, error } = await supabaseClient.from('leads').insert(insert).select('id').single()
@@ -78,7 +84,7 @@ export async function submitLead(raw: LeadPayload, eventType?: string) {
     await supabaseClient.from('lead_events').insert({
       lead_id: leadId,
       event_type: eventType || (raw.wants_demo ? 'demo_request' : 'download'),
-      payload: insert,
+      payload: eventPayload,
     })
   }
 
