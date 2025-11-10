@@ -1,15 +1,15 @@
 import { Metadata } from 'next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { PricingPage, Headline, Subhead, PricingTabs, PlatformTab, LaunchPackTab, ManagedOpsTab, FAQSection, FrameworkCTABand, WhyPrivateAISection, RoleBasedValueSection } from '@/components/pricing/PricingPage'
+import { PricingPage, Headline, Subhead, TrustAnchors, DayOneSection, PricingTabs, PlatformTab, LaunchPackTab, ManagedOpsTab, FAQSection, FrameworkCTABand, WhyPrivateAISection, RoleBasedValueSection } from '@/components/pricing/PricingPage'
 import FoundingFirmBanner from '@/components/FoundingFirmBanner'
 
 export const metadata: Metadata = {
-  title: 'Pricing - Private AI for Law Firms | Sapphire Legal AI',
-  description: 'Sapphire Legal AI offers Private AI for law firms with secure document intelligence, automated case summaries, timelines, and workflow automation. Explore Core, Practice, Firm, and Enterprise tiers.',
+  title: 'Sapphire Legal AI Pricing — Private AI for Law Firms',
+  description: 'Explore Sapphire Legal AI pricing. Private, secure AI for law firms with automated case summaries, timelines, workflow automation, and tenant-isolated vector intelligence.',
   openGraph: {
-    title: 'Pricing - Private AI for Law Firms | Sapphire Legal AI',
-    description: 'Sapphire Legal AI offers Private AI for law firms with secure document intelligence, automated case summaries, timelines, and workflow automation. Explore Core, Practice, Firm, and Enterprise tiers.',
+    title: 'Sapphire Legal AI Pricing — Private AI for Law Firms',
+    description: 'Explore Sapphire Legal AI pricing. Private, secure AI for law firms with automated case summaries, timelines, workflow automation, and tenant-isolated vector intelligence.',
   },
 }
 
@@ -22,6 +22,8 @@ export default function Pricing() {
         <PricingPage>
           <Headline>Flexible Pricing for Every Stage</Headline>
           <Subhead>Choose the right combination of platform and services for your firm's needs.</Subhead>
+          <TrustAnchors />
+          <DayOneSection />
           
           <PricingTabs>
             <PlatformTab />

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
-import { ArrowRight, Check, Star, ChevronDown, ChevronUp, Zap, FileText, Clock, Upload, Play, Shield, Lock, Database, Users, Briefcase, Settings } from 'lucide-react'
+import { ArrowRight, Check, Star, ChevronDown, ChevronUp, Zap, FileText, Clock, Upload, Play, Shield, Lock, Database, Users, Briefcase, Settings, Award, Server } from 'lucide-react'
 import { usePricingBookingModal } from '@/hooks/usePricingBookingModal'
 import { PricingBookingModal } from './PricingBookingModal'
 import { pricingTiers, pricingFootnote, planMatrix } from '@/data/pricing'
@@ -84,6 +84,44 @@ export function Subhead({ children }: SubheadProps) {
   )
 }
 
+export function TrustAnchors() {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  })
+
+  const trustItems = [
+    { icon: Award, text: 'SOC 2 Type II Certified' },
+    { icon: Database, text: 'Tenant-Isolated Vector Indexes' },
+    { icon: Lock, text: 'Zero Shared Embeddings' },
+    { icon: Server, text: 'On-Prem or Private VPC Deployment' },
+  ]
+
+  return (
+    <section className="py-8 bg-dark-900 border-b border-dark-700">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 10 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="flex flex-wrap items-center justify-center gap-8 md:gap-12"
+        >
+          {trustItems.map((item, index) => {
+            const Icon = item.icon
+            return (
+              <div key={index} className="flex items-center gap-2 text-dark-300">
+                <Icon className="h-4 w-4 text-dark-400" />
+                <span className="text-sm">{item.text}</span>
+              </div>
+            )
+          })}
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
 interface PricingTabsProps {
   children: React.ReactNode
 }
@@ -134,6 +172,143 @@ export function PricingTabs({ children }: PricingTabsProps) {
             {activeTab === 'platform' && <PlatformTab />}
             {activeTab === 'launch-pack' && <LaunchPackTab />}
             {activeTab === 'managed-ops' && <ManagedOpsTab />}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+export function DayOneSection() {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  })
+
+  return (
+    <section className="py-16 bg-dark-900">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 text-center">
+            Everything You See in the Demo—Available on Day One
+          </h2>
+          <p className="text-xl text-dark-300 mb-12 text-center max-w-3xl mx-auto">
+            Your first day with Sapphire mirrors the live demo. These workflows are available instantly.
+          </p>
+          
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Smart Document → Task Automation */}
+            <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg">
+                  <Zap className="h-5 w-5 text-sapphire-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-white">Smart Document → Task Automation</h3>
+                  <p className="text-xs text-dark-400 mt-1">(Litigation, PI, Probate, Corporate)</p>
+                </div>
+              </div>
+              <ul className="space-y-2 text-sm text-dark-300">
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Generate tasks directly from PDFs, Word docs, and scanned files</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Auto-route tasks to responsible roles</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Extract key dates, obligations, and action items</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Case Summary Sheets */}
+            <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg">
+                  <FileText className="h-5 w-5 text-sapphire-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-white">Case Summary Sheets</h3>
+                  <p className="text-xs text-dark-400 mt-1">(PI, Litigation, Corporate)</p>
+                </div>
+              </div>
+              <ul className="space-y-2 text-sm text-dark-300">
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Automated partner-ready summaries for any matter</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Extracts facts, issues, parties, chronology</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Links back to source documents</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Case Timelines */}
+            <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg">
+                  <Clock className="h-5 w-5 text-sapphire-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-white">Case Timelines</h3>
+                  <p className="text-xs text-dark-400 mt-1">(All practice areas)</p>
+                </div>
+              </div>
+              <ul className="space-y-2 text-sm text-dark-300">
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Auto-generated timelines from one or many documents</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Consolidates dates, events, milestones, and filings</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Editable + exportable for partner review</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Multi-Document Ingestion */}
+          <div className="mt-6 bg-dark-800/50 border border-dark-700 rounded-xl p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg">
+                <Upload className="h-5 w-5 text-sapphire-400" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-white">Multi-Document Ingestion & Vector Intelligence</h3>
+                <p className="text-xs text-dark-400 mt-1">(All matter types)</p>
+              </div>
+            </div>
+            <ul className="space-y-2 text-sm text-dark-300">
+              <li className="flex items-start gap-2">
+                <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                <span>Upload multiple files → watch real-time embedding</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                <span>Cross-document Q&A with citations</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                <span>Document Intelligence (lite/full depending on tier)</span>
+              </li>
+            </ul>
           </div>
         </motion.div>
       </div>
@@ -193,9 +368,10 @@ export function PlatformTab() {
         </div>
       </div>
 
+      {/* Tier Selection Guide */}
       <div className="text-center mb-8">
-        <p className="text-dark-300 leading-relaxed">
-          Choose your Sapphire Legal AI platform tier. All tiers are deployed through the <strong>Launch Pack</strong> and can be extended with <strong>Managed Ops</strong>, as outlined in the Sapphire Implementation Framework.
+        <p className="text-dark-300 leading-relaxed text-lg">
+          <strong className="text-white">Core</strong> = Private AI workspace · <strong className="text-white">Practice</strong> = Automation & Workflows · <strong className="text-white">Firm</strong> = Enterprise Controls & Compliance
         </p>
       </div>
       
@@ -259,7 +435,53 @@ export function PlatformTab() {
             <div className="mb-6">
               <h4 className="text-lg font-semibold text-white mb-2">{tier.blurb}</h4>
               <p className="text-sm text-dark-300 mb-3 leading-relaxed">{tier.paragraph}</p>
-              <p className="text-xs text-sapphire-400 font-medium">{tier.bestFor}</p>
+              <p className="text-xs text-sapphire-400 font-medium mb-4">{tier.bestFor}</p>
+              
+              {/* Outcomes Section */}
+              {tier.id === 'core' && (
+                <div className="bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg p-3 mb-4">
+                  <p className="text-xs font-semibold text-sapphire-400 mb-2">Outcomes:</p>
+                  <ul className="space-y-1 text-xs text-dark-300">
+                    <li>• Reduce admin overhead 30–40% in the first month</li>
+                    <li>• Private AI workspace that stays inside your walls</li>
+                  </ul>
+                </div>
+              )}
+              
+              {tier.id === 'practice' && (
+                <div className="bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg p-3 mb-4">
+                  <p className="text-xs font-semibold text-sapphire-400 mb-2">Practice Pack:</p>
+                  <p className="text-xs text-dark-300 mb-2">Practice Pack workflows for 12 core practice areas (PI, Real Estate, Estate, Corporate, Litigation)</p>
+                  <p className="text-xs font-semibold text-sapphire-400 mb-2 mt-3">Outcomes:</p>
+                  <ul className="space-y-1 text-xs text-dark-300">
+                    <li>• Automate 40–60% of repetitive matter tasks</li>
+                    <li>• Eliminate document drift with structured intelligence</li>
+                  </ul>
+                </div>
+              )}
+              
+              {tier.id === 'firm' && (
+                <div className="bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg p-3 mb-4">
+                  <p className="text-xs font-semibold text-sapphire-400 mb-2">Practice Pack:</p>
+                  <p className="text-xs text-dark-300 mb-2">Advanced Practice Pack automations with risk scoring & batch workflows</p>
+                  <p className="text-xs font-semibold text-sapphire-400 mb-2 mt-3">Outcomes:</p>
+                  <ul className="space-y-1 text-xs text-dark-300">
+                    <li>• Enterprise-grade governance for multi-office environments</li>
+                    <li>• Reduce risk and errors through citation validation & timeline scoring</li>
+                  </ul>
+                </div>
+              )}
+              
+              {tier.id === 'enterprise' && (
+                <div className="bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg p-3 mb-4">
+                  <p className="text-xs font-semibold text-sapphire-400 mb-2">Outcomes:</p>
+                  <ul className="space-y-1 text-xs text-dark-300">
+                    <li>• Fully automated matter dashboards for large teams</li>
+                    <li>• Predictive client intelligence & risk analysis</li>
+                    <li>• End-to-end governance and regulatory posture</li>
+                  </ul>
+                </div>
+              )}
             </div>
             
             <div className="mb-6">
@@ -297,6 +519,9 @@ export function PlatformTab() {
                 Schedule a Private AI Demo
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
+              <p className="text-xs text-dark-400 mt-2">
+                Upload a sample document during your demo and see Sapphire process it live.
+              </p>
             </div>
           </motion.div>
         ))}
@@ -312,127 +537,74 @@ export function PlatformTab() {
         </p>
       </div>
       
-      {/* What Your Firm Gets on Day One */}
+      {/* Mini Comparison Strip */}
+      <section className="mt-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-6 max-w-3xl mx-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-dark-700">
+                  <th className="text-left p-3 text-white font-medium">Capability</th>
+                  <th className="text-center p-3 text-white font-medium">Core</th>
+                  <th className="text-center p-3 text-white font-medium">Practice</th>
+                  <th className="text-center p-3 text-white font-medium">Firm</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-dark-700">
+                  <td className="p-3 text-dark-300">AI Workspace</td>
+                  <td className="p-3 text-center text-sapphire-400">✅</td>
+                  <td className="p-3 text-center text-sapphire-400">✅</td>
+                  <td className="p-3 text-center text-sapphire-400">✅</td>
+                </tr>
+                <tr className="border-b border-dark-700">
+                  <td className="p-3 text-dark-300">Automation</td>
+                  <td className="p-3 text-center text-dark-400">—</td>
+                  <td className="p-3 text-center text-sapphire-400">✅</td>
+                  <td className="p-3 text-center text-sapphire-400">✅</td>
+                </tr>
+                <tr>
+                  <td className="p-3 text-dark-300">Enterprise Controls</td>
+                  <td className="p-3 text-center text-dark-400">—</td>
+                  <td className="p-3 text-center text-dark-400">—</td>
+                  <td className="p-3 text-center text-sapphire-400">✅</td>
+                </tr>
+              </tbody>
+            </table>
+            <div className="mt-6 text-center">
+              <Button
+                variant="secondary"
+                size="md"
+                onClick={() => {
+                  const element = document.getElementById('compare-plans')
+                  element?.scrollIntoView({ behavior: 'smooth' })
+                }}
+              >
+                Compare plans
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Everything in the Live Demo Is Included */}
       <section className="mt-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 text-center">
-            Everything You See in the Demo—Available on Day One
-          </h2>
-          
-          <div className="grid md:grid-cols-3 gap-6 mt-12">
-            {/* Smart Document → Task Automation */}
-            <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg">
-                  <Zap className="h-5 w-5 text-sapphire-400" />
-                </div>
-                <h3 className="text-lg font-semibold text-white">Smart Document → Task Automation</h3>
-              </div>
-              <ul className="space-y-2 text-sm text-dark-300">
-                <li className="flex items-start gap-2">
-                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                  <span>Generate tasks directly from PDFs, Word docs, and scanned files</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                  <span>Auto-route tasks to responsible roles</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                  <span>Extract key dates, obligations, and action items</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Case Summary Sheets */}
-            <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg">
-                  <FileText className="h-5 w-5 text-sapphire-400" />
-                </div>
-                <h3 className="text-lg font-semibold text-white">Case Summary Sheets</h3>
-              </div>
-              <ul className="space-y-2 text-sm text-dark-300">
-                <li className="flex items-start gap-2">
-                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                  <span>Automated partner-ready summaries for any matter</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                  <span>Extracts facts, issues, parties, chronology</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                  <span>Links back to source documents</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Case Timelines */}
-            <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg">
-                  <Clock className="h-5 w-5 text-sapphire-400" />
-                </div>
-                <h3 className="text-lg font-semibold text-white">Case Timelines</h3>
-              </div>
-              <ul className="space-y-2 text-sm text-dark-300">
-                <li className="flex items-start gap-2">
-                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                  <span>Auto-generated timelines from one or many documents</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                  <span>Consolidates dates, events, milestones, and filings</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                  <span>Editable + exportable for partner review</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Multi-Document Ingestion */}
-          <div className="mt-6 bg-dark-800/50 border border-dark-700 rounded-xl p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg">
-                <Upload className="h-5 w-5 text-sapphire-400" />
-              </div>
-              <h3 className="text-lg font-semibold text-white">Multi-Document Ingestion & Vector Intelligence</h3>
-            </div>
-            <ul className="space-y-2 text-sm text-dark-300">
-              <li className="flex items-start gap-2">
-                <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                <span>Upload multiple files → watch real-time embedding</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                <span>Cross-document Q&A with citations</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
-                <span>Document Intelligence (lite/full depending on tier)</span>
-              </li>
-            </ul>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Demo Script is Reality */}
-      <section className="mt-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.5 }}
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 text-center">
             Everything in the Live Demo Is Included
           </h2>
+          <p className="text-xl text-dark-300 mb-12 text-center max-w-3xl mx-auto">
+            Your demo experience is the production experience.
+          </p>
           
           <div className="grid md:grid-cols-2 gap-8 mt-12">
             <div className="space-y-4">
@@ -483,7 +655,7 @@ export function PlatformTab() {
       </section>
 
       {/* Compare Plans Matrix */}
-      <section className="mt-12">
+      <section id="compare-plans" className="mt-12">
         <h2 className="text-xl font-semibold mb-6 text-center text-white">Compare plans</h2>
         <div className="overflow-x-auto rounded-xl border border-white/10 bg-white/5">
           <table className="w-full text-sm min-w-[800px]">
