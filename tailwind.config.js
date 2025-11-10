@@ -8,6 +8,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        brand: {
+          navy: '#0a2a4a',
+          blue: '#1d4ed8',
+        },
         sapphire: {
           50: '#f0f9ff',
           100: '#e0f2fe',
@@ -99,6 +103,7 @@ module.exports = {
         'gradient-primary': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         'gradient-sapphire': 'linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%)',
         'gradient-dark': 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
+        'gradient-monday': 'linear-gradient(to bottom, #0a2a4a 0%, #1d4ed8 100%)',
       },
       boxShadow: {
         'glow': '0 0 20px rgba(14, 165, 233, 0.3)',
