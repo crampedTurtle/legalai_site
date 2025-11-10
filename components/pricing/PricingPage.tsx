@@ -451,7 +451,7 @@ export function PlatformTab() {
               {tier.id === 'practice' && (
                 <div className="bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg p-3 mb-4">
                   <p className="text-xs font-semibold text-sapphire-400 mb-2">Practice Pack:</p>
-                  <p className="text-xs text-dark-300 mb-2">Practice Pack workflows for 12 core practice areas (PI, Real Estate, Estate, Corporate, Litigation)</p>
+                  <p className="text-xs text-dark-300 mb-2">Practice Pack workflows for 12 core practice areas (PI, Real Estate, Estate, Corporate, Litigation, Immigration, Employment, Family Law)</p>
                   <p className="text-xs font-semibold text-sapphire-400 mb-2 mt-3">Outcomes:</p>
                   <ul className="space-y-1 text-xs text-dark-300">
                     <li>• Automate 40–60% of repetitive matter tasks</li>
@@ -463,7 +463,7 @@ export function PlatformTab() {
               {tier.id === 'firm' && (
                 <div className="bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg p-3 mb-4">
                   <p className="text-xs font-semibold text-sapphire-400 mb-2">Practice Pack:</p>
-                  <p className="text-xs text-dark-300 mb-2">Advanced Practice Pack automations with risk scoring & batch workflows</p>
+                  <p className="text-xs text-dark-300 mb-2">Advanced Practice Pack automations with risk scoring & batch workflows (PI, Real Estate, Estate, Corporate, Litigation, Immigration, Employment, Family Law)</p>
                   <p className="text-xs font-semibold text-sapphire-400 mb-2 mt-3">Outcomes:</p>
                   <ul className="space-y-1 text-xs text-dark-300">
                     <li>• Enterprise-grade governance for multi-office environments</li>
@@ -522,9 +522,30 @@ export function PlatformTab() {
               <p className="text-xs text-dark-400 mt-2">
                 Upload a sample document during your demo and see Sapphire process it live.
               </p>
+              {tier.id === 'enterprise' && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full mt-2 group"
+                  onClick={() => open('platform')}
+                  data-cta="pricing"
+                  data-track="pricing_cta"
+                  data-tier={tier.id}
+                >
+                  Request a Custom Deployment Plan
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              )}
             </div>
           </motion.div>
         ))}
+      </div>
+      
+      {/* Practice Pack Cross-Link */}
+      <div className="mt-6 text-center">
+        <p className="text-sm text-dark-400">
+          Practice Packs are fully included in Practice and Firm tiers, with advanced automation available in Firm.
+        </p>
       </div>
       
       {/* Footnote */}
@@ -642,6 +663,22 @@ export function PlatformTab() {
                   <span className="text-dark-300">Case → Client → Document linkage</span>
                 </li>
               </ul>
+              
+              {/* Sample Outputs Links */}
+              <div className="mt-6 pt-6 border-t border-dark-700">
+                <p className="text-sm text-dark-400 mb-3">See sample outputs:</p>
+                <div className="flex flex-wrap gap-4 text-sm">
+                  <a href="/samples/case-summary" className="text-sapphire-400 hover:text-sapphire-300 transition-colors">
+                    Case Summary (example)
+                  </a>
+                  <a href="/samples/case-timeline" className="text-sapphire-400 hover:text-sapphire-300 transition-colors">
+                    Case Timeline (example)
+                  </a>
+                  <a href="/samples/task-list" className="text-sapphire-400 hover:text-sapphire-300 transition-colors">
+                    Automated Task List (example)
+                  </a>
+                </div>
+              </div>
             </div>
             <div className="flex items-center justify-center">
               <VideoModal
@@ -685,6 +722,22 @@ export function PlatformTab() {
               ))}
             </tbody>
           </table>
+        </div>
+        <p className="mt-4 text-xs text-dark-400 text-center">
+          2025 Roadmap: Document workflow templates · Full NetDocs/iManage connectors · Billing intelligence · Predictive case outcomes
+        </p>
+        <div className="mt-6 text-center">
+          <Button
+            variant="secondary"
+            size="md"
+            onClick={() => {
+              const element = document.getElementById('compare-plans')
+              element?.scrollIntoView({ behavior: 'smooth' })
+            }}
+          >
+            Compare plans
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
         </div>
         <p className="mt-3 text-xs text-white/60 text-center">
           *NetDocuments / iManage connectors on the roadmap. Contact us for timeline.

@@ -5,11 +5,11 @@ import { PricingPage, Headline, Subhead, TrustAnchors, DayOneSection, PricingTab
 import FoundingFirmBanner from '@/components/FoundingFirmBanner'
 
 export const metadata: Metadata = {
-  title: 'Sapphire Legal AI Pricing — Private AI for Law Firms',
-  description: 'Explore Sapphire Legal AI pricing. Private, secure AI for law firms with automated case summaries, timelines, workflow automation, and tenant-isolated vector intelligence.',
+  title: 'Sapphire Legal AI Pricing — Private, Secure, Workflow-Driven Legal Intelligence',
+  description: 'Explore Sapphire Legal AI pricing for law firms. Private AI, automated case summaries, timelines, task automation, and vector intelligence. Built for PI, litigation, probate, corporate, real estate, and more.',
   openGraph: {
     title: 'Sapphire Legal AI Pricing — Private AI for Law Firms',
-    description: 'Explore Sapphire Legal AI pricing. Private, secure AI for law firms with automated case summaries, timelines, workflow automation, and tenant-isolated vector intelligence.',
+    description: 'Private AI and workflow automation for legal teams. Explore pricing for Core, Practice, Firm, and Enterprise tiers.',
   },
 }
 
