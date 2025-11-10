@@ -2,11 +2,11 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { Sync, Zap, Workflow } from 'lucide-react'
+import { RefreshCw, Zap, Workflow } from 'lucide-react'
 
 const valueProps = [
   {
-    icon: Sync,
+    icon: RefreshCw,
     title: 'Zero Double Entry',
     description: 'Cases, boards, tasks, deadlines, and documents stay in sync. Update once, sync everywhere.',
   },

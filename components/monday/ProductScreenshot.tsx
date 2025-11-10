@@ -72,9 +72,11 @@ export function ProductScreenshot() {
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center space-y-4">
                 <div className="w-24 h-24 bg-sapphire-500/20 rounded-2xl flex items-center justify-center mx-auto">
-                  {tabs.find(t => t.id === activeTab)?.icon && (
-                    <tabs.find(t => t.id === activeTab)!.icon className="h-12 w-12 text-sapphire-400" />
-                  )}
+                  {(() => {
+                    const activeTabData = tabs.find(t => t.id === activeTab)
+                    const Icon = activeTabData?.icon
+                    return Icon ? <Icon className="h-12 w-12 text-sapphire-400" /> : null
+                  })()}
                 </div>
                 <div className="space-y-2">
                   <div className="h-4 w-48 bg-dark-700 rounded mx-auto"></div>
