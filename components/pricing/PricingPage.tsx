@@ -4,11 +4,12 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
-import { ArrowRight, Check, Star, ChevronDown, ChevronUp } from 'lucide-react'
+import { ArrowRight, Check, Star, ChevronDown, ChevronUp, Zap, FileText, Clock, Upload, Play, Shield, Lock, Database, Users, Briefcase, Settings } from 'lucide-react'
 import { usePricingBookingModal } from '@/hooks/usePricingBookingModal'
 import { PricingBookingModal } from './PricingBookingModal'
 import { pricingTiers, pricingFootnote, planMatrix } from '@/data/pricing'
 import content from '@/content/foundingFirm.json'
+import { VideoModal } from '@/components/VideoModal'
 
 interface PricingPageProps {
   children: React.ReactNode
@@ -272,7 +273,7 @@ export function PlatformTab() {
               </ul>
             </div>
             
-            <div className="text-center">
+            <div className="text-center space-y-2">
               <Button 
                 size="lg" 
                 className={`w-full group ${tier.badge === "Most Popular" ? 'bg-sapphire-500 hover:bg-sapphire-600' : ''}`}
@@ -281,7 +282,19 @@ export function PlatformTab() {
                 data-track="pricing_cta"
                 data-tier={tier.id}
               >
-                {tier.ctaLabel}
+                Watch the Workflow Tour
+                <Play className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+              <Button 
+                variant="secondary"
+                size="md" 
+                className="w-full group"
+                onClick={() => open('platform')}
+                data-cta="pricing"
+                data-track="pricing_cta"
+                data-tier={tier.id}
+              >
+                Schedule a Private AI Demo
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
@@ -299,6 +312,176 @@ export function PlatformTab() {
         </p>
       </div>
       
+      {/* What Your Firm Gets on Day One */}
+      <section className="mt-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 text-center">
+            Everything You See in the Demo—Available on Day One
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-6 mt-12">
+            {/* Smart Document → Task Automation */}
+            <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg">
+                  <Zap className="h-5 w-5 text-sapphire-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white">Smart Document → Task Automation</h3>
+              </div>
+              <ul className="space-y-2 text-sm text-dark-300">
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Generate tasks directly from PDFs, Word docs, and scanned files</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Auto-route tasks to responsible roles</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Extract key dates, obligations, and action items</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Case Summary Sheets */}
+            <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg">
+                  <FileText className="h-5 w-5 text-sapphire-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white">Case Summary Sheets</h3>
+              </div>
+              <ul className="space-y-2 text-sm text-dark-300">
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Automated partner-ready summaries for any matter</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Extracts facts, issues, parties, chronology</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Links back to source documents</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Case Timelines */}
+            <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg">
+                  <Clock className="h-5 w-5 text-sapphire-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white">Case Timelines</h3>
+              </div>
+              <ul className="space-y-2 text-sm text-dark-300">
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Auto-generated timelines from one or many documents</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Consolidates dates, events, milestones, and filings</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Editable + exportable for partner review</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Multi-Document Ingestion */}
+          <div className="mt-6 bg-dark-800/50 border border-dark-700 rounded-xl p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg">
+                <Upload className="h-5 w-5 text-sapphire-400" />
+              </div>
+              <h3 className="text-lg font-semibold text-white">Multi-Document Ingestion & Vector Intelligence</h3>
+            </div>
+            <ul className="space-y-2 text-sm text-dark-300">
+              <li className="flex items-start gap-2">
+                <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                <span>Upload multiple files → watch real-time embedding</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                <span>Cross-document Q&A with citations</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                <span>Document Intelligence (lite/full depending on tier)</span>
+              </li>
+            </ul>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Demo Script is Reality */}
+      <section className="mt-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.5 }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 text-center">
+            Everything in the Live Demo Is Included
+          </h2>
+          
+          <div className="grid md:grid-cols-2 gap-8 mt-12">
+            <div className="space-y-4">
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3">
+                  <Check className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span className="text-dark-300">Multi-document ingestion pipeline</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span className="text-dark-300">Real-time answering with citations</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span className="text-dark-300">Case summaries for any matter</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span className="text-dark-300">Automatically generated timelines</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span className="text-dark-300">Automated tasks from documents</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span className="text-dark-300">Practice Pack workflows for 12 core practice areas</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span className="text-dark-300">EMR Automation (for PI firms)</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="h-5 w-5 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span className="text-dark-300">Case → Client → Document linkage</span>
+                </li>
+              </ul>
+            </div>
+            <div className="flex items-center justify-center">
+              <VideoModal
+                videoId="cd40e8b0c3a14b9da24f138035ac4772"
+                buttonLabel="Watch the 3-Minute Workflow Tour"
+                className="group"
+              />
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
       {/* Compare Plans Matrix */}
       <section className="mt-12">
         <h2 className="text-xl font-semibold mb-6 text-center text-white">Compare plans</h2>
@@ -549,6 +732,209 @@ export function FrameworkCTABand() {
 interface FAQItem {
   question: string
   answer: string
+}
+
+export function WhyPrivateAISection() {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  })
+
+  return (
+    <section className="py-20 bg-dark-900">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 text-center">
+            Why Firms Choose Private AI Over Generic Tools
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Security & Isolation */}
+            <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-green-500/10 border border-green-500/30 rounded-lg">
+                  <Shield className="h-5 w-5 text-green-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white">Security & Isolation</h3>
+              </div>
+              <ul className="space-y-2 text-sm text-dark-300">
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Tenant-isolated vector indexes</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Dedicated Postgres database</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Zero shared embeddings</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>SOC 2 posture, GDPR/CCPA compliance</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Deployment Control */}
+            <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-green-500/10 border border-green-500/30 rounded-lg">
+                  <Settings className="h-5 w-5 text-green-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white">Deployment Control</h3>
+              </div>
+              <ul className="space-y-2 text-sm text-dark-300">
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Private VPC or on-prem</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>SSO/SAML integration</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Granular policy controls</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Full auditability</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Legal-Grade Precision */}
+            <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-green-500/10 border border-green-500/30 rounded-lg">
+                  <Briefcase className="h-5 w-5 text-green-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white">Legal-Grade Precision</h3>
+              </div>
+              <ul className="space-y-2 text-sm text-dark-300">
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Case-structured outputs</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Chronological timelines</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Obligation extraction</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                  <span>Matter-to-document relationships</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+export function RoleBasedValueSection() {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  })
+
+  const roles = [
+    {
+      icon: Users,
+      title: 'Managing Partners',
+      benefits: [
+        'Predictable costs',
+        'Higher margins',
+        'Reduced errors'
+      ]
+    },
+    {
+      icon: Briefcase,
+      title: 'Attorneys',
+      benefits: [
+        'Faster matter handling',
+        'More billables',
+        'Fewer admin tasks'
+      ]
+    },
+    {
+      icon: Settings,
+      title: 'Operations/Admin',
+      benefits: [
+        'Automated workflows',
+        'Standardized processes'
+      ]
+    },
+    {
+      icon: Shield,
+      title: 'IT/Compliance',
+      benefits: [
+        'SSO/SAML',
+        'Audit logs',
+        'Data governance',
+        'On-prem options'
+      ]
+    }
+  ]
+
+  return (
+    <section className="py-20 bg-dark-950">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 text-center">
+            Built For Every Role in Your Firm
+          </h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {roles.map((role, index) => {
+              const Icon = role.icon
+              return (
+                <motion.div
+                  key={role.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="bg-dark-800/50 border border-dark-700 rounded-xl p-6"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-sapphire-500/10 border border-sapphire-500/30 rounded-lg">
+                      <Icon className="h-5 w-5 text-sapphire-400" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-white">{role.title}</h3>
+                  </div>
+                  <ul className="space-y-2">
+                    {role.benefits.map((benefit, benefitIndex) => (
+                      <li key={benefitIndex} className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-sapphire-400 mt-0.5 flex-shrink-0" />
+                        <span className="text-sm text-dark-300">{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              )
+            })}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
 }
 
 export function FAQSection() {

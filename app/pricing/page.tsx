@@ -1,15 +1,15 @@
 import { Metadata } from 'next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { PricingPage, Headline, Subhead, PricingTabs, PlatformTab, LaunchPackTab, ManagedOpsTab, FAQSection, FrameworkCTABand } from '@/components/pricing/PricingPage'
+import { PricingPage, Headline, Subhead, PricingTabs, PlatformTab, LaunchPackTab, ManagedOpsTab, FAQSection, FrameworkCTABand, WhyPrivateAISection, RoleBasedValueSection } from '@/components/pricing/PricingPage'
 import FoundingFirmBanner from '@/components/FoundingFirmBanner'
 
 export const metadata: Metadata = {
-  title: 'Pricing - Hybrid Platform & Services Model | Sapphire Legal AI',
-  description: 'Choose from our flexible pricing model: Platform tiers (Core, Practice, Firm, Enterprise) with per-user pricing, Launch Pack implementation services, or Managed Operations.',
+  title: 'Pricing - Private AI for Law Firms | Sapphire Legal AI',
+  description: 'Sapphire Legal AI offers Private AI for law firms with secure document intelligence, automated case summaries, timelines, and workflow automation. Explore Core, Practice, Firm, and Enterprise tiers.',
   openGraph: {
-    title: 'Pricing - Sapphire Legal AI',
-    description: 'Flexible pricing for private AI legal solutions.',
+    title: 'Pricing - Private AI for Law Firms | Sapphire Legal AI',
+    description: 'Sapphire Legal AI offers Private AI for law firms with secure document intelligence, automated case summaries, timelines, and workflow automation. Explore Core, Practice, Firm, and Enterprise tiers.',
   },
 }
 
@@ -30,10 +30,80 @@ export default function Pricing() {
           </PricingTabs>
           
           <FrameworkCTABand />
+          <WhyPrivateAISection />
+          <RoleBasedValueSection />
           <FAQSection />
         </PricingPage>
       </main>
       <Footer />
+      
+      {/* JSON-LD Schema for Legal SaaS Pricing */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'SoftwareApplication',
+            name: 'Sapphire Legal AI',
+            applicationCategory: 'BusinessApplication',
+            operatingSystem: 'Web',
+            offers: [
+              {
+                '@type': 'Offer',
+                name: 'Core',
+                price: '1500',
+                priceCurrency: 'USD',
+                priceSpecification: {
+                  '@type': 'UnitPriceSpecification',
+                  price: '1500',
+                  priceCurrency: 'USD',
+                  billingIncrement: 'P1M'
+                }
+              },
+              {
+                '@type': 'Offer',
+                name: 'Practice',
+                price: '3500',
+                priceCurrency: 'USD',
+                priceSpecification: {
+                  '@type': 'UnitPriceSpecification',
+                  price: '3500',
+                  priceCurrency: 'USD',
+                  billingIncrement: 'P1M'
+                }
+              },
+              {
+                '@type': 'Offer',
+                name: 'Firm',
+                price: '6000',
+                priceCurrency: 'USD',
+                priceSpecification: {
+                  '@type': 'UnitPriceSpecification',
+                  price: '6000',
+                  priceCurrency: 'USD',
+                  billingIncrement: 'P1M'
+                }
+              }
+            ],
+            description: 'Private AI-powered legal operating system with secure document intelligence, automated case summaries, timelines, and workflow automation for law firms.',
+            provider: {
+              '@type': 'Organization',
+              name: 'Sapphire Five, Inc.',
+              url: 'https://sapphirelegal.ai',
+            },
+            featureList: [
+              'Smart Document → Task Automation',
+              'Case Summary Sheets',
+              'Case Timelines',
+              'Multi-Document Ingestion',
+              'Vector Intelligence',
+              'Practice Pack workflows',
+              'EMR Automation',
+              'Private AI deployment'
+            ],
+          }),
+        }}
+      />
     </div>
   )
 } 

@@ -96,7 +96,10 @@ export const pricingTiers: PricingTier[] = [
       "Policy controls",
       "Basic workflows",
       "Email support",
-      "Standard audit logs"
+      "Standard audit logs",
+      "Smart Document → Task Automation (starter version)",
+      "Case Summary (lite)",
+      "Case Timeline (lite, 10–20 events)"
     ],
     featureKeys: [
       "private_workspace",
@@ -126,7 +129,11 @@ export const pricingTiers: PricingTier[] = [
       "Priority support",
       "Usage analytics",
       "⚡ Workflow Optimization Service (bottlenecks, performance scoring, recommendations)",
-      "Document Intelligence (lite): structure & grammar checks"
+      "Document Intelligence (lite): structure & grammar checks",
+      "Full Task Automation builder",
+      "Cross-document case timelines",
+      "Case Summaries (professional edition)",
+      "Practice Pack automation for all supported areas"
     ],
     featureKeys: [
       "advanced_workflow_builder",
@@ -157,7 +164,11 @@ export const pricingTiers: PricingTier[] = [
       "Admin insights",
       "Scheduled exports",
       "🧠 Document Intelligence (full): anomaly detection, risk & compliance assessment, formatting consistency",
-      "📚 Citation Validation Service: real-time verification, overruling detection, related suggestions, batch validation"
+      "📚 Citation Validation Service: real-time verification, overruling detection, related suggestions, batch validation",
+      "Timeline templates + risk scoring",
+      "Advanced DMS routing and policy controls",
+      "Batch document intelligence",
+      "Admin & compliance insights"
     ],
     featureKeys: [
       "sso_saml",
@@ -190,7 +201,11 @@ export const pricingTiers: PricingTier[] = [
       "Optional: Fractional CTO advisory",
       "📋 Contract Intelligence Service: risk detection, compliance validation (GDPR/HIPAA/SOX/CCPA), industry benchmarking, optimization recommendations, risk scoring",
       "👥 Client Intelligence Service: risk profiling, churn prediction, segmentation, payment risk, opportunity identification, comms analysis",
-      "💙 Enhanced Client Retention Service: predictive churn with timeline, ROI calculation, segment-based strategies"
+      "💙 Enhanced Client Retention Service: predictive churn with timeline, ROI calculation, segment-based strategies",
+      "Fully automated matter dashboards",
+      "Compliance Intelligence Suite",
+      "Predictive client intelligence + churn detection",
+      "Advanced governance & custom SLAs"
     ],
     featureKeys: [
       "cis",
